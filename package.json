@@ -1,7 +1,69 @@
 {
-  "name": "atlas",
+  "name": "localapp",
+  "productName": "localapp",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:andr3h3nriqu3s11/atlas.git",
-  "license": "MIT"
+  "description": "My Electron application description",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "start": "tsc && electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts ."
+  },
+  "keywords": [],
+  "author": {
+    "name": "Andre Henriques",
+    "email": "andr3h3nriqu3s@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "localapp"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "electron": "18.0.1",
+    "eslint": "^8.0.1",
+    "eslint-plugin-import": "^2.25.0",
+    "typescript": "~4.5.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.11.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "fastify": "^3.27.4",
+    "fastify-cors": "^6.0.3",
+    "nodemon": "^2.0.15",
+    "prisma": "^3.11.1",
+    "ts-node": "^10.7.0"
+  }
 }
