@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+
+  backend:
+    image: node:17
+    container_name: Tartarus
+    volumes:
+      - ./server:/home/node/app
+    working_dir: /home/node/app
+    command: bash -c "yarn install; yarn prisma migrate dev; yarn dev & yarn prisma studio; chmod -R 777 node_modules"
+    ports:
+      - 3001:3001
+      - 3002:5555
+    environment:
+      DATABASE_URL: "file:./dev.db"
+
+  frontend:
+    container_name: Uranus
+    image: node:14
+    environment:
+      HOST: 0.0.0.0
+    volumes:
+      - ./frontend:/home/node/app
+    working_dir: /home/node/app
+    command: bash -c "yarn install; yarn dev; chmod -R 777 node_modules"
+    ports:
+     - 3000:3000
+    depends_on:
+      - backend
