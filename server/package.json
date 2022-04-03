@@ -7,6 +7,7 @@
     "@prisma/client": "^3.11.1",
     "fastify": "^3.27.4",
     "fastify-cors": "^6.0.3",
+    "fastify-static": "^4.6.1",
     "nodemon": "^2.0.15",
     "prisma": "^3.11.1",
     "ts-node": "^10.7.0",
