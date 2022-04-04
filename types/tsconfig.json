@@ -14,10 +14,5 @@
       "@types/*": ["./../types/*"]
     }
   },
-  "references": [
-    {
-      "path": "./../types/tsconfig.json"
-    }
-  ],
   "include": ["app"]
 }

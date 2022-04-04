@@ -2,6 +2,10 @@ import Fastify from "fastify";
 import path from "path";
 import fastifyStatic from "fastify-static";
 import { frontendPath } from "./constants";
+import { PrismaClient } from "@prisma/client";
+import { setUpUser } from "./user";
+
+export const prisma = new PrismaClient();
 
 export const buildServer = (code: string) => {
   const fastify = Fastify();
@@ -22,6 +26,8 @@ export const buildServer = (code: string) => {
       code,
     };
   });
+
+  setUpUser(baseUrl, fastify);
 
   return fastify;
 };
