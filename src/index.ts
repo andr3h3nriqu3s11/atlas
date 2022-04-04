@@ -3,8 +3,6 @@ import * as path from "path";
 
 import { buildServer } from "../server/app/app";
 
-console.log("hereeeeee");
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   // eslint-disable-line global-require
@@ -28,12 +26,16 @@ const createWindow = (): void => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", () => {
+app.on("ready", async () => {
   console.log("test");
   let server = buildServer("test");
 
-  server.listen(3001, "0.0.0.0", () => {
-    console.log(`Server running!`);
+  server.listen(3001, "0.0.0.0", (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`Server running!`);
+    }
   });
 
   createWindow();
