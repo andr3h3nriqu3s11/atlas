@@ -1,8 +1,8 @@
 <template>
-    <div class="auth" @submit.prevent="login">
+    <div class="auth-login" @submit.prevent="login">
         <form>
             <h1>Login</h1>
-            <input type="text" v-model="email" placeholder="email">
+            <input type="text" v-model="username" placeholder="username">
             <input type="password" v-model="password" placeholder="password">
             <button>Submit</button>
         </form>
@@ -13,7 +13,7 @@
 import Vue from 'vue'
 export default Vue.extend({
     data: () => ({
-        email: "",
+        username: "",
         password: ""
     }),
     methods:{
