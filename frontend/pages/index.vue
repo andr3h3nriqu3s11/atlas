@@ -1,5 +1,8 @@
 <template>
-  <Tutorial />
+  <div class="home-page">
+    <DashboardHome v-if="this.$store.getters['users/token']"/>
+    <AuthLogin v-else />
+  </div>
 </template>
 
 <script lang="ts">
