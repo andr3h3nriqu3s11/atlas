@@ -6,6 +6,7 @@ services:
     container_name: Tartarus
     volumes:
       - ./server:/home/node/app
+      - ./types:/home/node/app/ref/types
     working_dir: /home/node/app
     command: bash -c "yarn install; yarn prisma migrate dev; yarn dev & yarn prisma studio; chmod -R 777 node_modules"
     ports:
@@ -21,6 +22,7 @@ services:
       HOST: 0.0.0.0
     volumes:
       - ./frontend:/home/node/app
+      - ./types:/home/node/app/types
     working_dir: /home/node/app
     command: bash -c "yarn install; yarn dev; chmod -R 777 node_modules"
     ports:

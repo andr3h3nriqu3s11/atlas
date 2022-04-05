@@ -6,6 +6,7 @@
   "dependencies": {
     "@prisma/client": "^3.11.1",
     "@types/node": "^17.0.23",
+    "argon2": "^0.28.5",
     "fastify": "^3.27.4",
     "fastify-cors": "^6.0.3",
     "fastify-static": "^4.6.1",

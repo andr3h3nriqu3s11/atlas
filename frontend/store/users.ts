@@ -1,6 +1,6 @@
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import axios from 'axios'
-import { User } from "../types/user"
+import { UserLoginResponseType as User } from "../types/user"
 
 @Module({
   name: 'users',
