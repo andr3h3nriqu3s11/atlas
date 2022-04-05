@@ -1,4 +1,4 @@
-import {CreateUserRequestBody, UserType} from '../../../types/user';
+import {CreateUserRequestBody, UserType} from '@ref/types/user';
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import { prisma } from 'app/app';
 import argon2 from 'argon2';

@@ -4,7 +4,7 @@ import { error } from 'app/utils';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from 'fastify';
-import { LoginUserRequest } from '../../../types/user';
+import { LoginUserRequest } from '@ref/types/user';
 
 interface UserLoginRequest extends FastifyRequest {
 	body: LoginUserRequest

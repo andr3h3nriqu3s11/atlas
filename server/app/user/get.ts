@@ -1,7 +1,7 @@
 import { prisma } from "app/app";
 import { authenticate, AuthenticationHeaders } from "app/authentication";
 import { FastifyReply, FastifyRequest, RouteShorthandMethod, RouteShorthandOptions } from "fastify";
-import { UserType } from "../../../types/user";
+import { UserType } from "@ref/types/user";
 
 export const GetUsersSchema: RouteShorthandOptions = {
     schema: {

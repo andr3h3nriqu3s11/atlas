@@ -1,4 +1,4 @@
-import { UpdatePasswordUserRequestBody, UpdateUserRequestBody, UserType} from '@types/user';
+import { UpdatePasswordUserRequestBody} from '@ref/types/user';
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import { prisma } from 'app/app';
 import { error } from 'app/utils';

@@ -3,7 +3,7 @@ import { authenticate, AuthenticationHeaders } from "app/authentication";
 import { error } from "app/utils";
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import { SELECT_USER } from ".";
-import { UserType } from "@types/user";
+import { UserType } from "@ref/types/user";
 
 export const AuthorizeUserSchema: RouteShorthandOptions = {
     schema: {

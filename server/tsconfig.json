@@ -11,13 +11,8 @@
       "*": ["node_modules/*"],
       "app/*": ["app/*"],
       "@/*": ["app/*"],
-      "@types/*": ["./../types/*"]
+      "@ref/*": ["ref/*"]
     }
   },
-  "references": [
-    {
-      "path": "./../types/tsconfig.json"
-    }
-  ],
   "include": ["app"]
 }
