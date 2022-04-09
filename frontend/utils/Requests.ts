@@ -93,6 +93,6 @@ class OurAxios {
     }
 }
 
-const Requests = new RequestsClass(new OurAxios('localhost:3001'));
+const Requests = new RequestsClass(new OurAxios('http://localhost:3001'));
 
 export default Requests;

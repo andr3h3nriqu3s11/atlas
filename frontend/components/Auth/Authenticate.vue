@@ -12,6 +12,11 @@ export default Vue.extend({
     data: () => ({
         is_active: true
     }),
+    created(){
+        this.$nuxt.$on('changeAuthenticate', () => {
+            this.changeActive();
+        })
+    },
     methods:{
         changeActive () {
             this.is_active = !this.is_active;
