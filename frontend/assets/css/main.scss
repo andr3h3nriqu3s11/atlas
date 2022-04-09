@@ -1,2 +1,40 @@
 @import "./colours";
+@import "./mixins";
 
+@import "./utils";
+@import "./auth";
+
+body{
+    margin: 0;
+}
+
+.header{
+    display: flex;
+    justify-content: flex-end;
+    .icon-btn{
+        min-width: 60px;
+    }
+}
+
+.icon-btn{
+    border: solid 2px $colour-primary;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s;
+    &:hover{
+        background: $colour-primary;
+        color: $colour-secondary;
+    }
+    span{
+        font-size: 3em;
+    }
+}
+
+.generic-form{
+    padding: 5%;
+    background: #999;
+    text-align: center;
+    input{
+        width: 100%;
+    }
+}

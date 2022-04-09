@@ -1,8 +1,10 @@
 <template>
     <div class="card-component">
-        <h4>{{this.heading}}</h4>
-        <p>{{this.content}}</p>
-        <NuxtLink v-if="link_url" :to="this.link_url">{{this.link_name}}</NuxtLink>
+        <div class="card">
+            <h4>{{this.heading}}</h4>
+            <p>{{this.content}}</p>
+            <NuxtLink v-if="link_url" :to="this.link_url">{{this.link_name}}</NuxtLink>
+        </div>
     </div>
 </template>
 

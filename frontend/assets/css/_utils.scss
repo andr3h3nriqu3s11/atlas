@@ -1,0 +1,19 @@
+.card-component{
+    text-align: center;
+    .card{
+        padding: 5%;
+    }
+}
+
+.multi-card-banner{
+    display: grid;
+    &.two{
+        grid-template-columns: 1fr 1fr;
+    }
+    &.three{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .card-component{
+        padding: 5%;
+    }
+}
