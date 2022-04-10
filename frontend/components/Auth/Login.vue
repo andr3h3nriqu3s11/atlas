@@ -25,9 +25,8 @@ export default Vue.extend({
             console.log("login");
             try{
                 const res = await Requests.user.login({name:this.username, password:this.password});
-                const res_val = await res.json()
-                console.log(res_val);
-                this.$store.commit("users/setToken", res_val.token); // NEEDS actual token
+                console.log(res);
+                this.$store.commit("users/setToken", res.token); // NEEDS actual token
             }
             catch(err){
                 console.error(err);

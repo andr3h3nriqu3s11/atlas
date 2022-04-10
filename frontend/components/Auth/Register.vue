@@ -23,9 +23,8 @@ export default Vue.extend({
     methods:{
         async register(){
             try{
-                const res = await Requests.user.create({name:this.username, password:this.password})
-                const res_val = await res.json()
-                console.log(res_val);
+                const res = await Requests.user.create({name:this.username, password:this.password});
+                console.log(res);
                 this.$nuxt.$emit("changeAuthenticate");
             }
             catch(err){
