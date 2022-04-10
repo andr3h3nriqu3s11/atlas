@@ -19,6 +19,7 @@ export default Vue.extend({
     methods:{
         logOut(){
             this.$store.commit('users/setToken', null)
+            this.$router.push('/')
         }
     }
 })
