@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//
+//
+//
+// User related models
+//
+//
+//
+
 model User {
 
   id         String    @id @default(uuid())
@@ -31,3 +39,70 @@ model Token {
 
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+
+//
+//
+// Setting related to settings
+//
+//
+
+model WorldSetting {
+
+  id          String @id @default(uuid())
+
+  name        String @unique
+
+  templates   Template[]
+
+}
+
+//
+//
+// Character Template related models
+//
+//
+
+model Template {
+
+  id             String          @id @default(uuid())
+
+  worldSettingId String
+
+  // ITEM - CHARACTER
+  type           String
+
+  worldSetting   WorldSetting    @relation(references: [id], fields: [worldSettingId], onDelete: Cascade)
+  templateFields TemplateField[]
+}
+
+model TemplateField {
+
+  id             String        @id @default(uuid())
+  templateId     String
+
+  // STRING | NUMBER | DROPBOX | BOOLEAN
+  type           String
+
+  // DROPBOX - will be enconded as value:text|value:text
+  value          String
+
+  defaultValue   String
+
+  max            Int?
+  min            Int?
+
+  template       Template      @relation(references: [id], fields: [templateId], onDelete: Cascade)
+}
+
+//
+//
+//
+// Character related models
+//
+//
+//
+
+//model Character {
+//
+//}
