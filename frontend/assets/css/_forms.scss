@@ -76,6 +76,26 @@ $custom-checkbox-size: 20px;
         }
         
     }
+    select{
+        width: 100%;
+        background: none;
+        border: 1px solid $colour-primary;
+        padding: 2%;
+        color: $colour-primary;
+        margin: 2% auto;
+        border-radius: 5px;
+        transition: all 0.2s;
+        &:focus-visible{
+            outline: none;
+        }
+        &:hover{
+            border: solid 1px $colour-secondary;
+            color: $colour-secondary;
+        }
+    }
+    option{
+        background: $colour-surface;
+    }
 }
 
 .custom-checkbox-component{

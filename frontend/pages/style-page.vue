@@ -74,6 +74,11 @@
                             {{ option }}
                         </li>
                     </ul>
+                    <select name="frameworks" id="frameworks">
+                        <option value="react">React</option>
+                        <option value="vue">Vue</option>
+                        <option value="angular">Angular</option>
+                    </select>
                     <input class="btn" type="submit" value="Submit">
                     <button class="btn full-width" type="submit">Submit</button>
                 </form>
