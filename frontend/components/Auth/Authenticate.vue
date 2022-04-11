@@ -2,7 +2,7 @@
     <div class="authenticate">
         <AuthLogin v-if="is_active"/>
         <AuthRegister v-else/>
-        <button @click="changeActive">Change Active</button>
+        <button class="btn" @click="changeActive">Change Active</button>
     </div>
 </template>
 

@@ -46,5 +46,49 @@
                 />
             </BannersMultiCard>
         </section>
+        <section class="border-separator">
+            <h2>Generic Form</h2>
+            <div class="generic-form-wrapper">
+                <form class="generic-form">
+                    <div class="input-group">
+                        <input type="text" placeholder=" " />
+                        <label class="input-label">Text</label>
+                    </div>            
+                    <div class="input-group">
+                        <input type="numeric" placeholder=" " />
+                        <label class="input-label">numeric</label>
+                    </div>
+                    <h4>Radio Selection:</h4>
+                    <label>radio 1</label>
+                    <input type="radio" />
+                    <label>radio 2</label>
+                    <input type="radio" />
+                    <h4>Checkbox Selection:</h4>
+                    <UtilsCheckbox label="React" inputValue="react" v-model="selectedCheckboxes" />
+                    <UtilsCheckbox label="Vue" inputValue="vue" v-model="selectedCheckboxes" />
+                    <UtilsCheckbox label="Angular" inputValue="angular" v-model="selectedCheckboxes" />
+                    <h5 v-if="selectedCheckboxes != 0">Selected Checkboxes:</h5>
+                    <ul>
+                        
+                        <li v-for="(option, index) of selectedCheckboxes" :key="index">
+                            {{ option }}
+                        </li>
+                    </ul>
+                    <input class="btn" type="submit" value="Submit">
+                    <button class="btn full-width" type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
     </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+    data() {
+        return {
+            selectedCheckboxes: [],
+        };
+    },
+})
+</script>

@@ -1,12 +1,20 @@
 <template>
     <div class="auth-register">
         <div class="register-wrapper">
-            <form class="generic-form" @submit.prevent="register">
-                <h1>Register</h1>
-                <input type="text" v-model="username" placeholder="username">
-                <input type="password" v-model="password" placeholder="password">
-                <button>Submit</button>
-            </form>
+            <div class="generic-form-wrapper">
+                <form class="generic-form" @submit.prevent="register">
+                    <h1>Register</h1>
+                    <div class="input-group">
+                        <input type="text" v-model="username" placeholder=" " />
+                        <label class="input-label">username</label>
+                    </div>  
+                    <div class="input-group">
+                        <input type="password" v-model="password" placeholder=" " />
+                        <label class="input-label">password</label>
+                    </div> 
+                    <button class="btn full-width">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>

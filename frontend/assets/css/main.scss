@@ -3,6 +3,7 @@
 
 @import "./utils";
 @import "./auth";
+@import "./forms";
 
 @import "./styles";
 
@@ -61,23 +62,18 @@ section{
     }
 }
 
-.generic-form{
-    padding: 5%;
-    background: #999;
-    text-align: center;
-    input{
-        width: 100%;
-    }
-}
-
-.btn-link{
+.btn{
     text-decoration: none;
     text-transform: uppercase;
     border:2px solid;
     border-color:$colour-primary;
     color: $colour-primary;
     transition: all 0.4s;
-    padding: 4% 0;
+    padding: 1%;
+    background: none;
+    &.full-width{
+        width: 100%;
+    }
     &:hover{
         background: $colour-primary;
         color: $colour-on-primary;

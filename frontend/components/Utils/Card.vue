@@ -9,7 +9,7 @@
         <div class="card" v-else>
             <h4>{{this.heading}}</h4>
             <p>{{this.content}}</p>
-            <NuxtLink class="btn-link" :class="btn_design" v-if="link_url" :to="this.link_url">{{this.link_name}}</NuxtLink>
+            <NuxtLink class="btn" :class="btn_design" v-if="link_url" :to="this.link_url">{{this.link_name}}</NuxtLink>
             <span v-else></span>
         </div>
     </div>

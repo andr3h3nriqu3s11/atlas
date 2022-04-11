@@ -1,12 +1,20 @@
 <template>
-    <div class="auth-login" @submit.prevent="login">
+    <div class="auth-login">
         <div class="login-wrapper">
-            <form class="generic-form">
-                <h1>Login</h1>
-                <input type="text" v-model="username" placeholder="username">
-                <input type="password" v-model="password" placeholder="password">
-                <button>Submit</button>
-            </form>
+            <div class="generic-form-wrapper">
+                <form class="generic-form" @submit.prevent="login">
+                    <h1>Login</h1>
+                    <div class="input-group">
+                        <input type="text" v-model="username" placeholder=" " autocomplete="on" />
+                        <label class="input-label">username</label>
+                    </div>  
+                    <div class="input-group">
+                        <input type="password" v-model="password" placeholder=" " autocomplete="on" />
+                        <label class="input-label">password</label>
+                    </div> 
+                    <button class="btn full-width">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </template>
