@@ -1,2 +1,94 @@
 @import "./colours";
+@import "./mixins";
 
+@import "./utils";
+@import "./auth";
+
+@import "./styles";
+
+body{
+    margin: 0;
+    background: $colour-background;
+    color: $colour-on-background;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5{
+    font-family: "Quicksand Book", sans-serif;
+}
+
+h2, h3{
+    color: $colour-secondary;
+}
+
+section{
+    &.main-colour{
+        background: $colour-section;
+        padding: 4% 0;
+    }
+    &.border-separator{
+        &::after, &::before{
+            content: "";
+            width: 80%;
+            background: $colour-secondary;
+            height: 2px;
+            display: block;
+            margin: 30px auto 30px;
+        }
+    }
+}
+
+.header{
+    display: flex;
+    justify-content: flex-end;
+    .icon-btn{
+        min-width: 60px;
+    }
+}
+
+.icon-btn{
+    border: solid 2px $colour-primary;
+    color: $colour-primary;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s;
+    &:hover{
+        background: $colour-primary;
+        color: $colour-secondary;
+    }
+    span{
+        font-size: 3em;
+    }
+}
+
+.generic-form{
+    padding: 5%;
+    background: #999;
+    text-align: center;
+    input{
+        width: 100%;
+    }
+}
+
+.btn-link{
+    text-decoration: none;
+    text-transform: uppercase;
+    border:2px solid;
+    border-color:$colour-primary;
+    color: $colour-primary;
+    transition: all 0.4s;
+    padding: 4% 0;
+    &:hover{
+        background: $colour-primary;
+        color: $colour-on-primary;
+    }
+    &.fill{
+        background: $colour-primary;
+        color: $colour-on-primary;
+        &:hover{
+            background: $colour-secondary;
+            color: $colour-on-secondary;
+            border-color:$colour-secondary;
+        }
+    }
+}

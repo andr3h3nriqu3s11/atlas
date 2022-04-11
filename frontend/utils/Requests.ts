@@ -67,27 +67,29 @@ class OurAxios {
         this.baseUrl = baseUrl;
     }
 
-    post (url: string, options?: {data?: any, token?: string}) {
+    async post (url: string, options?: {data?: any, token?: string}) {
         let {data, token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
 
-        return fetch(u.toString(), {
+        let r = await fetch(u.toString(), {
             method: 'POST',
             headers: {
                 ...(data ? {'content-type': 'application/json;',} : {}),
                 ...(token ? {'token': token,} : {})
             },
             ...(data ? {body: JSON.stringify(data)} : {})
-        })
+        });
+
+        return r.json();
     }
 
-    get (url: string, options?: {data?: any, token?: string}) {
+    async get (url: string, options?: {data?: any, token?: string}) {
         let {data, token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
 
-        return fetch(u.toString(), {
+        let r = await fetch(u.toString(), {
             method: 'GET',
             headers: {
                 ...(data ? {'content-type': 'application/json;',} : {}),
@@ -95,14 +97,16 @@ class OurAxios {
             },
             ...(data ? {body: JSON.stringify(data)} : {})
         })
+
+        return r.json();
     }
 
-    put (url: string, options?: {data?: any, token?: string}) {
+    async put (url: string, options?: {data?: any, token?: string}) {
         let {data, token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
         
-        return fetch(u.toString(), {
+        let r = await fetch(u.toString(), {
             method: 'PUT',
             headers: {
                 ...(data ? {'content-type': 'application/json;',} : {}),
@@ -110,6 +114,8 @@ class OurAxios {
             },
             ...(data ? {body: JSON.stringify(data)} : {})
         })
+
+        return r.json();
     }
 
     delete (url: string, options?: {data?: any, token?: string}) {
@@ -128,6 +134,6 @@ class OurAxios {
     }
 }
 
-const Requests = new RequestsClass(new OurAxios('localhost:3001'));
+const Requests = new RequestsClass(new OurAxios('http://localhost:3001'));
 
 export default Requests;

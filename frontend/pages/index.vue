@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <DashboardHome v-if="this.$store.getters['users/token']"/>
-    <AuthLogin v-else />
+    <AuthAuthenticate v-else />
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
-    <div class="auth-login" @submit.prevent="login">
-        <div class="login-wrapper">
-            <form class="generic-form">
-                <h1>Login</h1>
+    <div class="auth-register">
+        <div class="register-wrapper">
+            <form class="generic-form" @submit.prevent="register">
+                <h1>Register</h1>
                 <input type="text" v-model="username" placeholder="username">
                 <input type="password" v-model="password" placeholder="password">
                 <button>Submit</button>
@@ -21,17 +21,15 @@ export default Vue.extend({
         password: ""
     }),
     methods:{
-        async login(){
-            console.log("login");
+        async register(){
             try{
-                const res = await Requests.user.login({name:this.username, password:this.password});
+                const res = await Requests.user.create({name:this.username, password:this.password});
                 console.log(res);
-                this.$store.commit("users/setToken", res.token); // NEEDS actual token
+                this.$nuxt.$emit("changeAuthenticate");
             }
             catch(err){
                 console.error(err);
             }
-            
         }
     }
 })
