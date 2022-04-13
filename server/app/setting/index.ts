@@ -4,7 +4,6 @@ import { DeleteSettingHandler, DeleteSettingSchema } from "./delete";
 import { GetSettingHandler, GetSettingSchema } from "./get";
 import { UpdateSettingHandler, UpdateSettingSchema } from "./update";
 
-
 export const setUpWorldSetting = (baseUrl: string, fastify: FastifyInstance)=> {
 	const url = `${baseUrl}/setting`;
 

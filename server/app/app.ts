@@ -4,6 +4,8 @@ import fastifyStatic from "fastify-static";
 import { frontendPath } from "./constants";
 import { PrismaClient } from "@prisma/client";
 import { setUpUser } from "./user";
+import { setUpTemplate } from "./template";
+import { setUpWorldSetting } from "./setting";
 
 export const prisma = new PrismaClient();
 
@@ -28,6 +30,8 @@ export const buildServer = (code: string) => {
   });
 
   setUpUser(baseUrl, fastify);
+  setUpTemplate(baseUrl, fastify);
+  setUpWorldSetting(baseUrl, fastify);
 
   return fastify;
 };
