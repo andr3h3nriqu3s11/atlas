@@ -72,6 +72,9 @@ model Template {
   // ITEM - CHARACTER
   type           String
 
+  name           String          @unique
+  description    String?
+
   worldSetting   WorldSetting    @relation(references: [id], fields: [worldSettingId], onDelete: Cascade)
   templateFields TemplateField[]
 }
