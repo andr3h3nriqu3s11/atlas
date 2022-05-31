@@ -1,7 +1,7 @@
 <template>
     <div class="custom-checkbox-component">
         <label class="custom-checkbox-wrapper">
-            <input  type="checkbox" :value="inputValue"  v-model="model" @click="active"/>
+            <input  type="checkbox" :value="inputValue" v-model="model" @click="active"/>
             <div class="custom-checkbox" :class="{active: isActive}"></div>
         </label>
         <span>{{ label }}</span>
