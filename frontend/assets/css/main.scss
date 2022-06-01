@@ -6,6 +6,7 @@
 @import "./forms";
 
 @import "./styles";
+@import "./mindmap";
 
 body{
     margin: 0;
@@ -42,13 +43,13 @@ section{
 .header{
     display: flex;
     justify-content: flex-end;
+    height: 5vh;
     .icon-btn{
-        min-width: 60px;
+        height: 100%;
     }
 }
 
 .icon-btn{
-    border: solid 2px $colour-primary;
     color: $colour-primary;
     text-align: center;
     cursor: pointer;
@@ -58,7 +59,11 @@ section{
         color: $colour-secondary;
     }
     span{
-        font-size: 3em;
+        font-size: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
     }
 }
 

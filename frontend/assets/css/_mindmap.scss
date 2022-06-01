@@ -1,0 +1,29 @@
+.mindmap-page{
+    .mindmap-container{
+        height: 93vh;
+        width: 98%;
+        margin: auto;
+        background: $colour-section;
+        position: relative;
+        .create-menu-component{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: absolute;
+            background: $colour-on-surface-variant;
+            display: none;
+            &.active{
+                display: flex;
+            }
+            span{
+                padding: 5px;
+                cursor: pointer;
+                border-bottom: 2px solid;
+                transition: all 0.4s;
+                &:hover{
+                    background: $colour-primary;
+                }
+            }
+        }
+    }
+}
