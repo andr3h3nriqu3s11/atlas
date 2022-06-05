@@ -1,6 +1,7 @@
 <template>
     <div class="mindmap-page">
-        <div class="mindmap-container" @click="clickListener($event)">
+        <UtilsPopupDialog><h2>Header</h2><p>text</p></UtilsPopupDialog>
+        <div class="mindmap-container" @click="clickListener($event)"> 
             <MindmapCreateMenu />
         </div>
     </div>

@@ -25,11 +25,13 @@ export default Vue.extend({
         createCard(e: any){
             e.stopPropagation();
             console.log("Create Card");
+            this.$nuxt.$emit('PopupDialogInterface');
             this.closeMenu();
         },
         createEvent(e: any){
             e.stopPropagation();
             console.log("Create Event");
+            this.$nuxt.$emit('PopupDialogInterface');
             this.closeMenu();
         },
         closeMenu(){
