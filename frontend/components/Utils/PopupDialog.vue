@@ -1,11 +1,11 @@
 <template>
-    <div v-if="active" class="popup-dialog-component">
+    <div v-if="active" class="popup-dialog-component">   
         <div class="popup-dialog-wrapper">
             <div class="text-wrapper">
                 <slot></slot>
             </div>
             <div class="btn-row">
-                <button class="btn" @click="close_popup_dialog">close</button>
+                <span class="icon-btn material-icons" @click="close_popup_dialog">close</span>
             </div>
         </div>
     </div>

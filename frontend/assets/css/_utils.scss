@@ -60,5 +60,11 @@
         text-align: center;
         background: $colour-surface;
         padding: 2% 10%;
+        position: relative;
+    }
+    .btn-row{
+        position: absolute;
+        top: 5px;
+        right: 5px;
     }
 }
