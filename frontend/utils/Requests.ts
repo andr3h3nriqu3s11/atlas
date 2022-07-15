@@ -1,5 +1,5 @@
 import {CreateUserRequestBody, LoginUserRequest, UpdatePasswordUserRequestBody, UpdateUserRequestBody, UserLoginResponseType, UserResponseType} from '@/types/user';
-import { CreateTemplateRequestBody, TemplateReturn, UpdateTemplateRequestBody } from '~/types';
+import { CreateTemplateFieldRequestBody, CreateTemplateRequestBody, TemplateFieldResponse, TemplateFieldsReturn, TemplateReturn, UpdateTemplateFieldRequestBody, UpdateTemplateRequestBody } from '~/types';
 import { CreateWorldSettingRequest, WorldSetting } from '~/types/setting';
 
 class RequestsClass {
@@ -58,10 +58,19 @@ class RequestsClass {
             includeFields?: boolean; 
         }) => this.req.get(this.objToUrl('/template', options)),
 
-        delete: (id: string): Promise<TemplateReturn> => this.req.delete(`/template/${id}`)
+        delete: (id: string): Promise<TemplateReturn> => this.req.delete(`/template/${id}`),
+
+        field: {
+
+            create: (data: CreateTemplateFieldRequestBody): Promise<TemplateFieldResponse> => this.req.post(`/template/field/`, {data}),
+
+            update: (data: UpdateTemplateFieldRequestBody, id: string): Promise<TemplateFieldResponse> => this.req.post(`/template/field/${id}`, {data}),
+
+            delete: (id: string): Promise<{}> => this.req.post(`/template/field/${id}`, {}),
+
+        }
+
     }
-
-
 }
 
 interface Requester {
@@ -76,9 +85,11 @@ class OurAxios {
     //axios: Axios
 
     baseUrl: string
+    token?: string
 
-    constructor (baseUrl: string) {
+    constructor (baseUrl: string, token?: string) {
         this.baseUrl = baseUrl;
+        this.token = token;
     }
 
     getToken = () => localStorage.getItem('LoginToken') ?? undefined;
@@ -89,7 +100,7 @@ class OurAxios {
     })
 
     async post (url: string, options?: {data?: any, token?: string}) {
-        let {data, token = this.getToken()} = options ?? {};
+        let {data, token = this.getToken() ?? this.token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
 
@@ -103,7 +114,7 @@ class OurAxios {
     }
 
     async get (url: string, options?: {data?: any, token?: string}) {
-        let {data, token = this.getToken()} = options ?? {};
+        let {data, token = this.getToken() ?? this.token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
 
@@ -117,10 +128,10 @@ class OurAxios {
     }
 
     async put (url: string, options?: {data?: any, token?: string}) {
-        let {data, token = this.getToken()} = options ?? {};
+        let {data, token = this.getToken() ?? this.token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
-        
+
         let r = await fetch(u.toString(), {
             method: 'PUT',
             headers: this.buildHeaders(data, token),
@@ -131,10 +142,10 @@ class OurAxios {
     }
 
     delete (url: string, options?: {data?: any, token?: string}) {
-        let {data, token = this.getToken()} = options ?? {};
+        let {data, token = this.getToken() ?? this.token} = options ?? {};
 
         let u = new URL(url, this.baseUrl)
-        
+
         return fetch(u.toString(), {
             method: 'DELETE',
             headers: this.buildHeaders(data, token),
@@ -143,6 +154,7 @@ class OurAxios {
     }
 }
 
+//TODO this url needs to be dynamically loaded from electron
 const Requests = new RequestsClass(new OurAxios('http://localhost:3001'));
 
 export default Requests;

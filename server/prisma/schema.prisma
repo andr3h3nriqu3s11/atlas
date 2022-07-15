@@ -84,6 +84,12 @@ model TemplateField {
   id             String        @id @default(uuid())
   templateId     String
 
+  // Name of the field this is the internal name
+  name           String
+
+  // Label this is for the display name
+  label          String
+
   // STRING | NUMBER | DROPBOX | BOOLEAN
   type           String
 
