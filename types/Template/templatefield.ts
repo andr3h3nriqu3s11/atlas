@@ -13,6 +13,7 @@ export interface CreateTemplateFieldRequestBody {
   templateId: string,
   name: string;
   label: string;
+  required: boolean;
   type: TemplateFieldType,
   value: string,
   defaultValue: string,
@@ -26,6 +27,7 @@ export interface UpdateTemplateFieldRequestBody {
   type?: TemplateFieldType,
   value?: string,
   defaultValue?: string,
+  required?: boolean,
   max?: number,
   min?: number,
 }
@@ -35,6 +37,7 @@ export interface TemplateFieldResponse {
   templateId: string,
   name: string,
   label: string,
+  required: boolean,
   type: TemplateFieldType,
   value: string,
   defaultValue: string,

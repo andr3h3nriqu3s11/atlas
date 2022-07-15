@@ -1,11 +1,9 @@
 import {CreateUserRequestBody, LoginUserRequest, UpdatePasswordUserRequestBody, UpdateUserRequestBody, UserLoginResponseType, UserResponseType} from '@/types/user';
-import { CreateTemplateFieldRequestBody, CreateTemplateRequestBody, TemplateFieldResponse, TemplateFieldsReturn, TemplateReturn, UpdateTemplateFieldRequestBody, UpdateTemplateRequestBody } from '~/types';
-import { CreateWorldSettingRequest, WorldSetting } from '~/types/setting';
+import { CreateTemplateFieldRequestBody, CreateTemplateRequestBody, TemplateFieldResponse, TemplateFieldsReturn, TemplateReturn, UpdateTemplateFieldRequestBody, UpdateTemplateRequestBody, CreateWorldSettingRequest, WorldSetting } from '~/types';
 
 class RequestsClass {
 
     req: Requester
-
 
     objToUrl = (url: string, data: any) => {
         let urlD = new URL(url);
