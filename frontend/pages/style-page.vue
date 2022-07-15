@@ -59,10 +59,17 @@
                         <label class="input-label">numeric</label>
                     </div>
                     <h4>Radio Selection:</h4>
-                    <label>radio 1</label>
-                    <input type="radio" />
+                    <UtilsRadioButton label="Foo" value="foo" v-model="MySelectedValue" />
+                    <UtilsRadioButton label="Bar" value="bar" v-model="MySelectedValue" />
+                    <UtilsRadioButton label="Baz" value="baz" v-model="MySelectedValue" />
+                    <div v-if="MySelectedValue">
+                        <h5>Selected Radio Button:</h5>
+                        <p>{{MySelectedValue}}</p>
+                    </div>
+                    <!-- <label>radio 1</label>
+                    <input type="radio" name="select-radio"/>
                     <label>radio 2</label>
-                    <input type="radio" />
+                    <input type="radio" name="select-radio"/> -->
                     <h4>Checkbox Selection:</h4>
                     <UtilsCheckbox label="React" inputValue="react" v-model="selectedCheckboxes" />
                     <UtilsCheckbox label="Vue" inputValue="vue" v-model="selectedCheckboxes" />
@@ -93,6 +100,7 @@ export default Vue.extend({
     data() {
         return {
             selectedCheckboxes: [],
+            MySelectedValue: ""
         };
     },
 })
