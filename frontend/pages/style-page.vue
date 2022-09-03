@@ -76,7 +76,6 @@
                     <UtilsCheckbox label="Angular" inputValue="angular" v-model="selectedCheckboxes" />
                     <h5 v-if="selectedCheckboxes != 0">Selected Checkboxes:</h5>
                     <ul>
-                        
                         <li v-for="(option, index) of selectedCheckboxes" :key="index">
                             {{ option }}
                         </li>
