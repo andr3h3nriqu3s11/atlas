@@ -1,3 +1,3 @@
 export * from './setting';
 export * from './user';
-export * from './template';
+export * from './Template';

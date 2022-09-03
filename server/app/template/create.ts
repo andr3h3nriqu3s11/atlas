@@ -28,7 +28,7 @@ export const CreateTemplateHandler = requestBuilder(async (req: CreateTemplateRe
 	try {
 		return await prisma.template.create({data: req.body});
 	} catch (e) {
-		if (e instanceof PrismaClientKnownRequestError && e.code === 'P2002') error(reply, 400, 'Teamplte with that name already exists');
+		if (e instanceof PrismaClientKnownRequestError && e.code === 'P2002') error(reply, 400, 'Template with that name already exists');
 		if (e instanceof PrismaClientKnownRequestError && e.code === 'P2003') error(reply, 400, 'World Setting id does not exist');
 		throw e;
 	}

@@ -16,28 +16,32 @@ datasource db {
 //
 
 model User {
+  id           String    @id @default(uuid())
 
-  id         String    @id @default(uuid())
+  name         String    @unique
 
-  name       String    @unique
+  password     String
 
-  password   String
+  userType     String
 
-  userType   String
+  authorized   Boolean
 
-  authorized Boolean
+  tokens       Token[]
 
-  tokens  Token[]
+  dateCreated  DateTime @default(now())
+  dateUpdate   DateTime @updatedAt
 }
 
 model Token {
-  token         String  @id
+  token        String  @id
 
-  userId        String
+  userId       String
 
-  expireDate    DateTime
+  expireDate   DateTime
 
   user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  dateCreated  DateTime @default(now())
 }
 
 
@@ -48,13 +52,14 @@ model Token {
 //
 
 model WorldSetting {
+  id           String @id @default(uuid())
 
-  id          String @id @default(uuid())
+  name         String @unique
 
-  name        String @unique
+  templates    Template[]
 
-  templates   Template[]
-
+  dateCreated  DateTime @default(now())
+  dateUpdate   DateTime @updatedAt
 }
 
 //
@@ -64,48 +69,79 @@ model WorldSetting {
 //
 
 model Template {
+  id                String          @id @default(uuid())
 
-  id             String          @id @default(uuid())
-
-  worldSettingId String
+  worldSettingId    String
 
   // ITEM - CHARACTER
-  type           String
+  type              String
 
-  name           String          @unique
-  description    String?
+  name              String          @unique
+  description       String?
 
-  worldSetting   WorldSetting    @relation(references: [id], fields: [worldSettingId], onDelete: Cascade)
-  templateFields TemplateField[]
+  worldSetting      WorldSetting    @relation(references: [id], fields: [worldSettingId], onDelete: Cascade)
+  templateFields    TemplateField[]
+  templateInstances TemplateInstance[]
+
+  dateCreated       DateTime @default(now())
+  dateUpdate        DateTime @updatedAt
 }
 
 model TemplateField {
+  id            String        @id @default(uuid())
+  templateId    String
 
-  id             String        @id @default(uuid())
-  templateId     String
+  // Name of the field this is the internal name
+  name          String
 
-  // STRING | NUMBER | DROPBOX | BOOLEAN
-  type           String
+  // Label this is for the display name
+  label         String
 
-  // DROPBOX - will be enconded as value:text|value:text
-  value          String
+  //            STRING | NUMBER |                                                                  DROPBOX | BOOLEAN
+  type          String
 
-  defaultValue   String
+  //            DROPBOX - will be enconded as value:text|value:text
+  value         String
+
+  required      Boolean
+
+  defaultValue  String
 
   max            Int?
   min            Int?
 
-  template       Template      @relation(references: [id], fields: [templateId], onDelete: Cascade)
+  template      Template      @relation(references: [id], fields: [templateId], onDelete: Cascade)
+
+  instanceFields TemplateInstanceFields[]
+
+  dateCreated   DateTime @default(now())
+  dateUpdate    DateTime @updatedAt
 }
 
-//
-//
-//
-// Character related models
-//
-//
-//
 
-//model Character {
-//
-//}
+// Will be an instance of a template
+model TemplateInstance {
+  id           String @id @default(uuid())
+
+  templateId   String
+
+  template     Template @relation(references: [id], fields: [templateId], onDelete: Cascade)
+
+  fields       TemplateInstanceFields[]
+
+  dateCreated  DateTime @default(now())
+  dateUpdate   DateTime @updatedAt
+}
+
+// Will be an instance of a field in a template
+model TemplateInstanceFields {
+  id         String @id @default(uuid())
+
+  instanceId String
+
+  fieldId    String
+
+  templateField TemplateField @relation(references: [id], fields: [fieldId], onDelete: Cascade)
+
+  instance   TemplateInstance @relation(references: [id], fields: [instanceId], onDelete: Cascade)
+}

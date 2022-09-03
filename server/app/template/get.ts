@@ -6,6 +6,7 @@ export const GetTemplateSchema: RouteShorthandOptions = {
 	schema: {
 		querystring: {
 			type: 'object',
+			required: ['id'],
 			properties: {
 				id: {type: 'string'},
 				includeFields: {type: 'boolean'}
