@@ -1,6 +1,6 @@
 <template>
     <div class="session-create" >
-        <button v-if="!session_created" @click="create">Create</button>
+        <button v-if="!session_created" @click="create" class="btn">Create</button>
         <SessionHandler v-else />
     </div>
 </template>
@@ -16,6 +16,9 @@ export default Vue.extend({
         create(){
             this.session_created = true
         }
+    },
+    created(){
+        console.log(this.$store.getters['users/token'])
     }
 })
 </script>

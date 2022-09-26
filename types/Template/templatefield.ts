@@ -30,6 +30,7 @@ export interface UpdateTemplateFieldRequestBody {
   required?: boolean,
   max?: number,
   min?: number,
+  templateId: string
 }
 
 export interface TemplateFieldResponse {
