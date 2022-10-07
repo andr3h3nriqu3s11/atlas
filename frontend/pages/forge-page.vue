@@ -4,8 +4,9 @@
             
         </div>
         <div class="apps">
-            <CharacterTemplate />
-            <CharacterCreator />
+            <!-- <CharacterTemplate />
+            <CharacterCreator /> -->
+            <CampaignViewNPC />
         </div>
     </div>    
 </template>

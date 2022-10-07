@@ -21,7 +21,8 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: "stylesheet", href:"http://fonts.cdnfonts.com/css/quicksand" },
-      { rel: "stylesheet", href:"http://fonts.cdnfonts.com/css/roboto" }
+      { rel: "stylesheet", href:"http://fonts.cdnfonts.com/css/roboto" },
+      { rel: "stylesheet", href:"http://fonts.cdnfonts.com/css/montserrat" }
     ],
   },
 

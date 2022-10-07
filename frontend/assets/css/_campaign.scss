@@ -1,0 +1,73 @@
+.container-NPC{
+    width: 100%;
+    height: $page-height;
+    .row{
+        margin: 0;
+    }
+    .vertical-menu{
+        padding: 0;
+        .vertical-menu-item{
+            width: 100%;
+            padding: 0%;
+            position: relative;
+            display: flex;
+            flex-direction: row-reverse;
+            @for $i from 1 through 6{
+                &:nth-child(#{$i}){
+                    animation: animation-vertical-up #{($i*0.1)+0.5}s;
+                }
+            }
+            &::after{
+                content: "";
+                display: block;
+                padding-bottom: 50%;
+            }
+            .btn_container{
+                @include center-element;
+                a{
+                    @include center-element;
+                    white-space: nowrap;
+                    transition: all 0.4s;
+                    opacity: 0;
+                }
+                span{
+                    @include center-element;
+                    font-size: 3em;
+                    transition: all 0.4s;
+                }
+            }
+            .btn{
+                position: absolute;
+                width: 50%;
+                height: 100%;
+                transition: all 0.4s;
+                &:hover{
+                    width: 100%;
+                    a{
+                        transform: translate(-15%, -50%);
+                        font-size: 1.2em;
+                        opacity: 1;
+                    }
+                    span{
+                        transform: translate(-160%, -50%);
+                    }
+                }
+            }
+        }
+    }
+    .content{
+        background-color: $colour-section;
+        border: 2px solid $colour-primary;
+    }
+}
+
+@keyframes animation-vertical-up {
+    0%{
+        top: 50px;
+        opacity: 0;
+    }
+    100%{
+        top: 0px;
+        opacity: 1;
+    }
+}

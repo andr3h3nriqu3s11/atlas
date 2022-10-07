@@ -1,11 +1,15 @@
 @import "./colours";
 @import "./mixins";
+@import "./variables";
 
 @import "./utils";
 @import "./auth";
 @import "./forms";
 
 @import "./styles";
+@import "./campaign";
+
+@import "./fifthedition";
 
 body{
     margin: 0;
@@ -42,6 +46,7 @@ section{
 .header{
     display: flex;
     justify-content: flex-end;
+    height: $header-height;
     .icon-btn{
         min-width: 60px;
     }
