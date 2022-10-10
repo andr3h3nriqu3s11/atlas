@@ -1,7 +1,7 @@
 <template>
     <div class="fifth-edition-info">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 info-stats-container">
                 <div class="row info-stats">
                     <div class="armor-class col-md-6 info-stat-wrapper">
                         <h5>Armor Class</h5>
@@ -12,6 +12,28 @@
                         <h5>Hitpoints</h5>
                         <span class="material-icons">favorite</span>
                         <p>48/48</p>
+                    </div>
+                </div>
+                <div class="row info-stats">
+                    <div class="armor-class col-md-6 info-stat-wrapper">
+                        <h5>Hit Dice</h5>
+                        <span class="material-icons">casino</span>
+                        <p>D8</p>
+                    </div>
+                    <div class="armor-class col-md-6 info-stat-wrapper death-saves">
+                        <h5>Death Saves</h5>
+                        <div> 
+                            <span class="death-save-text">Success :</span> 
+                            <div class="death-save-node success checked"></div>
+                            <div class="death-save-node success"></div>
+                            <div class="death-save-node success"></div>
+                        </div>
+                        <div> 
+                            <span class="death-save-text">Failures :</span> 
+                            <div class="death-save-node failure checked"></div>
+                            <div class="death-save-node failure"></div>
+                            <div class="death-save-node failure"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -26,7 +48,7 @@
                     <p>5</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 info-stats-container">
                 <div class="row info-stats">
                     <div class="proficiency col-md-6 info-stat-wrapper">
                         <h5>Proficiency</h5>
@@ -37,6 +59,18 @@
                         <h5>Speed</h5>
                         <span class="material-icons">directions_run</span>
                         <p>30 ft.</p>
+                    </div>
+                </div>
+                <div class="row info-stats">
+                    <div class="proficiency col-md-6 info-stat-wrapper">
+                        <h5>Inspiration</h5>
+                        <span class="material-icons">music_note</span>
+                        <p>2</p>
+                    </div>
+                    <div class="speed col-md-6 info-stat-wrapper">
+                        <h5>Initiative</h5>
+                        <span class="material-icons">sensor_occupied</span>
+                        <p>+5</p>
                     </div>
                 </div>
             </div>

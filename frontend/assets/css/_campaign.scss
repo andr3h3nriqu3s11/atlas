@@ -32,7 +32,7 @@
                 }
                 span{
                     @include center-element;
-                    font-size: 3em;
+                    font-size: 3vw;
                     transition: all 0.4s;
                 }
             }
@@ -41,11 +41,13 @@
                 width: 50%;
                 height: 100%;
                 transition: all 0.4s;
+                a{
+                    font-size: 1.2vw;
+                }
                 &:hover{
                     width: 100%;
                     a{
                         transform: translate(-15%, -50%);
-                        font-size: 1.2em;
                         opacity: 1;
                     }
                     span{

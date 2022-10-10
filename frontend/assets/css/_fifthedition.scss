@@ -38,22 +38,54 @@
         }
     }
     
-    .info-stats{
-        text-align: center;
+    .info-stats-container{
         display: flex;
-        align-content: space-around;
-        flex-direction: row;
-        height: 100%;
-        .info-stat-wrapper{
-            span{
-                font-size: 3em;
-                color: $colour-primary;
+        justify-content: space-evenly;
+        flex-direction: column;
+        .info-stats{
+            text-align: center;
+            display: flex;
+            align-content: stretch;
+            flex-direction: row;
+            align-items: center;
+            .info-stat-wrapper{
+                .material-icons{
+                    font-size: 3em;
+                    color: $colour-primary;
+                }
+                p{
+                    color: $colour-secondary;
+                    margin: 0;
+                }
             }
-            p{
-                color: $colour-secondary;
+            h5{
+                font-size: 1.25vw;
             }
         }
+        .death-saves{
+            .death-save-text{
+                color: $colour-secondary;
+            }
+            .death-save-node{
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                border: 1px solid $colour-secondary;
+                &.success{
+                    &.checked{
+                        background-color: $colour-secondary;
+                    }
+                }
+                &.failure{
+                    &.checked{
+                        background-color: $colour-secondary;
+                    }
+                }
+            }
+            
+        }
     }
+    
 }
 
 .fifth-edition-main-stats{
@@ -80,9 +112,11 @@
             background-color: $colour-section;
             border: 2px solid $colour-primary;
             padding: 3px 5px 0px;
+            font-size: 1.25vw;
         }
         h4{
             @include center-element;
+            font-size: 2vw;
         }
         h6{
             position: absolute;
@@ -93,6 +127,7 @@
             left: 50%;
             transform: translate(-50%, 0);
             background-color: $colour-section;
+            font-size: 1.25vw;
         }
         &.proficient{
             &::before{
@@ -113,26 +148,26 @@
             display: flex;
             justify-content: space-between;
             position: relative;
+            padding: 0 7px;
             .skill-name{
                 color: $colour-secondary;
                 text-transform: uppercase;
-                font-size: 0.75em;
+                font-size: 0.85vw;
+                line-height: 1.8;
             }
             .skill-value{
                 color: $colour-primary;
+                font-size: 1vw;
             }
             &.proficient{
-                &::after{
-                    content: "";
-                    display: block;
-                    width: 10px;
-                    height: 10px;
-                    background: $colour-secondary;
-                    position: absolute;
-                    top: 7px;
-                    right: -14px;
-                    border: 2px solid $colour-primary
+                .skill-name{
+                    color: $colour-secondary-highlight;
                 }
+                .skill-value{
+                    color: $colour-primary-highlight;
+                }
+                background: $colour-surface-variant;
+                border: 1px solid $colour-primary;
             }
         }
     }
