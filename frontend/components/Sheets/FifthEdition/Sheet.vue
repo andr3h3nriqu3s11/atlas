@@ -5,6 +5,7 @@
         </div>
         <div class="row">
             <SheetsFifthEditionMainStats />
+            <SheetsFifthEditionSpecialFeatures />
         </div>
     </div>
 </template>

@@ -6,6 +6,12 @@
                 <p>{{this.content}}</p>
             </NuxtLink>
         </div>
+        <div class="card" v-else-if="cardDesign == 'list'" :class="cardDesign">
+            <h4>{{this.heading}}</h4>
+            <div v-for="(listItem, index) in getCardList" :key="index">
+                {{listItem}}
+            </div>
+        </div>
         <div class="card" v-else>
             <h4>{{this.heading}}</h4>
             <p>{{this.content}}</p>
@@ -18,6 +24,11 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-    props:["heading", "content", "link_name", "link_url", "btn_design", "cardDesign"]
+    props:["heading", "content", "link_name", "link_url", "btn_design", "cardDesign"],
+    computed:{
+        getCardList(){
+            return this.$props.content.split(",")
+        }
+    }
 })
 </script>

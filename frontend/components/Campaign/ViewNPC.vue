@@ -2,15 +2,10 @@
     <div class="add-NPC-component">
         <div class="container-NPC">
             <div class="row">
-                <div class="vertical-menu col-md-2">
-                    <div class="vertical-menu-item" v-for="(item, index) in menuItems" :key="index">
-                        <div class="btn">
-                            <div class="btn_container">
-                                <span class="material-icons">{{item.icon}}</span>
-                                <a>{{ item.name }}</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-2 vertical-menu-wrapper">
+                    <UtilsVerticalMenu 
+                        :json="this.menuItems"
+                    />
                 </div>
                 <div class="content col-md-9">
                     <SheetsFifthEditionSheet />
@@ -29,32 +24,37 @@ export default Vue.extend({
         return {
             menuItems: [
                 {
-                    name: "menu 1",
+                    name: "Main Stats",
                     icon: "settings",
                     action: ""
                 },
                 {
-                    name: "menu 2",
+                    name: "Special Features",
                     icon: "person",
                     action: ""
                 },
                 {
-                    name: "menu 3",
+                    name: "Actions",
                     icon: "settings_accessibility",
                     action: ""
                 },
                 {
-                    name: "menu 4",
+                    name: "Features & Feats",
                     icon: "diversity_2",
                     action: ""
                 },
                 {
-                    name: "menu 5",
+                    name: "Magic",
                     icon: "sensor_occupied",
                     action: ""
                 },
                 {
-                    name: "menu 6",
+                    name: "Items",
+                    icon: "filter_1",
+                    action: ""
+                },
+                {
+                    name: "Description & Notes",
                     icon: "filter_1",
                     action: ""
                 }

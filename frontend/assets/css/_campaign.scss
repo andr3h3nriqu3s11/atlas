@@ -4,8 +4,10 @@
     .row{
         margin: 0;
     }
-    .vertical-menu{
+    .vertical-menu-wrapper{
         padding: 0;
+    }
+    .vertical-menu{
         .vertical-menu-item{
             width: 100%;
             padding: 0%;
@@ -41,8 +43,10 @@
                 width: 50%;
                 height: 100%;
                 transition: all 0.4s;
+                border-radius: 0.25rem 0 0 0.25rem;
                 a{
                     font-size: 1.2vw;
+                    white-space: pre-wrap;
                 }
                 &:hover{
                     width: 100%;
