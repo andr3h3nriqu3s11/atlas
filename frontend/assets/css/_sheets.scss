@@ -1,0 +1,21 @@
+.value-input-field-component{
+    position: relative;
+    input{
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: center;
+        color: inherit;
+        text-transform: unset;
+        font-weight: unset;
+        cursor: pointer;
+        transition: all 0.4s;
+        position: relative;
+        &:focus-visible{
+            outline: none;
+        }
+        &:hover{
+            filter: brightness(120%);
+        }
+    }
+}

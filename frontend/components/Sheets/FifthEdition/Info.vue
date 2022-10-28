@@ -41,11 +41,11 @@
                 <div class="character-image">
                     <img src="https://i.pinimg.com/564x/e4/75/95/e4759550ea779d844975731f8c2bbcde.jpg" />
                 </div>
-                <h2>Character Name</h2>
-                <h3>Character Title</h3>
+                <h2><SheetsValueInput tag="input" value="Character Name" /></h2>
+                <h3><SheetsValueInput tag="input" value="Character Title" /></h3>
                 <hr>
                 <div class="character-level">
-                    <p>5</p>
+                    <p><SheetsValueInput tag="input" value="5" /></p>
                 </div>
             </div>
             <div class="col-md-4 info-stats-container">
