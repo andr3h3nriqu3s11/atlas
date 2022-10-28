@@ -26,37 +26,37 @@ export default Vue.extend({
                 {
                     name: "Main Stats",
                     icon: "settings",
-                    action: ""
+                    action: "v_show_5e_main_stats"
                 },
                 {
                     name: "Special Features",
                     icon: "person",
-                    action: ""
+                    action: "v_show_5e_special_features"
                 },
                 {
                     name: "Actions",
                     icon: "settings_accessibility",
-                    action: ""
+                    action: "v_show_5e_actions"
                 },
                 {
                     name: "Features & Feats",
                     icon: "diversity_2",
-                    action: ""
+                    action: "v_show_5e_features"
                 },
                 {
                     name: "Magic",
                     icon: "sensor_occupied",
-                    action: ""
+                    action: "v_show_5e_magic"
                 },
                 {
                     name: "Items",
                     icon: "filter_1",
-                    action: ""
+                    action: "v_show_5e_items"
                 },
                 {
                     name: "Description & Notes",
                     icon: "filter_1",
-                    action: ""
+                    action: "v_show_5e_desc"
                 }
             ]
         };

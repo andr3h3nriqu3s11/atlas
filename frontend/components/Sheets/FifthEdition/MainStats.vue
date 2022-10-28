@@ -1,5 +1,5 @@
 <template>
-    <div class="fifth-edition-main-stats">
+    <div class="fifth-edition-main-stats" v-if="active">
         <div class="attributes-with-skills">
             <div class="row">
                 <div class="attribute col-md-2" v-for="(attr, index) in attributes" :key="index">
@@ -27,6 +27,7 @@ import {attribute} from "../../../types/Sheets/fifthedition"
 export default Vue.extend({
     data() {
         return {
+            active:false,
             attributes: [
                 {
                     name: "str",
@@ -162,5 +163,10 @@ export default Vue.extend({
             ]
         };
     },
+    created(){
+        this.$nuxt.$on('v_show_5e_main_stats', (state:boolean) => {
+            this.active = state
+        })
+    }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="fifth-edition-special-features">
+    <div class="fifth-edition-special-features" v-if="active">
         <div class="Immunities and Resistances">
             <section class="border-separator">
                 <h2>Immunities and Resistances</h2>
@@ -30,3 +30,19 @@
         Background
     </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
+    data() {
+        return {
+            active:false
+        }
+    },
+    created(){
+        this.$nuxt.$on('v_show_5e_special_features', (state:boolean) => {
+            this.active = state
+        })
+    }
+})
+</script>
