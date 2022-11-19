@@ -1,5 +1,20 @@
 .value-input-field-component{
     position: relative;
+    &::before{
+        content: '';
+        width: 0;
+        height: 100%;
+        position: absolute;
+        transition:all 0.4s;
+        background-color: $colour-secondary;
+        opacity: 0.2;
+    }
+    &:hover{
+        &::before{
+            width: 100%;
+            
+        }
+    }
     input{
         width: 100%;
         background: none;

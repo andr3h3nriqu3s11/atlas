@@ -20,3 +20,33 @@ $colour-on-background: #ffffff;
 $colour-on-surface: #ffffff;
 $colour-on-surface-variant:#8E8E8E;
 $colour-on-error: #000000;
+
+
+$colour-scheme: fantasy;
+
+@if ($colour-scheme == 'red_override') {
+    $colour-primary:#E8985E;
+    $colour-primary-variant: #5A2328;
+    $colour-secondary: #F1F0CC;
+
+    $colour-primary-highlight: #e6bfa3;
+    $colour-secondary-highlight: rgb(214, 197, 185);
+
+    $colour-section:#121212;
+
+    $colour-background: #121212;
+    $colour-surface: #262A10;
+    $colour-surface-variant: #141204;
+} @else if ($colour-scheme == 'fantasy'){
+    $colour-primary:rgb(200,170,110);
+    $colour-secondary: rgb(240,230,210);
+
+    $colour-on-primary: #000000;
+    $colour-on-variant: rgb(240,238,210);
+    $colour-on-secondary: #000000;
+    $colour-on-background: rgb(240,238,210);
+    $colour-on-surface: rgb(240,238,210);
+    $colour-on-surface-variant:#8E8E8E;
+    $colour-on-error: #000000;
+
+}

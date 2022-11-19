@@ -30,6 +30,32 @@
         }
         &.list{
             display:block;
+            padding: 0;
+            h4{
+                padding: 5%;
+                background-color: $colour-secondary;
+                color: $colour-on-secondary;
+                font-weight: bold;
+            }
+            .list-container{
+                padding:5% 10%;
+                text-align: left;
+                letter-spacing: 2px;
+                font-family: "Quicksand Book", sans-serif;
+                .list-item-value-container{
+                    position: relative;
+                    &::before{
+                        content: '';
+                        width: 5px;
+                        height: 5px;
+                        background: $colour-primary;
+                        position: absolute;
+                        @include center-element;
+                        left: -7.5px;
+                        top:45%;
+                    }
+                }
+            }
         }
     }
 }

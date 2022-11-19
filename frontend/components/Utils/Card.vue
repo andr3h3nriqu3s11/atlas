@@ -8,8 +8,10 @@
         </div>
         <div class="card" v-else-if="cardDesign == 'list'" :class="cardDesign">
             <h4>{{this.heading}}</h4>
-            <div v-for="(listItem, index) in getCardList" :key="index">
-                {{listItem}}
+            <div class="list-container">
+                <div class="list-item-value-container" v-for="(listItem, index) in getCardList" :key="index">
+                    {{listItem}}
+                </div>
             </div>
         </div>
         <div class="card" v-else>
