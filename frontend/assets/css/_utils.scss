@@ -72,3 +72,21 @@
         padding: 5%;
     }
 }
+
+.two-col-container-component{
+    column-count: 2;
+    width: 80%;
+    margin: 2% auto;
+    text-align: left;
+    b{
+        color: $colour-primary;
+    }
+    ul{
+        margin: 0;
+        li{
+            b{
+                color: $colour-primary-variant;
+            }
+        }
+    }
+}
