@@ -85,8 +85,11 @@
         margin: 0;
         li{
             b{
-                color: $colour-primary-variant;
+                color: $colour-secondary;
             }
         }
+    }
+    p{
+        margin:0;
     }
 }

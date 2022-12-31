@@ -91,9 +91,6 @@
                 </form>
             </div>
         </section>
-        <section>
-            <BannersTwoColContainer />
-        </section>
     </div>
 </template>
 
