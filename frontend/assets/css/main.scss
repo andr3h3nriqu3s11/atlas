@@ -8,8 +8,10 @@
 
 @import "./styles";
 @import "./sheets";
-@import "./campaign";
+@import "./campaigns";
+@import "./characters";
 
+@import "./forge";
 @import "./fifthedition";
 
 body{
@@ -46,7 +48,7 @@ section{
 
 .header{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     height: $header-height;
     .icon-btn{
         min-width: 60px;
@@ -65,6 +67,9 @@ section{
     }
     span{
         font-size: 3em;
+    }
+    &.nav-btn{
+        border: none;
     }
 }
 
