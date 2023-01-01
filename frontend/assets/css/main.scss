@@ -50,6 +50,7 @@ section{
     display: flex;
     justify-content: space-between;
     height: $header-height;
+    align-items: center;
     .icon-btn{
         min-width: 60px;
     }

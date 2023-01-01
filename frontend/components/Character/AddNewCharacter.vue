@@ -1,11 +1,20 @@
 <template>
     <div class="add-new-character-component">
-        <div v-for="(sheet, index) in sheets" :key="index">
-            <SheetsNewSheet 
-                :sheet_name="sheet.name"
-                :sheet_page="sheet.link" 
-            />
+        <div class="add-new-character-btn btn" @click="switchActive">
+            <span class="material-icons">note_add</span>
+            <span class="text">Add New</span>
         </div>
+        <UtilsOverlayDialog v-if="this.active">
+            <div class="tools-wrapper">
+                <div class="tool" v-for="(sheet, index) in sheets" :key="index">
+                    <span class="material-icons">note_add</span>
+                    <h3>{{sheet.name}}</h3>
+                </div>
+            </div>
+            <div class="btn" @click="switchActive">
+                <span>Close</span>
+            </div>
+        </UtilsOverlayDialog>
     </div>
 </template>
 
@@ -14,6 +23,7 @@ import Vue from 'vue'
 export default Vue.extend({
     data() {
         return {
+            active:false,
             sheets:[
                 {
                     "name":"5th Edition",
@@ -24,6 +34,11 @@ export default Vue.extend({
                     "link":""
                 }
             ]
+        }
+    },
+    methods:{
+        switchActive(){
+            this.active = !this.active
         }
     }
 })

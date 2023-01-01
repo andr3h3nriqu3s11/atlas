@@ -4,3 +4,11 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+@mixin square-element{
+    &::after{
+        content: "";
+        display: block;
+        padding-bottom: 100%;
+    }
+}

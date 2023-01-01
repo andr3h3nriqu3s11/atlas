@@ -1,40 +1,41 @@
 .forge-page{
-    text-align: center;
-    .tools-wrapper{
-        display: flex;
-        .tool{
-            width: 20%;
-            padding: 2%;
-            text-align: center;
-            position: relative;
+    text-align: center;    
+}
+
+.tools-wrapper{
+    display: flex;
+    .tool{
+        width: 20%;
+        padding: 2%;
+        text-align: center;
+        position: relative;
+        transition: all 0.4s;
+        a{
+            text-decoration: none;
+            text-transform: none;
+            color: $colour-primary;
+            @include center-element;
             transition: all 0.4s;
+
+        }
+        .material-icons{
+            font-size: 10vh;
+        }
+        p{
+            text-transform: uppercase;
+            font-size: 2vh;
+        }
+        &::after{
+            content: "";
+            display: block;
+            padding-bottom: 100%;
+        }
+        &:hover{
+            background: $colour-primary;
+            cursor: pointer;
             a{
-                text-decoration: none;
-                text-transform: none;
-                color: $colour-primary;
-                @include center-element;
-                transition: all 0.4s;
-    
-            }
-            .material-icons{
-                font-size: 10vh;
-            }
-            p{
-                text-transform: uppercase;
-                font-size: 2vh;
-            }
-            &::after{
-                content: "";
-                display: block;
-                padding-bottom: 100%;
-            }
-            &:hover{
-                background: $colour-primary;
-                cursor: pointer;
-                a{
-                    color: $colour-secondary;
-                }
+                color: $colour-secondary;
             }
         }
-    }    
-}
+    }
+}    
