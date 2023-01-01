@@ -99,4 +99,14 @@ section{
             border-color:$colour-secondary;
         }
     }
+    &.square-btn{
+        @include square-element;
+        padding: 0;
+        position: relative;
+        min-width: 55px;
+        span{
+            @include center-element;
+            font-size: 3vh;
+        }
+    }
 }

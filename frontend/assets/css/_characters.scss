@@ -1,3 +1,17 @@
+.character-tabs{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: scroll;
+    .btn{
+        min-width: 250px;
+    }
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
+}
+
 .add-new-character-component{
     .add-new-character-btn{
         width: 100%;
