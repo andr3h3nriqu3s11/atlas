@@ -1,8 +1,15 @@
 <template>
     <div class="list-characters-component">
+        <div class="generic-form">
+            <select v-model="selectedCharacterType" name="settings" id="settings">
+                <option value="all">All</option>
+                <option value="FE">5th Edition</option>
+                <option value="SW">Savage Worlds</option>
+            </select>
+        </div>
         <div class="characters-container">
-            <div class="character-wrapper" v-for="(character, index) in characters" :key="index">
-                <div class="charcter-content-wrapper">
+            <div class="character-wrapper" v-for="(character, index) in getCharacterList" :key="index">
+                <div class="charcter-content-wrapper" @click="AddCharacterToTabs(character.name, character.id)">
                     <div class="character-img-wrapper">
                         <img :src="character.img" />
                     </div>
@@ -22,24 +29,51 @@ export default Vue.extend({
                 {
                     "img":"https://i.pinimg.com/564x/03/f6/13/03f6135e91b48fef0e1b12f09b224da9.jpg",
                     "name":"Veraxhadon",
-                    "id":"1"
+                    "id":"1",
+                    "type":"FE"
                 },
                 {
                     "img":"https://i.pinimg.com/564x/06/53/98/065398232e9d666800583d9f6d13f14b.jpg",
                     "name":"The Rogue",
-                    "id":"2"
+                    "id":"2",
+                    "type":"SW"
                 },
                 {
                     "img":"https://cdnb.artstation.com/p/assets/images/images/003/734/319/large/atec-min-gyu-lee-1018.jpg?1476925161",
                     "name":"The Red One",
-                    "id":"3"
+                    "id":"3",
+                    "type":"FE"
                 },
                 {
                     "img":"https://i.pinimg.com/564x/7e/eb/50/7eeb50ccfacc650ce91cc0d3f97d4d41.jpg",
                     "name":"The Eternal Emperor",
-                    "id":"4"
+                    "id":"4",
+                    "type":"FE"
                 }
-            ]
+            ],
+            selectedCharacterType:"all"
+        }
+    },
+    methods:{
+        AddCharacterToTabs(char_name:string, char_id:number){
+            this.$nuxt.$emit("AddCharacterView", {name:char_name,id:char_id})
+            this.$nuxt.$emit("SwitchCharacterListVisibility")
+        }
+    },
+    computed:{
+        getCharacterList(){
+            if(this.selectedCharacterType === "all"){
+                return this.characters
+            }
+            else{
+                let characterList:any = []
+                this.characters.forEach((char:any) => {
+                    if(char.type == this.selectedCharacterType){
+                        characterList.push(char)
+                    }
+                });
+                return characterList
+            } 
         }
     }
 })
