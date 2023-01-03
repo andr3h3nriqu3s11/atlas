@@ -62,11 +62,12 @@ export default Vue.extend({
     },
     computed:{
         getCharacterList(){
+            let characterList:any = []
             if(this.selectedCharacterType === "all"){
-                return this.characters
+                characterList = this.characters
+                return characterList
             }
             else{
-                let characterList:any = []
                 this.characters.forEach((char:any) => {
                     if(char.type == this.selectedCharacterType){
                         characterList.push(char)
