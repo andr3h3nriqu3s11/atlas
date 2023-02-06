@@ -14,6 +14,11 @@ export default Vue.extend({
     },
     methods:{
     },
-    props:["character_ids"]
+    props:["character_ids"],
+    computed:{
+        getCharacters(){
+            
+        }
+    }
 })
 </script>
