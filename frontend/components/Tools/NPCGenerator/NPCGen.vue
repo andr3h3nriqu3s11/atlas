@@ -1,12 +1,13 @@
 <template>
     <div class="npc-gen-component">
         <form class="generic-form">
-            <input type="text" :value="npc_to_gen_num" />
+            <input type="number" v-model="npc_to_gen_num" />
         </form>
         <div class="btn" @click="generateNPC">Generate NPC</div>
-        <div class="generated-npc-wrapper" v-for="(npc, index) in npcs" :key="index">
-            <!-- {{npc}} -->
-            <ToolsNPCGeneratorNPCGenCard :NPCInfo="npc" />
+        <div class="npc-generated-cards">
+            <div class="generated-npc-wrapper" v-for="(npc, index) in getNPCs" :key="index">
+                <ToolsNPCGeneratorNPCGenCard :NPCInfo="npc" />
+            </div>
         </div>
     </div>
 </template>
@@ -29,6 +30,12 @@ export default Vue.extend({
             return values[Math.floor(Math.random() * keys.length)]
         },
         generateNPC(){
+            this.npcs = []
+            for (let i = 0; i < this.npc_to_gen_num; i++) {
+                this.npcs.push(this.makeNPCData())
+            }
+        },
+        makeNPCData() : JSON {
             let npc_data:any = {}
 
             let OccupationKeys = Object.keys(NPCData.Occupations)
@@ -48,8 +55,7 @@ export default Vue.extend({
             npc_data.ideal = this.getRandomAttribute(NPCData.Ideal)
             npc_data.bond = this.getRandomAttribute(NPCData.Bond)
             npc_data.flaw = this.getRandomAttribute(NPCData.Flaw)
-
-            this.npcs.push(npc_data)
+            return npc_data
         }
     },
     computed:{

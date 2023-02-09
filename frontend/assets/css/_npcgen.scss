@@ -1,0 +1,22 @@
+.npc-generated-cards{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .generated-npc-wrapper{
+        padding:10px;
+        width: 33%;
+        .npc-gen-card-component{
+            background-color: $colour-section;
+            height: 100%;
+            .npc-gen-card-wrapper{
+                padding: 2%;
+                b{
+                    text-transform: uppercase;
+                }
+                span{
+                    display: block;
+                }
+            }
+        }
+    }
+}

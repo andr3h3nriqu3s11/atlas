@@ -1,16 +1,18 @@
 <template>
     <div class="npc-gen-card-component">
-        <p>Name: {{NPCInfo.name}}</p>
-        <p>Age: {{NPCInfo.age}}</p>
-        <p>Occupation: {{NPCInfo.occupation}}</p>
-        <p>Appearance: {{NPCInfo.appearance}}</p>
-        <p>Abilities: {{NPCInfo.abilities}}</p>
-        <p>Talent: {{NPCInfo.talent}}</p>
-        <p>Mannerism: {{NPCInfo.mannerism}}</p>
-        <p>Interactions: {{NPCInfo.interactions}}</p>
-        <p>Ideal: {{NPCInfo.ideal}}</p>
-        <p>Bond: {{NPCInfo.bond}}</p>
-        <p>Flaw: {{NPCInfo.flaw}}</p>
+        <div class="npc-gen-card-wrapper">
+            <h3>Name: {{NPCInfo.name}}</h3>
+            <h2>Age: {{NPCInfo.age}}</h2>
+            <span><b>Occupation:</b> {{NPCInfo.occupation}}</span>
+            <span><b>Appearance:</b> {{NPCInfo.appearance}}</span>
+            <span><b>Abilities:</b> {{NPCInfo.abilities}}</span>
+            <span><b>Talent:</b> {{NPCInfo.talent}}</span>
+            <span><b>Mannerism:</b> {{NPCInfo.mannerism}}</span>
+            <span><b>Interactions:</b> {{NPCInfo.interactions}}</span>
+            <span><b>Ideal:</b> {{NPCInfo.ideal}}</span>
+            <span><b>Bond:</b> {{NPCInfo.bond}}</span>
+            <span><b>Flaw:</b> {{NPCInfo.flaw}}</span>
+        </div>
     </div>
 </template>
 
