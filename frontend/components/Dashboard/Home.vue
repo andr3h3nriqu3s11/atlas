@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard-home">
-        <BannersMultiCard design="two">
+        <BannersMultiCard design="three">
             <UtilsCard 
                 heading="Sessions"
                 content="Create or Join a session!"
@@ -12,6 +12,12 @@
                 content="Create your own templates and characters!"
                 link_url="/forge-page"
                 link_name="Forge"
+            />
+            <UtilsCard 
+                heading="Tools"
+                content="Variety of tools to choose from!"
+                link_url="/tools-page"
+                link_name="Tools"
             />
         </BannersMultiCard>
     </div>
