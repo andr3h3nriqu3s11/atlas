@@ -5,11 +5,12 @@
             "Commoner",
             "Bureaucrat",
             "Politician",
+            "Counsellor",
             "Noble",
             "Military"
         ],
         "Trade":[
-            "Merchant",
+            "General Goods Merchant",
             "Potter",
             "Blacksmith",
             "Glassblower",
@@ -20,11 +21,11 @@
             "Alchemist",
             "Healer",
             "Stable worker",
-            "Mageware",
-            "Spices",
-            "Cloth",
-            "Rare materials",
-            "Exotic Materials / Creatures",
+            "Mageware Seller",
+            "Spices Merchant",
+            "Cloth Merchant",
+            "Rare Materials Merchant",
+            "Exotic Materials / Creatures Merchant",
             "Map Vendor",
             "Book Seller",
             "Hunter",
@@ -32,6 +33,8 @@
         ],
         "Religious":[
             "Worshipper",
+            "Follower",
+            "Militant",
             "Monk",
             "Priest",
             "Bishop"
@@ -41,7 +44,9 @@
             "Fisherman",
             "Farmer",
             "Miner",
-            "Dock worker"
+            "Dock worker",
+            "Assistant",
+            "Administrator"
         ],
         "Recreation":[
             "Town Crier",
@@ -49,12 +54,20 @@
             "Brothel worker",
             "Bard",
             "Rider",
-            "Gladiator/Brawler"
+            "Gladiator/Brawler",
+            "Party planner"
         ],
         "Education":[
             "Librarian",
             "Teacher",
-            "Student"
+            "Lecturer",
+            "Student",
+            "Novice",
+            "Apprentice",
+            "Engineer",
+            "Scientist",
+            "Tutor",
+            "Language Specialist"
         ]
     },
     "Appearance":[

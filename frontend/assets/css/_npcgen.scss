@@ -19,4 +19,32 @@
             }
         }
     }
+    .npc-name{
+        padding: 10px 10px 5px 10px;
+        text-align: center;
+        border-radius: 25px;
+        color: #fff;
+        font-weight: bold;
+        &.Housing{
+            background-color: #DF928E;
+        }
+        &.Trade{
+            background-color: #E8C547;
+            color: $colour-section;
+        }
+        &.Religious{
+            background-color: #E9D2C0;
+            color: $colour-section;
+        }
+        &.Worker{
+            background-color: #1F2041;
+        }
+        &.Recreation{
+            background-color: #5C80BC;
+        }
+        &.Education{
+            background-color: #417B5A;
+        }
+    }
+    
 }

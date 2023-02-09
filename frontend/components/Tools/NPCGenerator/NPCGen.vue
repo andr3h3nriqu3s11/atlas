@@ -47,6 +47,7 @@ export default Vue.extend({
             npc_data.name = this.getRandomAttribute(NPCNames.HumanMaleFirst) + " " + this.getRandomAttribute(NPCNames.HumanLast)
             npc_data.age = Math.floor(Math.random() * 110)
             npc_data.occupation = occupation
+            npc_data.occupationCategory = occupationCategory
             npc_data.appearance = this.getRandomAttribute(NPCData.Appearance)
             npc_data.abilities = this.getRandomAttribute(NPCData.Abilities)
             npc_data.talent = this.getRandomAttribute(NPCData.Talent)
