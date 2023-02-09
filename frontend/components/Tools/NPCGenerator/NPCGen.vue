@@ -19,7 +19,7 @@ export default Vue.extend({
     data() {
         return {
             npc_to_gen_num:1,
-            npcs:[]
+            npcs: [] as any
         }
     },
     methods:{
@@ -53,7 +53,7 @@ export default Vue.extend({
         }
     },
     computed:{
-        getNPCs(){
+        getNPCs() : any{
             return this.npcs
         }
     }
