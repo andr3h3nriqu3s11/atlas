@@ -2,7 +2,9 @@
     <div class="characters-page">
         <div class="character-tabs">
             <div class="btn" v-for="(tab, index) in getTabs" :key="index">
-                {{tab.name}}
+                <div @click="tabSelected(tab.id)">
+                    {{tab.name}}
+                </div>
             </div>
             <div class="square-btn btn" @click="switchActive">
                 <span>+</span>
@@ -37,6 +39,9 @@ export default Vue.extend({
     methods:{
         switchActive(){
             this.active = !this.active
+        },
+        tabSelected(id:number){
+            this.$nuxt.$emit("on_character_tab_change", id)
         }
     },
     created () {
