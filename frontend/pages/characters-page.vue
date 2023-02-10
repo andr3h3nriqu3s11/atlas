@@ -21,7 +21,7 @@
                 </div>
             </div>
         </UtilsOverlayDialog>
-
+        <CharacterListSheets :charactersData="getTabs"/>
     </div>
 </template>
 

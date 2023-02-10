@@ -1,6 +1,6 @@
 <template>
-    <div class="add-NPC-component">
-        <div class="container-NPC">
+    <div class="view-character-component">
+        <div class="container-char">
             <div class="row">
                 <div class="col-md-2 vertical-menu-wrapper">
                     <UtilsVerticalMenu 

@@ -9,7 +9,7 @@
         </div>
         <div class="characters-container">
             <div class="character-wrapper" v-for="(character, index) in getCharacterList" :key="index">
-                <div class="charcter-content-wrapper" @click="AddCharacterToTabs(character.name, character.id)">
+                <div class="charcter-content-wrapper" @click="AddCharacterToTabs(character.name, character.id, character.type)">
                     <div class="character-img-wrapper">
                         <img :src="character.img" />
                     </div>
@@ -55,8 +55,8 @@ export default Vue.extend({
         }
     },
     methods:{
-        AddCharacterToTabs(char_name:string, char_id:number){
-            this.$nuxt.$emit("AddCharacterView", {name:char_name,id:char_id})
+        AddCharacterToTabs(char_name:string, char_id:number, char_type:string){
+            this.$nuxt.$emit("AddCharacterView", {name:char_name,id:char_id,type:char_type})
             this.$nuxt.$emit("SwitchCharacterListVisibility")
         }
     },
