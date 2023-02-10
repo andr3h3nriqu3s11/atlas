@@ -24,7 +24,7 @@ export default Vue.extend({
     },
     props:["charactersData"],
     computed:{
-        getCharacters(){
+        getCharacters():any{
             return this.charactersData
         }
     }
