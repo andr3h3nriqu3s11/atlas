@@ -1,13 +1,21 @@
 {
     "Occupations":{
+        "Military":[
+            "Soldier",
+            "Guard",
+            "Bounty Hunter",
+            "Knight",
+            "Militia",
+            "Bandit",
+            "Marksman"
+        ],
         "Housing":[
             "Peasant",
             "Commoner",
             "Bureaucrat",
             "Politician",
             "Counsellor",
-            "Noble",
-            "Military"
+            "Noble"
         ],
         "Trade":[
             "General Goods Merchant",
@@ -37,7 +45,10 @@
             "Militant",
             "Monk",
             "Priest",
-            "Bishop"
+            "Bishop",
+            "Inquisitor",
+            "Fanatic",
+            "Cultist"
         ],
         "Worker":[
             "Lumberjack",

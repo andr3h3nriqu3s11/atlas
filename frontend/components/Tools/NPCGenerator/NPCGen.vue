@@ -6,6 +6,7 @@
         <div class="btn" @click="generateNPC">Generate NPC</div>
         <div class="npc-generated-cards">
             <div class="generated-npc-wrapper" v-for="(npc, index) in getNPCs" :key="index">
+                <div class="npc-index">{{index+1}}</div>
                 <ToolsNPCGeneratorNPCGenCard :NPCInfo="npc" />
             </div>
         </div>
@@ -44,8 +45,14 @@ export default Vue.extend({
             let occupations = OccupationValues[occupationCategory]
             let occupation = occupations[Math.floor(Math.random() * occupations.length)]
             
-            npc_data.name = this.getRandomAttribute(NPCNames.HumanMaleFirst) + " " + this.getRandomAttribute(NPCNames.HumanLast)
-            npc_data.age = Math.floor(Math.random() * 110)
+            npc_data.gender = Math.random() < 0.5 ? "M" : "F";
+            if(npc_data.gender == "M"){
+                npc_data.name = this.getRandomAttribute(NPCNames.HumanMaleFirst) + " " + this.getRandomAttribute(NPCNames.HumanLast)
+            }
+            else{
+                npc_data.name = this.getRandomAttribute(NPCNames.HumanFemaleFirst) + " " + this.getRandomAttribute(NPCNames.HumanLast)
+            }
+            npc_data.age = Math.floor(Math.random() * 80)
             npc_data.occupation = occupation
             npc_data.occupationCategory = occupationCategory
             npc_data.appearance = this.getRandomAttribute(NPCData.Appearance)

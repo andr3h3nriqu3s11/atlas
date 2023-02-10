@@ -1,6 +1,7 @@
 <template>
     <div class="npc-gen-card-component">
         <div class="npc-gen-card-wrapper">
+            <div class="npc-gender">{{NPCInfo.gender}}</div>
             <h3 :class="NPCInfo.occupationCategory" class="npc-name">Name: {{NPCInfo.name}}</h3>
             <h2>Age: {{NPCInfo.age}}</h2>
             <span><b>Occupation:</b> {{NPCInfo.occupation}}</span>
