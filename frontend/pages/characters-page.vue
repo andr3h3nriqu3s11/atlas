@@ -55,6 +55,7 @@ export default Vue.extend({
             });
             if(!tabOpen){
                 this.tabs.push(data)
+                this.$nuxt.$emit("on_character_tab_change", data.id)
             }
         }),
         this.$nuxt.$on('SwitchCharacterListVisibility', () => {
