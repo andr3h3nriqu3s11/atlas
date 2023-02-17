@@ -7,6 +7,8 @@ import { UserType } from "@ref/types/user";
 
 export const AuthorizeUserSchema: RouteShorthandOptions = {
     schema: {
+        description: 'End point used to authorize a user',
+        tags: ['User'],
         headers: AuthenticationHeaders,
         params: {
             type: 'object',

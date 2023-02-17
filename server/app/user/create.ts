@@ -7,6 +7,8 @@ import { error } from 'app/utils';
 
 export const CreateUserSchema: RouteShorthandOptions = {
     schema: {
+        description: 'End point used to create user',
+        tags: ['User'],
         body: {
             type: 'object',
             properties: {
@@ -31,10 +33,10 @@ export const CreateUserHandler = async (req: CreateUserRequest, reply: FastifyRe
         userType = UserType.DM;
     }
 
-    let pass = await argon2.hash(req.body.password)
+    const pass = await argon2.hash(req.body.password)
 
     try {
-        let new_user = await prisma.user.create({
+        const new_user = await prisma.user.create({
             data: {
                 ...req.body,
                 password: pass,

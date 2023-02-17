@@ -7,6 +7,8 @@ import { SELECT_USER } from '.';
 
 export const UpdateUserSchema: RouteShorthandOptions = {
     schema: {
+        description: 'End point used to update a user',
+        tags: ['User'],
         body: {
             type: 'object',
             required: ['name', 'password'],
@@ -35,7 +37,7 @@ export const UpdateUserHandler = async (req: UpdateUserRequest, reply: FastifyRe
     if (token.userId != id) {
         if (token.user.userType != UserType.DM) error(reply, 403, 'You are a pleb');
 
-        let s_user = await prisma.user.findUnique({where: {id}});
+        const s_user = await prisma.user.findUnique({where: {id}});
 
         if (!s_user) error(reply, 404, 'User not found')
     }

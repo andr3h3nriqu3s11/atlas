@@ -12,6 +12,8 @@ interface UserLoginRequest extends FastifyRequest {
 
 export const UserLoginSchema: RouteShorthandOptions = {
 	schema: {
+        description: 'End point used to login user',
+        tags: ['User'],
 		body: {
 			type: 'object',
 			required: ['name', 'password'],

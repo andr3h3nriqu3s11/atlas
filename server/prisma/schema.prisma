@@ -65,6 +65,10 @@ model Campaign {
     type String
     // SWADE - Svage worlds
 
+    status String
+    // character_editing_mode
+    // playing_mode
+
     creator_id String
 
     dateCreated DateTime @default(now())
@@ -85,7 +89,7 @@ model Campaign {
 model SWADE_Campaign {
     id String @id @default(uuid())
 
-    campaign_id String
+    campaign_id String @unique
 
     dateCreated DateTime @default(now())
 
@@ -98,26 +102,46 @@ model SWADE_Campaign {
 model SWADE_CharacterSheet {
     
     id String @id @default(uuid())
+
+    name String
     
     campaign_id String
+
+    attributePoints Int @default(5)
     
     // Atributes
-    agility Int 
-    smarts Int
-    spirit Int
-    strength Int
-    vigor Int
+    agility Int         @default(0)
+    smarts Int          @default(0)
+    spirit Int          @default(0)
+    strength Int        @default(0)
+    vigor Int           @default(0)
 
     // Other
     
-    rank String
+    rank String         @default("novice")
 
     campaign SWADE_Campaign @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+
+    skillPoints Int @default(15)
 
     skills SWADE_CharacterSheet_Skill[]
     edges SWADE_CharacterSheet_edge[]
     hidrances SWADE_CharacterSheet_hidrances[]
     items SWADE_CharacterSheet_item[]
+
+    logs SWADE_CharacterSheet_Logs[]
+}
+
+model SWADE_CharacterSheet_Logs {
+    id String @id @default(uuid())
+
+    character_id String
+
+    message String
+
+    dateCreated DateTime @default(now())
+
+    character SWADE_CharacterSheet @relation(references: [id], fields: [character_id])
 }
 
 model SWADE_CharacterSheet_Skill {
@@ -298,7 +322,7 @@ model SWADE_Item_armor {
 
     armor Int
 
-    item_id String
+    item_id String @unique
     item SWADE_Item @relation(fields: [item_id], references: [id])
 }
 
@@ -315,7 +339,7 @@ model SWADE_Item_Range {
 
     min_str Int?
 
-    item_id String
+    item_id String @unique
     item SWADE_Item @relation(fields: [item_id], references: [id])
 
 }
@@ -325,7 +349,7 @@ model SWADE_Item_Weapon {
 
     damage String
 
-    item_id String
+    item_id String @unique
     item SWADE_Item @relation(fields: [item_id], references: [id])
 }
 

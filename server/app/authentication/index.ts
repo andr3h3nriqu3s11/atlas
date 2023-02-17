@@ -9,6 +9,7 @@ export const AuthenticationHeaders = {
 	},
 	required: ['token']
 };
+
 export const authenticate = async (
 	req: FastifyRequest,
 	rep: FastifyReply,
@@ -41,10 +42,12 @@ export const authenticate = async (
 		rep.code(401);
 		throw new Error('invalid token');
 	}
-	if (new Date().getTime() > new Date(tokenDB.expireDate).getTime()) {
+
+	if (new Date().getTime() > tokenDB.expireDate.getTime()) {
 		prisma.token.delete({ where: { token } });
 		rep.code(401);
 		throw new Error('invalid token');
 	}
+
 	return tokenDB;
 };
