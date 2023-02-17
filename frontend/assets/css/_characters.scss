@@ -1,4 +1,76 @@
-.container-NPC{
+.character-tabs{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: scroll;
+    .btn{
+        min-width: 250px;
+    }
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
+}
+
+.add-new-character-component{
+    .add-new-character-btn{
+        width: 100%;
+        max-width: 250px;
+        margin: 2% auto;
+        display: block;
+        line-height: 0;
+        .text{
+            top: -6px;
+            position: relative;
+        }
+    }
+}
+
+.list-characters-component{
+    .characters-container{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        .character-wrapper{
+            width: 20%;
+            transition: all 0.4s;
+            cursor: pointer;
+            .charcter-content-wrapper{
+                padding: 10% 20% 0;
+            }
+            .character-img-wrapper{
+                position: relative;
+                overflow: hidden;
+                @include square-element;
+                padding: 5%;
+                border: 1px solid $colour-primary;
+                img{
+                    width: 100%;
+                    @include center-element;
+                }
+            }
+            h4{
+                text-align: center;
+                margin: 5% auto 0;
+                transition: all 0.4s;
+            }
+            &:hover{
+                background-color: $colour-primary;
+                h4{
+                    color: $colour-on-primary;
+                }
+            }
+        }
+    }
+}
+
+.characters-page{
+    .character-list-btn-close-wrapper{
+        text-align: center;
+    }
+}
+
+.container-char{
     max-width: 1500px;
     margin: auto;
     height: $page-height;

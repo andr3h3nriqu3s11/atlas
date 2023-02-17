@@ -1,7 +1,12 @@
 <template>
     <div class="header">
+        <NuxtLink to="/">
+            <div class="icon-btn nav-btn">
+                <span class="material-icons">home</span>
+            </div>
+        </NuxtLink>
         <div v-if="this.$store.getters['users/token']">
-            <div class="icon-btn" @click="logOut">
+            <div class="icon-btn nav-btn" @click="logOut">
                 <span class="material-icons">meeting_room</span>
             </div>
         </div>

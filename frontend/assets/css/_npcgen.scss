@@ -1,0 +1,80 @@
+.npc-generated-cards{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .generated-npc-wrapper{
+        padding:10px;
+        width: 33%;
+        position: relative;
+        .npc-index{
+            background-color: #1F2041;
+            border: solid #fff 2px;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+        }
+        .npc-gender{
+            background-color: chocolate;
+            border: solid #fff 2px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        .npc-gen-card-component{
+            background-color: $colour-section;
+            height: 100%;
+            border-radius: 25px;
+            .npc-gen-card-wrapper{
+                padding: 5%;
+                b{
+                    text-transform: uppercase;
+                }
+                span{
+                    display: block;
+                }
+            }
+        }
+    }
+    .npc-name{
+        padding: 10px 10px 5px 10px;
+        text-align: center;
+        border-radius: 25px;
+        color: #fff;
+        font-weight: bold;
+        &.Military{
+            background-color: crimson;
+        }
+        &.Housing{
+            background-color: #DF928E;
+        }
+        &.Trade{
+            background-color: #E8C547;
+            color: $colour-section;
+        }
+        &.Religious{
+            background-color: #E9D2C0;
+            color: $colour-section;
+        }
+        &.Worker{
+            background-color: #1F2041;
+        }
+        &.Recreation{
+            background-color: #5C80BC;
+        }
+        &.Education{
+            background-color: #417B5A;
+        }
+    }
+    
+}
