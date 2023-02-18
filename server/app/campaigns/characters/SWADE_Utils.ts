@@ -1,6 +1,6 @@
-import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hidrances, SWADE_CharacterSheet_Logs} from '@prisma/client'
+import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hidrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge} from '@prisma/client'
 
-import {Rank} from '@ref/types/swade';
+import {BaseAttribute, Rank, RequirementType, Skill, SkillRequirement} from '@ref/types/swade';
 import {swade_character} from '@ref/types';
 
 export const find_include = {
@@ -34,3 +34,27 @@ export const export_character = (character: SWADE_CharacterSheet & {
     atributesPoints: character.attributePoints,
     skillPoints: character.skillPoints
 })
+
+export type ExportableSkill = SWADE_Skill & {
+    requirements:  ExportableSkillRequirement[]
+};
+
+export const export_skill = (skill: ExportableSkill): Skill => ({
+    title: skill.title,
+    base: skill.base as BaseAttribute,
+    rank: skill.rank as Rank,
+    id: skill.id,
+    requirements: skill.requirements.map(export_skill_requirement)
+});
+
+export type ExportableSkillRequirement = SWADE_Skills_Requirement & {edge?: SWADE_Edge, skill: SWADE_Skill};
+
+export const export_skill_requirement = (skillRequirement: ExportableSkillRequirement): SkillRequirement => ({
+    type: skillRequirement.type as RequirementType,
+    level: skillRequirement.level,
+    target_id: skillRequirement.target_id,
+    edge_id: skillRequirement.edge_id,
+    skill_id: skillRequirement.skill_id,
+    edge_title: skillRequirement.edge?.title,
+    skill_title: skillRequirement.skill?.title,
+});

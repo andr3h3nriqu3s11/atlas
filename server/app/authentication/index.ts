@@ -16,10 +16,8 @@ export const authenticate = async (
 	token_pass: string | undefined = undefined
 ) => {
 	const token = token_pass ?? req.headers.token;
-	if (!token || Array.isArray(token)) {
-		rep.code(401);
-		throw new Error('invalid token');
-	}
+	if (!token || Array.isArray(token)) 
+        rep.error(401, 'invalid token')
 	const tokenDB = await prisma.token.findUnique({
 		where: {
 			token
@@ -38,15 +36,12 @@ export const authenticate = async (
 			userId: true
 		}
 	});
-	if (!tokenDB) {
-		rep.code(401);
-		throw new Error('invalid token');
-	}
+	if (!tokenDB) 
+        rep.error(401, 'invalid token')
 
 	if (new Date().getTime() > tokenDB.expireDate.getTime()) {
 		prisma.token.delete({ where: { token } });
-		rep.code(401);
-		throw new Error('invalid token');
+        rep.error(401, 'invalid token')
 	}
 
 	return tokenDB;

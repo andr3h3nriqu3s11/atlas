@@ -46,6 +46,11 @@ export const buildServer = async (code: string) => {
 
     // Adds the authenticate funcions to the request field
     fastify.addHook('preHandler', (req: FastifyRequest, reply, done) => {
+
+        reply.error = (status: number, message: string) => {
+            reply.code(status);
+            throw new Error(message);
+        }
         
         req.authenticate = 
             async (token_pass: string | undefined = undefined) => 
@@ -59,8 +64,7 @@ export const buildServer = async (code: string) => {
                 if (tokenDB.user.userType === UserType.DM)
                     return tokenDB;
 
-                reply.code(401);
-                throw new Error('Needs to be an dm');
+                reply.error(401, 'Needs to be an dm');
             }
 
         done();
@@ -99,5 +103,8 @@ declare module 'fastify' {
   export interface FastifyRequest {
     authenticate: (token_pass?: string) => Promise<TokenDB>
     authenticate_dm: (token_pass?: string) => Promise<TokenDB>
+  }
+  export interface FastifyReply {
+    error: (status: number, message: string) => never
   }
 }
