@@ -1,6 +1,6 @@
 import { BaseAttribute, Rank, update_skill, Skill } from '@ref/types/swade';
 import { prisma } from 'app/app';
-import { export_skill } from 'app/campaigns/characters/SWADE_Utils';
+import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify'
 
@@ -57,6 +57,6 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             }
         });
 
-        return export_skill(result);
+        return swade_export_skill(result);
     });
 }

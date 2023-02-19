@@ -56,7 +56,8 @@ export type SkillRequirement<T extends Campaign = Campaign> = T extends SWADE_Ca
 
 export enum SWADE_RequirementType {
     skill = "skill",
-    edge = "edge"
+    edge = "edge",
+    attribute = "attribute"
 }
 
 export type SWADE_SkillRequirement = {

@@ -38,8 +38,6 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
             const list_skills = await prisma.sWADE_Skill.count({
                 where: {
                     title: body.title,
-                    rank: body.rank,
-                    base: body.base
                 }
             });
 
