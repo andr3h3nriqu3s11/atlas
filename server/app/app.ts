@@ -2,12 +2,13 @@ import Fastify, {FastifyRequest} from "fastify";
 import path from "path";
 import fastifyStatic from "@fastify/static";
 import { frontendPath } from "./constants";
-import { PrismaClient } from "@prisma/client";
+import { Campaign, PrismaClient } from "@prisma/client";
 import { setUpUser } from "./user";
 import { authenticate } from "./authentication";
 import { UserType } from "@ref/types/user";
 import { FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { setUpCampaingns } from "./campaigns";
+import { CampaignStatus } from "@ref/types";
 
 export const prisma = new PrismaClient();
 
@@ -67,6 +68,24 @@ export const buildServer = async (code: string) => {
                 reply.error(401, 'Needs to be an dm');
             }
 
+        req.authenticate_verifyCampaign = async (id: string, verify_type = true, token_pass: string | undefined = undefined) => {
+            const token = await req.authenticate(token_pass);
+
+            const campaign = await prisma.campaign.findUnique({
+                where: {
+                    id: id
+                }
+            });
+
+            if (!campaign) 
+                reply.error(404, 'Campaign not found');
+
+            if (verify_type && campaign.status !== CampaignStatus.character_editing_mode && token.user.userType == UserType.PLEB)
+                reply.error(401, 'You can not create a character in playing mode if you are not the dm');
+
+            return {token, campaign};
+        }
+
         done();
     });
 
@@ -103,6 +122,7 @@ declare module 'fastify' {
   export interface FastifyRequest {
     authenticate: (token_pass?: string) => Promise<TokenDB>
     authenticate_dm: (token_pass?: string) => Promise<TokenDB>
+    authenticate_verifyCampaign: (id: string, verify_type?: boolean, token_pass?: string) => Promise<{token: TokenDB, campaign: Campaign}>
   }
   export interface FastifyReply {
     error: (status: number, message: string) => never

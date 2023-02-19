@@ -3,6 +3,7 @@ import { setUpAddCampaign } from './CreateCampaign';
 import { set_up_campaign_characters } from './characters';
 import { prisma } from 'app/app';
 import { error } from 'app/utils';
+import { set_up_skills } from './skills';
 
 export const setUpCampaingns = (fastify: FastifyInstance, baseUrl: string) => {
 
@@ -10,8 +11,8 @@ export const setUpCampaingns = (fastify: FastifyInstance, baseUrl: string) => {
     
     setUpAddCampaign(fastify, url);
 
-
     set_up_campaign_characters(fastify, url);
+    set_up_skills(fastify, url);
 }
 
 export const get_id = async (id: string, reply: FastifyReply) => {

@@ -1,4 +1,4 @@
-import { CampaignStatus, CampaignType, Character, create_character, UserType } from '@ref/types';
+import { CampaignType, Character, create_character} from '@ref/types';
 import { prisma } from 'app/app';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify';
@@ -18,22 +18,9 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
             }
         }
     }, async (req: FastifyRequest<{Body: create_character}>, reply): Promise<Character> => {
-        const token = await req.authenticate();
-
         const {body} = req;
+        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id)
 
-        const campaign = await prisma.campaign.findUnique({
-            where: {
-                id: body.campaign_id
-            }
-        });
-
-        if (!campaign) 
-            return error(reply, 404, 'Campaign not found');
-
-        if (campaign.status !== CampaignStatus.character_editing_mode && token.user.userType == UserType.PLEB)
-            return error(reply, 401, 'You can not create a character in playing mode if you are not the dm');
-        
         if (campaign.type === CampaignType.SWADE) {
 
             const check_character = await prisma.sWADE_CharacterSheet.findFirst({

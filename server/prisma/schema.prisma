@@ -176,8 +176,7 @@ model SWADE_Skill {
     requirements SWADE_Skills_Requirement[] @relation("requirements")
 
     skill_required SWADE_Skills_Requirement[]
-    edge_required SWADE_Edge_requirements[]
-    characters_skills SWADE_CharacterSheet_Skill[]
+    characters_skills SWADE_CharkcterSheet_Skill[]
     item_effects SWADE_Item_effect[]
 }
 

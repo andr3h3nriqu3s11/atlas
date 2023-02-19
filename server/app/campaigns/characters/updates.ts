@@ -1,30 +1,21 @@
 import { SWADE_CharacterSheet } from '@prisma/client';
-import { CampaignStatus, CampaignType, Character, update_character, update_character_swade, UserType } from '@ref/types';
+import { CampaignType, Character, update_character, update_character_swade } from '@ref/types';
 import { Rank } from '@ref/types/swade';
 import { prisma } from 'app/app';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify'
-import { get_id } from '..';
-import { export_character, find_include } from './SWADE_Utils';
+import { prisma_export_character } from './SWADE_Utils';
 
 export const update = (fastify: FastifyInstance, baseUrl: string) => {
-    
-    
     fastify.put(`${baseUrl}/update`, {
         schema: {
             description: 'Update user',
             tags: ['Campaign', 'Characters']
         }
     }, async (req: FastifyRequest<{Body: update_character}>, reply): Promise<Character> => {
-        const token = await req.authenticate();
-
         const {body} = req;
+        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
 
-        const campaign = await get_id(body.campaign_id, reply);
-
-        if (campaign.status !== CampaignStatus.character_editing_mode && token.user.userType !== UserType.DM)
-            return error(reply, 401, 'You can not edit in the middle of playing');
-        
         if (campaign.type === CampaignType.SWADE) {
             
             const character = await prisma.sWADE_CharacterSheet.findUnique({
@@ -85,22 +76,11 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
 
             await add_log(character, body, attributePoints);
 
-            const return_character = await prisma.sWADE_CharacterSheet.findUnique({
-                where: {
-                    id: character.id
-                },
-                include: find_include
-            });
-
-
             // TODO check if skill points need to be recalulated
-
-            return export_character(return_character);
+            return prisma_export_character(character.id);
         } else
             throw Error('Unrechanble');
     });
-
-    
 }
 
 async function add_log(character: SWADE_CharacterSheet, body: update_character_swade, attributePoints: number) {
