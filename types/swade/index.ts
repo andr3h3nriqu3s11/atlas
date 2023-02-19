@@ -1,5 +1,6 @@
 export * from './skill';
 export * from './edges';
+export * from './hindrance';
 
 export enum Rank {
     Novice = 'novice',

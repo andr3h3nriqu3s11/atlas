@@ -1,6 +1,6 @@
-import { Token, User } from '@prisma/client';
 import { prisma } from 'app/app';
 import { FastifyReply, FastifyRequest } from 'fastify';
+
 
 export const AuthenticationHeaders = {
 	type: 'object',

@@ -1,4 +1,4 @@
-import {Rank, CharacterSkill, CharacterEdge} from '../../swade';
+import {Rank, CharacterSkill, CharacterEdge, Hindrance} from '../../swade';
 import {Campaign, SWADE_Campaign} from '..';
 
 
@@ -45,8 +45,7 @@ export interface swade_character extends character_base {
     
     skills: CharacterSkill[]
     edges: CharacterEdge[]
-    // TODO
-    hidrances: any[]
+    hindrances: Hindrance[]
     // TODO
     items: any[]
 }

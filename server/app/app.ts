@@ -2,7 +2,7 @@ import Fastify, {FastifyRequest} from "fastify";
 import path from "path";
 import fastifyStatic from "@fastify/static";
 import { frontendPath } from "./constants";
-import { Campaign, PrismaClient } from "@prisma/client";
+import { PrismaClient, Campaign } from "@prisma/client";
 import { setUpUser } from "./user";
 import { authenticate } from "./authentication";
 import { UserType } from "@ref/types/user";
@@ -119,12 +119,12 @@ interface TokenDB {
 }
 
 declare module 'fastify' {
-  export interface FastifyRequest {
+  interface FastifyRequest {
     authenticate: (token_pass?: string) => Promise<TokenDB>
     authenticate_dm: (token_pass?: string) => Promise<TokenDB>
     authenticate_verifyCampaign: (id: string, verify_type?: boolean, token_pass?: string) => Promise<{token: TokenDB, campaign: Campaign}>
   }
-  export interface FastifyReply {
+  interface FastifyReply {
     error: (status: number, message: string) => never
   }
 }

@@ -1,8 +1,9 @@
-import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hidrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements} from '@prisma/client'
+import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances} from '@prisma/client'
 
-import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge} from '@ref/types/swade';
+import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance} from '@ref/types/swade';
 import {swade_character, SWADE_Campaign, CampaignType} from '@ref/types';
 import { prisma } from 'app/app';
+import { export_hindrance } from '../swade/hindrances';
 
 export const find_include = {
     skills: {
@@ -17,7 +18,11 @@ export const find_include = {
         }
     },
     items: true, 
-    hidrances: true
+    hindrances: {
+        include: {
+            hindrance: true
+        }
+    }
 }
 
 export const prisma_export_character = async (id: string) => export_character(await prisma.sWADE_CharacterSheet.findUnique({
@@ -28,7 +33,7 @@ export const prisma_export_character = async (id: string) => export_character(aw
 export const export_character = (character: SWADE_CharacterSheet & {
     skills: SWADE_ExportableCharacterSkill[];
     edges: SWADE_ExportableCharacterEdge[];
-    hidrances: SWADE_CharacterSheet_hidrances[];
+    hindrances: SWADE_ExportableHindrance[];
     items: SWADE_CharacterSheet_item[];
     logs: SWADE_CharacterSheet_Logs[];
 }): swade_character => ({
@@ -44,7 +49,7 @@ export const export_character = (character: SWADE_CharacterSheet & {
     spirit: character.spirit,
     agility: character.agility,
     strength: character.strength,
-    hidrances: character.hidrances,
+    hindrances: character.hindrances.map(swade_export_character_hindarance),
     atributesPoints: character.attributePoints,
     skillPoints: character.skillPoints
 })
@@ -124,3 +129,15 @@ export const swade_export_edge_requirement = (edgeRequirement: SWADE_ExportableE
     skill_title: edgeRequirement.skill?.title,
     attribute: edgeRequirement.attribute
 });
+
+//
+// Hindrances
+//
+
+export type SWADE_ExportableHindrance = SWADE_CharacterSheet_hindrances & { hindrance: SWADE_Hindrances};
+
+export const swade_export_character_hindarance = (hindrance: SWADE_ExportableHindrance): Hindrance => ({
+    id: hindrance.hindrance.id,
+    title: hindrance.hindrance.title,
+    description: hindrance.hindrance.description
+})
