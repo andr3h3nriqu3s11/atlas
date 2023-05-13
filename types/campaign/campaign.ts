@@ -1,6 +1,6 @@
 import {CampaignType} from '.';
 
-export type Campaign = SWADE_Campaign;
+export type Campaign<Type extends CampaignType> = Type extends CampaignType.SWADE ? SWADE_Campaign : BaseCampaign;
 
 interface BaseCampaign {
     id: string;

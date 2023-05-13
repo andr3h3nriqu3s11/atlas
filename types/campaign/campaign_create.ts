@@ -1,6 +1,6 @@
 import {CampaignType} from '.';
 
-export interface CreateCampaign {
+export interface CreateCampaign<Type extends CampaignType> {
     title: string;
-    type: CampaignType;
+    type: Type;
 }

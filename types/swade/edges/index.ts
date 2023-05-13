@@ -30,12 +30,12 @@ export type remove_edge_requirement = {
     {type: SWADE_RequirementType.attribute, attribute: string}
 );
 
-export interface edge_character_pair extends campaign_interaction {
+export interface EdgeCharacterPair extends campaign_interaction {
     character_id: string,
     edge_id: string,
 }
 
-export interface add_edge_character extends edge_character_pair {
+export interface AddEdgeCharacter extends EdgeCharacterPair {
     level: number
 }
 

@@ -1,4 +1,4 @@
-import { CampaignType, Character, SWADE_RequirementType, add_edge_character, edge_character_pair } from '@ref/types';
+import { CampaignType, Character, SWADE_RequirementType, add_edge_character, EdgeCharacterPair } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -110,7 +110,7 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: edge_character_pair}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: EdgeCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
 

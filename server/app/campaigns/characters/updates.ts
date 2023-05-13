@@ -1,5 +1,5 @@
 import { SWADE_CharacterSheet } from '@prisma/client';
-import { CampaignType, Character, update_character, update_character_swade } from '@ref/types';
+import { CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
 import { Rank } from '@ref/types/swade';
 import { prisma } from 'app/app';
 import { error } from 'app/utils';
@@ -12,7 +12,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Update user',
             tags: ['Campaign', 'Characters']
         }
-    }, async (req: FastifyRequest<{Body: update_character}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: UpdateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
 

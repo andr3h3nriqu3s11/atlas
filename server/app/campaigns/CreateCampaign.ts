@@ -22,10 +22,10 @@ export const setUpAddCampaign = (fastify: FastifyInstance, base: string) => {
         }
     }, async (
         req: FastifyRequest<{
-            Body: CreateCampaign,
+            Body: CreateCampaign<CampaignType>,
         }>, 
         reply
-    ): Promise<Campaign> => {
+    ): Promise<Campaign<CampaignType>> => {
         const token = await req.authenticate_dm();
 
         const  {body} = req;

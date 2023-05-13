@@ -1,25 +1,25 @@
 import {Rank, CharacterSkill, CharacterEdge, Hindrance} from '../../swade';
-import {Campaign, SWADE_Campaign} from '..';
+import {Campaign, CampaignType, SWADE_Campaign} from '..';
 
 
 export interface campaign_interaction {
     campaign_id: string
 }
 
-export interface create_character extends campaign_interaction{
+export interface CreateCharacter extends campaign_interaction{
     name: string;
 }
 
-export interface skill_character_pair extends campaign_interaction {
+export interface SkillCharacterPair extends campaign_interaction {
     character_id: string,
     skill_id: string,
 }
 
-export interface add_skill_character extends skill_character_pair {
+export interface AddSkillCharacter extends skill_character_pair {
     level: number
 }
 
-export type Character<T extends Campaign = Campaign> = T extends SWADE_Campaign ? swade_character : character_base;
+export type Character<T extends Campaign<CampaignType> = Campaign<CampaignType>> = T extends SWADE_Campaign ? swade_character : character_base;
 
 export interface character_base extends campaign_interaction {
     id: string;
@@ -27,7 +27,7 @@ export interface character_base extends campaign_interaction {
 }
 
 // I kown that this is useless in this scale but it will be usefull later on
-export type CharacterBase<T extends Campaign = Campaign> = T extends SWADE_Campaign ? character_base : character_base;
+export type CharacterBase<T extends Campaign<CampaignType> = Campaign<CampaignType>> = T extends SWADE_Campaign ? character_base : character_base;
 
 export interface swade_character extends character_base {
 
@@ -50,7 +50,7 @@ export interface swade_character extends character_base {
     items: any[]
 }
 
-export type update_character<T extends Campaign = Campaign> = T extends SWADE_Campaign ? update_character_swade : update_base;
+export type UpdateCharacter<T extends Campaign<CampaignType> = Campaign<CampaignType>> = T extends SWADE_Campaign ? update_character_swade : update_base;
 
 interface update_base extends campaign_interaction {
     id: string;

@@ -1,6 +1,8 @@
 import { Campaign, CampaignType, SWADE_Campaign } from '../../campaign';
 import {BaseAttribute, Rank } from '../index'
 
+type CampaignT = Campaign<CampaignType>;
+
 export type create_skill = {
     type: CampaignType.SWADE
     title: string,
@@ -30,7 +32,7 @@ export type update_skill = {
     rank?: Rank
 }
 
-export type CharacterSkill<T extends Campaign = Campaign> = T extends SWADE_Campaign ? SWADE_CharacterSkill : never;
+export type CharacterSkill<T extends CampaignT = CampaignT> = T extends SWADE_Campaign ? SWADE_CharacterSkill : never;
 
 export interface SWADE_CharacterSkill {
     campaignType: CampaignType.SWADE
@@ -41,7 +43,7 @@ export interface SWADE_CharacterSkill {
     level: number,
 }
 
-export type Skill<T extends Campaign = Campaign> = T extends SWADE_Campaign ? SWADE_Skill : never;
+export type Skill<T extends CampaignT = CampaignT> = T extends SWADE_Campaign ? SWADE_Skill : never;
 
 export interface SWADE_Skill {
     campaignType: CampaignType.SWADE
@@ -52,7 +54,7 @@ export interface SWADE_Skill {
     requirements: SkillRequirement<SWADE_Campaign>[]
 }
 
-export type SkillRequirement<T extends Campaign = Campaign> = T extends SWADE_Campaign ? SWADE_SkillRequirement : never;
+export type SkillRequirement<T extends CampaignT = CampaignT> = T extends SWADE_Campaign ? SWADE_SkillRequirement : never;
 
 export enum SWADE_RequirementType {
     skill = "skill",
