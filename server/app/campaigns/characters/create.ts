@@ -1,4 +1,4 @@
-import { CampaignType, Character, create_character} from '@ref/types';
+import { CampaignType, Character, CreateCharacter } from '@ref/types';
 import { prisma } from 'app/app';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify';
@@ -17,7 +17,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: create_character}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: CreateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id)
 

@@ -1,4 +1,4 @@
-import { BaseAttribute, Rank, update_skill, Skill } from '@ref/types/swade';
+import { BaseAttribute, Rank, Skill, UpdateSkill } from '@ref/types/swade';
 import { prisma } from 'app/app';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
 import { error } from 'app/utils';
@@ -10,7 +10,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Update swade skill',
             tags: ['Skill', 'Swade']
         }
-    }, async (req: FastifyRequest<{Body: update_skill}>, reply): Promise<Skill> => {
+    }, async (req: FastifyRequest<{Body: UpdateSkill}>, reply): Promise<Skill> => {
         await req.authenticate_dm();
 
         const {body} = req;

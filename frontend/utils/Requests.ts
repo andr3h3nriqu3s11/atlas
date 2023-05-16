@@ -1,6 +1,29 @@
 import {CreateUserRequestBody, LoginUserRequest, UpdatePasswordUserRequestBody, UpdateUserRequestBody, UserLoginResponseType, UserResponseType} from '@/types/user';
-// import { CreateTemplateFieldRequestBody, CreateTemplateRequestBody, TemplateFieldResponse, TemplateFieldsReturn, TemplateReturn, UpdateTemplateFieldRequestBody, UpdateTemplateRequestBody, CreateWorldSettingRequest, WorldSetting, CreateCampaign, CampaignType, Campaign, create_character, Character } from '~/types';
-import { CreateCampaign, CampaignType, Campaign, CreateCharacter, Character, UpdateCharacter, AddSkillCharacter, Skill, SkillCharacterPair, AddEdgeCharacter, Edge, EdgeCharacterPair } from '~/types';
+import {
+  CreateCampaign,
+  CampaignType,
+  Campaign,
+  CreateCharacter,
+  Character,
+  UpdateCharacter,
+  AddSkillCharacter,
+  Skill,
+  SkillCharacterPair,
+  AddEdgeCharacter,
+  Edge,
+  EdgeCharacterPair,
+  HindranceCharacterPair,
+  AddHindranceCharacter,
+  Hindrance,
+  CreateSkill,
+  UpdateSkill,
+  CreateSkillRequirement,
+  RemoveSkillRequirement,
+  CreateEdge,
+  UpdateEdge,
+  CreateEdgeRequirement,
+  RemoveEdgeRequirement,
+} from '~/types';
 
 interface Requester {
     post: (url: string, options?: {data?: any, token?: string}) => Promise<any>
@@ -126,46 +149,92 @@ class RequestsClass {
               } as EdgeCharacterPair,
             }),
         },
-      },
-    }
 
-    /*
-    setting = {
-        create: (data: CreateWorldSettingRequest): Promise<WorldSetting> => this.req.post(`/setting`, {data}),
+        hindrance: {
+          url: `/campaing/characters/hindrance`,
 
-        get: (id: string): Promise<WorldSetting> => this.req.get(this.objToUrl('/setting', {id})),
+          add: (
+            campaign: Campaign<CampaignType.SWADE>,
+            character: Character<Campaign<CampaignType.SWADE>>,
+            hindrance: Hindrance,
+            level: number,
+          ): Promise<void> =>
+            this.req.post(`${this.campaign.characters.hindrance.url}/add`, {data: {
+              campaign_id: campaign.id,
+              character_id: character.id,
+              hindrance_id: hindrance.id,
+              level
+            } as AddHindranceCharacter}),
 
-        update: (id: string, data: CreateWorldSettingRequest): Promise<WorldSetting> => this.req.put(`/setting/${id}`, {data}),
-
-        delete: (id: string): Promise<WorldSetting> => this.req.delete(`/setting/${id}`)
-    }
-
-    template = {
-
-        create: (data: CreateTemplateRequestBody): Promise<TemplateReturn> => this.req.post(`/template`, {data}),
-
-
-        update: (id: string, data: UpdateTemplateRequestBody): Promise<TemplateReturn> => this.req.put(`/template/${id}`, {data}),
-
-        get: (options?:{
-            id?: string;
-            includeFields?: boolean;
-        }) => this.req.get(this.objToUrl('/template', options)),
-
-        delete: (id: string): Promise<TemplateReturn> => this.req.delete(`/template/${id}`),
-
-        field: {
-
-            create: (data: CreateTemplateFieldRequestBody): Promise<TemplateFieldResponse> => this.req.post(`/template/field/`, {data}),
-
-            update: (data: UpdateTemplateFieldRequestBody, id: string): Promise<TemplateFieldResponse> => this.req.post(`/template/field/${id}`, {data}),
-
-            delete: (id: string): Promise<{}> => this.req.post(`/template/field/${id}`, {}),
-
+          remove: (
+            campaign: Campaign<CampaignType.SWADE>,
+            character: Character<Campaign<CampaignType.SWADE>>,
+            hindrance: Hindrance,
+          ) => this.req.post(`${this.campaign.characters.hindrance.url}/remove`, { data: {
+            campaign_id: campaign.id,
+            hindrance_id: hindrance.id,
+            character_id: character.id,
+          } as HindranceCharacterPair })
         }
+      },
 
+      skills: {
+        url: `/campaing/characters/skills`,
+
+        add: (data: CreateSkill): Promise<Skill> =>
+          this.req.post(`${this.campaign.skills.url}/add`, {data}),
+        update: (data: UpdateSkill): Promise<Skill> =>
+          this.req.post(`${this.campaign.skills.url}/update`, {data}),
+        list: (type: CampaignType): Promise<Skill[]> =>
+          this.req.post(`${this.campaign.skills.url}/list`, { data: { type, } }),
+
+        requirements: {
+          add: (data: CreateSkillRequirement): Promise<Skill> =>
+            this.req.post(`${this.campaign.skills.url}/requirement/add`, {data}),
+
+          remove: (data: RemoveSkillRequirement): Promise<Skill> =>
+            this.req.post(`${this.campaign.skills.url}/requirement/remove`, {data}),
+        },
+      },
+
+      edges: {
+        url: `/campaing/characters/edges`,
+
+        add: (data: CreateEdge): Promise<Edge> =>
+          this.req.post(`${this.campaign.edges.url}/add`, {data}),
+
+        update: (data: UpdateEdge): Promise<Edge> =>
+          this.req.post(`${this.campaign.edges.url}/update`, {data}),
+
+        list: (type: CampaignType): Promise<Edge[]> =>
+          this.req.post(`${this.campaign.edges.url}/list`, {
+            data: {
+              type,
+            },
+          }),
+
+        requirements: {
+          add: (data: CreateEdgeRequirement): Promise<Edge> =>
+            this.req.post(`${this.campaign.edges.url}/requirement/add`, {data}),
+          remove: (data: RemoveEdgeRequirement): Promise<Edge> =>
+            this.req.post(`${this.campaign.edges.url}/requirement/remove`, {data}),
+        }
+      },
+
+      hindrance: {
+        url: `/campaing/characters/hindrance`,
+
+        add: (data: CreateEdge): Promise<Hindrance> =>
+          this.req.post(`${this.campaign.hindrance.url}/add`, {data}),
+
+        update: (data: UpdateEdge): Promise<Hindrance> =>
+          this.req.post(`${this.campaign.hindrance.url}/update`, {data}),
+
+        list: (type: CampaignType): Promise<Hindrance[]> =>
+          this.req.post(`${this.campaign.hindrance.url}/list`, { data: { type } }),
+      }
     }
-    */
+
 }
 
 class OurAxios {

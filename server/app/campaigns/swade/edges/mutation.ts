@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import { create_edge, Edge, update_edge } from '@ref/types';
+import { CreateEdge, Edge, UpdateEdge } from '@ref/types';
 import { Rank } from '@ref/types';
 import { error } from 'app/utils';
 import { prisma } from 'app/app';
@@ -19,7 +19,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: create_edge}>, reply): Promise<Edge> => {
+    }, async (req: FastifyRequest<{Body: CreateEdge}>, reply): Promise<Edge> => {
         await req.authenticate_dm();
 
         const {body} = req;
@@ -68,7 +68,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Update swade edge',
             tags: ['Edge', 'Swade']
         }
-    }, async (req: FastifyRequest<{Body: update_edge}>, reply): Promise<Edge> => {
+    }, async (req: FastifyRequest<{Body: UpdateEdge}>, reply): Promise<Edge> => {
         await req.authenticate_dm();
 
         const {body} = req;
@@ -103,7 +103,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                 ...body
             },
             include: {
-                requirements: {
+                    requirements: {
                     include: {
                         edge: true,
                         skill: true

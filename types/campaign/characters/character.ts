@@ -15,7 +15,7 @@ export interface SkillCharacterPair extends campaign_interaction {
     skill_id: string,
 }
 
-export interface AddSkillCharacter extends skill_character_pair {
+export interface AddSkillCharacter extends SkillCharacterPair {
     level: number
 }
 

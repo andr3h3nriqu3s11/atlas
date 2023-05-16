@@ -1,4 +1,4 @@
-import { add_skill_character, CampaignType, Character, SWADE_RequirementType, skill_character_pair } from '@ref/types';
+import { CampaignType, Character, SWADE_RequirementType, AddSkillCharacter, SkillCharacterPair } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -17,7 +17,7 @@ export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: add_skill_character}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: AddSkillCharacter}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
         
@@ -105,7 +105,7 @@ export const skill_remove = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: skill_character_pair}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: SkillCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
 

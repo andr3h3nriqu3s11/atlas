@@ -1,5 +1,5 @@
 import { CampaignType, Character } from '@ref/types';
-import { add_hindrance_character, hindrance_character_pair } from '@ref/types/swade/hindrance';
+import { AddHindranceCharacter, HindranceCharacterPair } from '@ref/types/swade/hindrance';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -18,7 +18,7 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: add_hindrance_character}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: AddHindranceCharacter}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
         
@@ -74,7 +74,7 @@ export const hidrance_remove = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: hindrance_character_pair}>, reply): Promise<Character> => {
+    }, async (req: FastifyRequest<{Body: HindranceCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
 

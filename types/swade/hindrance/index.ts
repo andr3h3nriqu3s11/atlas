@@ -13,11 +13,11 @@ export interface update_hindrance extends Partial<Hindrance>{
     id: string
 }
 
-export interface hindrance_character_pair extends campaign_interaction {
+export interface HindranceCharacterPair extends campaign_interaction {
     character_id: string,
     hindrance_id: string,
 }
 
-export interface add_hindrance_character extends hindrance_character_pair {
+export interface AddHindranceCharacter extends HindranceCharacterPair {
     level: number
 }

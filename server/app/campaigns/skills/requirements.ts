@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import {CampaignType, create_skill_requirement, remove_skill_requirement, SWADE_RequirementType, Skill} from '@ref/types';
+import {CampaignType, SWADE_RequirementType, Skill, CreateSkillRequirement, RemoveSkillRequirement} from '@ref/types';
 import { prisma } from 'app/app';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
 
@@ -9,7 +9,7 @@ export const add = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Endpoint used to add a requirement to a skill',
             tags: ['Skill', 'Swade'],
         }
-    }, async (req: FastifyRequest<{Body: create_skill_requirement}>, reply): Promise<Skill> => {
+    }, async (req: FastifyRequest<{Body: CreateSkillRequirement}>, reply): Promise<Skill> => {
         await req.authenticate_dm();
 
         const {body} = req;
@@ -96,7 +96,7 @@ export const remove = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Endpoint used to add a requirement to a skill',
             tags: ['Skill', 'Swade'],
         }
-    }, async (req: FastifyRequest<{Body: remove_skill_requirement}>, reply): Promise<Skill> => {
+    }, async (req: FastifyRequest<{Body: RemoveSkillRequirement}>, reply): Promise<Skill> => {
         await req.authenticate_dm();
 
         const {body} = req;

@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import {CampaignType, create_skill, Skill} from '@ref/types';
+import {CampaignType, CreateSkill, Skill} from '@ref/types';
 import { BaseAttribute, Rank } from '@ref/types';
 import { error } from 'app/utils';
 import { prisma } from 'app/app';
@@ -20,7 +20,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             }
         }
-    }, async (req: FastifyRequest<{Body: create_skill}>, reply): Promise<Skill> => {
+    }, async (req: FastifyRequest<{Body: CreateSkill}>, reply): Promise<Skill> => {
         await req.authenticate_dm();
 
         const {body} = req;

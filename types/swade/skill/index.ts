@@ -3,7 +3,7 @@ import {BaseAttribute, Rank } from '../index'
 
 type CampaignT = Campaign<CampaignType>;
 
-export type create_skill = {
+export type CreateSkill = {
     type: CampaignType.SWADE
     title: string,
     base: BaseAttribute,
@@ -12,19 +12,19 @@ export type create_skill = {
     type: never
 }
 
-export type create_skill_requirement = 
+export type CreateSkillRequirement = 
 ({
     campaignType:  CampaignType.SWADE
     id: string,
     level?: number,
 } & ({type: SWADE_RequirementType.edge, edge_id: string} | {type: SWADE_RequirementType.skill, skill_id: string}));
 
-export type remove_skill_requirement = {
+export type RemoveSkillRequirement = {
     campaignType:  CampaignType.SWADE
     id: string,
 } & ({type: SWADE_RequirementType.edge, edge_id: string} | {type: SWADE_RequirementType.skill, skill_id: string});
 
-export type update_skill = {
+export type UpdateSkill = {
     campaignType:  CampaignType.SWADE
     id: string,
     title?: string,

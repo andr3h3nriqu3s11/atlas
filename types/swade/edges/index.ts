@@ -2,17 +2,17 @@ import { BaseAttribute, Rank, SWADE_RequirementType } from "..";
 import { campaign_interaction } from "../../campaign";
 
 
-export interface create_edge {
+export interface CreateEdge {
     title: string;
     rank: Rank;
     description: string;
 }
 
-export interface update_edge extends Partial<create_edge> {
+export interface UpdateEdge extends Partial<CreateEdge> {
     id: string;
 }
 
-export type create_edge_requirement = 
+export type CreateEdgeRequirement = 
 ({
     id: string,
     level?: number,
@@ -22,7 +22,7 @@ export type create_edge_requirement =
     {type: SWADE_RequirementType.attribute, attribute: BaseAttribute}
 ));
 
-export type remove_edge_requirement = {
+export type RemoveEdgeRequirement = {
     id: string,
 } & (
     {type: SWADE_RequirementType.edge, edge_id: string} | 
