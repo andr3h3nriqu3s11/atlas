@@ -2,6 +2,7 @@ import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import {CreateCampaign, CampaignType, Campaign, SWADE_Campaign, CampaignStatus} from '../../ref/types';
 import { prisma } from 'app/app';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const setUpAddCampaign = (fastify: FastifyInstance, base: string) => {
     fastify.post(`${base}/add`, {
@@ -15,10 +16,12 @@ export const setUpAddCampaign = (fastify: FastifyInstance, base: string) => {
                         type: "string"
                     },
                     type: {
-                        type: "string"
+                        type: "string",
+                        enum: ['SWADE']
                     },
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (
         req: FastifyRequest<{

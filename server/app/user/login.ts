@@ -1,6 +1,5 @@
 import { User } from '@prisma/client';
 import { prisma } from 'app/app';
-import { error } from 'app/utils';
 import argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import { FastifyReply, FastifyRequest, RouteShorthandOptions } from 'fastify';
@@ -49,14 +48,15 @@ export const UserLoginHandler = async (
                 name: req.body.name,
 			}
 		});
-	} catch { error(reply, 401, 'cloud not perform login') }
+	} catch { reply.error(401, 'could not perform login') }
 
-	if (!getUser) error(reply, 401, 'email or password are invalid');
+	if (!getUser) 
+        reply.error(401, 'email or password are invalid');
 
 	try {
 		const result = await argon2.verify(getUser.password, body.password);
 		if (!result) throw new Error();
-	} catch { error(reply, 401, 'email or password are invalid'); }
+	} catch { reply.error(401, 'email or password are invalid'); }
 
 	//Remove the salt and password from the user object
 	delete getUser.password;
@@ -69,21 +69,10 @@ export const UserLoginHandler = async (
 				userId: getUser.id
 			}
 		});
-	} catch (e) { error(reply, 401, 'cloud not perform login') }
+	} catch (e) { reply.error(401, 'cloud not perform login') }
 
 	return {
 		user: getUser,
 		token: tokenStr
 	};
 };
-
-export interface LoginReturnObject {
-	token: string;
-	user: {
-		id: string;
-		email: string;
-		name: string;
-		publicStatus: boolean;
-		optimalWorkingTime: Date;
-	};
-}

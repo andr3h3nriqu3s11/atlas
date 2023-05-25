@@ -1,4 +1,4 @@
-import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances} from '@prisma/client'
+import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances, SWADE_Campaign as prisma_SWADE_Campaign, Campaign as prisma_Campaign} from '@prisma/client'
 
 import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance} from '@ref/types/swade';
 import {swade_character, SWADE_Campaign, CampaignType} from '@ref/types';
@@ -22,6 +22,11 @@ export const find_include = {
         include: {
             hindrance: true
         }
+    },
+    campaign: {
+        include: {
+            campaign: true,
+        }
     }
 }
 
@@ -30,7 +35,7 @@ export const prisma_export_character = async (id: string) => export_character(aw
     include: find_include,
 }))
 
-export const export_character = (character: SWADE_CharacterSheet & {
+export const export_character = (character: SWADE_CharacterSheet & { campaign: prisma_SWADE_Campaign & { campaign: prisma_Campaign }} & {
     skills: SWADE_ExportableCharacterSkill[];
     edges: SWADE_ExportableCharacterEdge[];
     hindrances: SWADE_ExportableHindrance[];
@@ -39,7 +44,7 @@ export const export_character = (character: SWADE_CharacterSheet & {
 }): swade_character => ({
     id: character.id,
     name: character.name,
-    campaign_id: character.campaign_id,
+    campaign_id: character.campaign.campaign.id,
     rank: character.rank as Rank,
     edges: character.edges.map(swade_export_character_edge),
     items: character.items,
@@ -141,3 +146,19 @@ export const swade_export_character_hindarance = (hindrance: SWADE_ExportableHin
     title: hindrance.hindrance.title,
     description: hindrance.hindrance.description
 })
+
+//
+// Campaign
+//
+
+export const export_swade_campaign = (data: prisma_Campaign & {
+    SWADE_Campaign: prisma_SWADE_Campaign & {
+        characters: SWADE_CharacterSheet[]
+    }
+}): SWADE_Campaign => ({
+    type: CampaignType.SWADE,
+    title: data.title,
+    id: data.id,
+    dateCreation: data.dateCreated.toISOString(),
+    characters: data.SWADE_Campaign.characters.map(export_character)
+});

@@ -3,6 +3,7 @@ import { prisma } from 'app/app';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { export_character, find_include } from './SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {
@@ -15,7 +16,8 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                     name: {type: 'string'},
                     campaign_id: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: CreateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
@@ -23,25 +25,44 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
 
         if (campaign.type === CampaignType.SWADE) {
 
+            const swade_campaign = await prisma.sWADE_Campaign.findFirst({
+                where: {
+                    campaign_id: campaign.id
+                },
+            });
+
             const check_character = await prisma.sWADE_CharacterSheet.findFirst({
                 where: {
-                    campaign_id: body.campaign_id,
+                    campaign_id: swade_campaign.id,
                     name: body.name,
                 }
             }); 
 
             if (check_character)
-                return error(reply, 400, 'Character with that name already exists');
+                reply.error(400, 'Character with that name already exists');
+            
+            try {
+                const character = await prisma.sWADE_CharacterSheet.create({
+                    data: {
+                        name: body.name,
+                        campaign_id: swade_campaign.id
+                    },
+                    include: {
+                        ...find_include,
+                        campaign: {
+                            include: {
+                                campaign: true,
+                            }
+                        }
+                    }
+                });
 
-            const character = await prisma.sWADE_CharacterSheet.create({
-                data: {
-                    name: body.name,
-                    campaign_id: body.campaign_id
-                },
-                include: find_include
-            });
-
-            return export_character(character);
+                return export_character(character);
+            } catch (e) {
+                console.log(e);
+                throw new Error(e.message);
+            }
+            
         } else
             throw new Error('Unreachable');
     })

@@ -23,6 +23,7 @@ import {
   UpdateEdge,
   CreateEdgeRequirement,
   RemoveEdgeRequirement,
+  ListCampaign
 } from '~/types';
 
 interface Requester {
@@ -71,6 +72,9 @@ class RequestsClass {
 
       add: <Type extends CampaignType>(data: CreateCampaign<Type>): Promise<Campaign<Type>> =>
         this.req.post(`${this.campaign.url}/add`, {data}),
+
+      list: <Type extends CampaignType>(data: ListCampaign<Type>): Promise<Campaign<Type>> =>
+        this.req.post(`${this.campaign.url}/list`, {data}),
 
       characters: {
         url: `/campaing/characters`,
@@ -252,7 +256,8 @@ class OurAxios {
     getToken = () => localStorage.getItem('LoginToken') ?? undefined;
 
     buildHeaders = (json?: boolean, token?: string) => ({
-        ...(json ? {'content-type': 'application/json;',} : {}),
+        ...(json ? {'content-type': 'application/json; charset=utf-8',} : {}),
+        ...(json ? {'Accept': 'application/json; charset=utf-8',} : {}),
         ...(token ? {token,} : {})
     })
 
