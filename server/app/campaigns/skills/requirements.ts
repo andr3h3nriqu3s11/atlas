@@ -2,12 +2,14 @@ import {FastifyInstance, FastifyRequest} from 'fastify';
 import {CampaignType, SWADE_RequirementType, Skill, CreateSkillRequirement, RemoveSkillRequirement} from '@ref/types';
 import { prisma } from 'app/app';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/requirement/add`, {
         schema: {
             description: 'Endpoint used to add a requirement to a skill',
             tags: ['Skill', 'Swade'],
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: CreateSkillRequirement}>, reply): Promise<Skill> => {
         await req.authenticate_dm();

@@ -2,6 +2,7 @@ import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddE
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/edge/add`, {
@@ -15,7 +16,8 @@ export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
                     edge_id: {type: 'string'},
                     level: {type: 'number'}
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: AddEdgeCharacter}>, reply): Promise<Character> => {
         const {body} = req;
@@ -108,7 +110,8 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
                     character_id: {type: 'string'},
                     edge_id: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: EdgeCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;

@@ -1,9 +1,9 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { CreateEdge, Edge, UpdateEdge } from '@ref/types';
 import { Rank } from '@ref/types';
-import { error } from 'app/utils';
 import { prisma } from 'app/app';
 import { swade_export_edge } from 'app/campaigns/characters/SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {
@@ -17,7 +17,8 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                     rank: {type: 'string'},
                     description: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: CreateEdge}>, reply): Promise<Edge> => {
         await req.authenticate_dm();
@@ -25,13 +26,13 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         const {body} = req;
 
         if(!Object.values(Rank).includes(body.rank))
-            return error(reply, 400, 'rank has an invalid value');
+            reply.error(400, 'rank has an invalid value');
 
         if (!body.title)
-            return error(reply, 400, 'title has an invalid value');
+            reply.error(400, 'title has an invalid value');
 
         if (!body.description)
-            return error(reply, 400, 'title has an invalid value');
+            reply.error(400, 'title has an invalid value');
 
         const list_edges = await prisma.sWADE_Edge.count({
             where: {
@@ -40,7 +41,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         });
 
         if (list_edges !== 0)
-            return error(reply, 400, 'A edge with that name already exists');
+            reply.error(400, 'A edge with that name already exists');
 
         const skill = await prisma.sWADE_Edge.create({
             data: {
@@ -80,10 +81,10 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
         });
         
         if (!skill)
-            return error(reply, 404, 'Edge not found');
+            reply.error(404, 'Edge not found');
 
         if (body.rank && !Object.values(Rank).includes(body.rank))
-            return error(reply, 400, 'rank has an invalid value');
+            reply.error(400, 'rank has an invalid value');
 
         if (body.title) {
             const find_skill = await prisma.sWADE_Edge.findFirst({
@@ -92,7 +93,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             });
             if (find_skill)
-                return error(reply, 400, 'a edge with this title already exists');
+                reply.error(400, 'a edge with this title already exists');
         }
 
         const result = await prisma.sWADE_Edge.update({

@@ -2,12 +2,14 @@ import {FastifyInstance, FastifyRequest} from 'fastify';
 import {SWADE_RequirementType, Edge, BaseAttribute, CreateEdgeRequirement, RemoveEdgeRequirement} from '@ref/types';
 import { prisma } from 'app/app';
 import { swade_export_edge } from 'app/campaigns/characters/SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/requirement/add`, {
         schema: {
             description: 'Endpoint used to add a requirement to a edge',
             tags: ['Skill', 'Swade'],
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: CreateEdgeRequirement}>, reply): Promise<Edge> => {
         await req.authenticate_dm();

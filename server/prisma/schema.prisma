@@ -32,6 +32,7 @@ model User {
   dateUpdate  DateTime @updatedAt
 
   campaigns Campaign[]
+  characters SWADE_CharacterSheet[]
 }
 
 model Token {
@@ -101,6 +102,11 @@ model SWADE_CharacterSheet {
   name String
 
   campaign_id String
+  creator_id String
+
+  dead Boolean @default(false)
+  npc  Boolean @default(false)
+  visible Boolean @default(false)
 
   attributePoints Int @default(5)
 
@@ -116,6 +122,7 @@ model SWADE_CharacterSheet {
   rank String @default("novice")
 
   campaign SWADE_Campaign @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+  creator User @relation(fields: [creator_id], references: [id], onDelete: Cascade)
 
   skillPoints Int @default(15)
 

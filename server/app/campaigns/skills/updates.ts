@@ -1,5 +1,6 @@
 import { BaseAttribute, Rank, Skill, UpdateSkill } from '@ref/types/swade';
 import { prisma } from 'app/app';
+import { AuthenticationHeaders } from 'app/authentication';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify'
@@ -8,7 +9,8 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.put(`${baseUrl}/update`, {
         schema: {
             description: 'Update swade skill',
-            tags: ['Skill', 'Swade']
+            tags: ['Skill', 'Swade'],
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: UpdateSkill}>, reply): Promise<Skill> => {
         await req.authenticate_dm();

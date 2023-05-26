@@ -24,6 +24,8 @@ export type Character<T extends Campaign<CampaignType> = Campaign<CampaignType>>
 export interface character_base extends campaign_interaction {
     id: string;
     name: string;
+    dead: boolean;
+    npc: boolean;
 }
 
 // I kown that this is useless in this scale but it will be usefull later on

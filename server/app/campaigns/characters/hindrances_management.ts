@@ -3,6 +3,7 @@ import { AddHindranceCharacter, HindranceCharacterPair } from '@ref/types/swade/
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/hindrance/add`, {
@@ -16,7 +17,8 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
                     hindrance_id: {type: 'string'},
                     level: {type: 'number'}
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: AddHindranceCharacter}>, reply): Promise<Character> => {
         const {body} = req;
@@ -72,7 +74,8 @@ export const hidrance_remove = (fastify: FastifyInstance, baseUrl: string) => {
                     character_id: {type: 'string'},
                     hindrance_id: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: HindranceCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;

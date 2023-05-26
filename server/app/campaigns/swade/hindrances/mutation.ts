@@ -3,6 +3,7 @@ import { error } from 'app/utils';
 import { prisma } from 'app/app';
 import { create_hindrance, Hindrance, update_hindrance } from '@ref/types/swade/hindrance';
 import { export_hindrance } from '.';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {
@@ -16,7 +17,8 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                     rank: {type: 'string'},
                     description: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: create_hindrance}>, reply): Promise<Hindrance> => {
         await req.authenticate_dm();
@@ -53,7 +55,8 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.put(`${baseUrl}/update`, {
         schema: {
             description: 'Update swade hindrance',
-            tags: ['Hindrance', 'Swade']
+            tags: ['Hindrance', 'Swade'],
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: update_hindrance}>, reply): Promise<Hindrance> => {
         await req.authenticate_dm();

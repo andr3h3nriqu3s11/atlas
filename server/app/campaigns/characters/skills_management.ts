@@ -2,6 +2,7 @@ import { CampaignType, Character, SWADE_RequirementType, AddSkillCharacter, Skil
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/skill/add`, {
@@ -15,7 +16,8 @@ export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
                     skill_id: {type: 'string'},
                     level: {type: 'number'}
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: AddSkillCharacter}>, reply): Promise<Character> => {
         const {body} = req;
@@ -103,7 +105,8 @@ export const skill_remove = (fastify: FastifyInstance, baseUrl: string) => {
                     character_id: {type: 'string'},
                     skill_id: {type: 'string'},
                 }
-            }
+            },
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: SkillCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;

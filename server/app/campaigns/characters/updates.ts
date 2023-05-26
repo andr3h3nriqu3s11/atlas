@@ -1,20 +1,24 @@
 import { SWADE_CharacterSheet } from '@prisma/client';
-import { CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
+import { CampaignStatus, CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
 import { Rank } from '@ref/types/swade';
 import { prisma } from 'app/app';
-import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify'
 import { prisma_export_character } from './SWADE_Utils';
+import { AuthenticationHeaders } from 'app/authentication';
 
 export const update = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.put(`${baseUrl}/update`, {
         schema: {
             description: 'Update user',
-            tags: ['Campaign', 'Characters']
+            tags: ['Campaign', 'Characters'],
+            headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: UpdateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id);
+
+        if (campaign.status !== CampaignStatus.character_editing_mode && !user.authorized)
+            reply.error(400, "You can not change this character while the campaign is in playing mode");
 
         if (campaign.type === CampaignType.SWADE) {
             
@@ -25,7 +29,10 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             });
 
             if (character)
-                return error(reply, 404, 'Character not found on campaign');
+                reply.error(404, 'Character not found on campaign');
+
+            if (character.creator_id !== user.id && !user.authorized)
+                reply.error(400, "You can not change this character");
 
             if (body.name && body.name !== character.name) {
                 const check_character = await prisma.sWADE_CharacterSheet.findFirst({
@@ -36,7 +43,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                 });
 
                 if (check_character)
-                    return error(reply, 409, 'Character already with that name already exists on the campaign');
+                    reply.error(409, 'Character already with that name already exists on the campaign');
             }
 
             const targets = ["vigor", "smarts", "spirit", "agility", "strength"];
@@ -48,7 +55,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                     continue;
 
                 if (body[target] < 0)
-                    return error(reply, 400, `${target} needs to be a positive value`);
+                    reply.error(400, `${target} needs to be a positive value`);
 
                 diff += character[target] - body[target];
             }
@@ -56,10 +63,10 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             const attributePoints = character.attributePoints - diff;
 
             if (attributePoints < 0)
-                return error(reply , 400, 'Too many attribute points spent');
+                reply.error(400, 'Too many attribute points spent');
 
             if (body.rank && !Object.values(Rank).includes(body.rank))
-                return error(reply, 400, 'Invalid Rank');
+                reply.error(400, 'Invalid Rank');
                 
             delete body.campaign_id
             delete body.id

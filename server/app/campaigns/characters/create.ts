@@ -1,6 +1,5 @@
-import { CampaignType, Character, CreateCharacter } from '@ref/types';
+import { CampaignStatus, CampaignType, Character, CreateCharacter } from '@ref/types';
 import { prisma } from 'app/app';
-import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { export_character, find_include } from './SWADE_Utils';
 import { AuthenticationHeaders } from 'app/authentication';
@@ -21,7 +20,10 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: CreateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id)
+        const {campaign, token} = await req.authenticate_verifyCampaign(body.campaign_id)
+
+        if (campaign.status !== CampaignStatus.character_editing_mode && token.user.authorized)
+            reply.error(400, "You can not create a new character while the campaign is in playing mode");
 
         if (campaign.type === CampaignType.SWADE) {
 
@@ -45,7 +47,8 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                 const character = await prisma.sWADE_CharacterSheet.create({
                     data: {
                         name: body.name,
-                        campaign_id: swade_campaign.id
+                        campaign_id: swade_campaign.id,
+                        creator_id: token.user.id,
                     },
                     include: {
                         ...find_include,
@@ -59,7 +62,6 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
 
                 return export_character(character);
             } catch (e) {
-                console.log(e);
                 throw new Error(e.message);
             }
             
