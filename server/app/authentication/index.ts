@@ -1,6 +1,6 @@
-import { Token, User } from '@prisma/client';
 import { prisma } from 'app/app';
 import { FastifyReply, FastifyRequest } from 'fastify';
+
 
 export const AuthenticationHeaders = {
 	type: 'object',
@@ -9,16 +9,15 @@ export const AuthenticationHeaders = {
 	},
 	required: ['token']
 };
+
 export const authenticate = async (
 	req: FastifyRequest,
 	rep: FastifyReply,
 	token_pass: string | undefined = undefined
 ) => {
 	const token = token_pass ?? req.headers.token;
-	if (!token || Array.isArray(token)) {
-		rep.code(401);
-		throw new Error('invalid token');
-	}
+	if (!token || Array.isArray(token)) 
+        rep.error(401, 'token needed')
 	const tokenDB = await prisma.token.findUnique({
 		where: {
 			token
@@ -37,14 +36,13 @@ export const authenticate = async (
 			userId: true
 		}
 	});
-	if (!tokenDB) {
-		rep.code(401);
-		throw new Error('invalid token');
-	}
-	if (new Date().getTime() > new Date(tokenDB.expireDate).getTime()) {
+	if (!tokenDB) 
+        rep.error(401, 'invalid token');
+
+	if (new Date().getTime() > tokenDB.expireDate.getTime()) {
 		prisma.token.delete({ where: { token } });
-		rep.code(401);
-		throw new Error('invalid token');
+        rep.error(401, 'token expired');
 	}
+
 	return tokenDB;
 };

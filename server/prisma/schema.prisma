@@ -16,132 +16,368 @@ datasource db {
 //
 
 model User {
-  id           String    @id @default(uuid())
+  id String @id @default(uuid())
 
-  name         String    @unique
+  name String @unique
 
-  password     String
+  password String
 
-  userType     String
+  userType String
 
-  authorized   Boolean
+  authorized Boolean
 
-  tokens       Token[]
+  tokens Token[]
 
-  dateCreated  DateTime @default(now())
-  dateUpdate   DateTime @updatedAt
+  dateCreated DateTime @default(now())
+  dateUpdate  DateTime @updatedAt
+
+  campaigns Campaign[]
+  characters SWADE_CharacterSheet[]
 }
 
 model Token {
-  token        String  @id
+  token String @id
 
-  userId       String
+  userId String
 
-  expireDate   DateTime
+  expireDate DateTime
 
-  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  dateCreated  DateTime @default(now())
-}
-
-
-//
-//
-// Setting related to settings
-//
-//
-
-model WorldSetting {
-  id           String @id @default(uuid())
-
-  name         String @unique
-
-  templates    Template[]
-
-  dateCreated  DateTime @default(now())
-  dateUpdate   DateTime @updatedAt
+  dateCreated DateTime @default(now())
 }
 
 //
 //
-// Character Template related models
+//
+// Campaign
 //
 //
+//
 
-model Template {
-  id                String          @id @default(uuid())
+model Campaign {
+  id String @id @default(uuid())
 
-  worldSettingId    String
+  title String
 
-  // ITEM - CHARACTER
-  type              String
+  type String
+  // SWADE - Svage worlds
 
-  name              String          @unique
-  description       String?
+  status String
+  // character_editing_mode
+  // playing_mode
 
-  worldSetting      WorldSetting    @relation(references: [id], fields: [worldSettingId], onDelete: Cascade)
-  templateFields    TemplateField[]
-  templateInstances TemplateInstance[]
+  creator_id String
 
-  dateCreated       DateTime @default(now())
-  dateUpdate        DateTime @updatedAt
+  dateCreated DateTime @default(now())
+
+  SWADE_Campaign SWADE_Campaign?
+
+  creator User @relation(fields: [creator_id], references: [id], onDelete: Cascade)
 }
 
-model TemplateField {
-  id            String        @id @default(uuid())
-  templateId    String
+//
+//
+//
+// Campaign SWADE
+//
+//
+//
 
-  // Name of the field this is the internal name
-  name          String
+model SWADE_Campaign {
+  id String @id @default(uuid())
 
-  // Label this is for the display name
-  label         String
+  campaign_id String @unique
 
-  //            STRING | NUMBER |                                                                  DROPBOX | BOOLEAN
-  type          String
+  dateCreated DateTime @default(now())
 
-  //            DROPBOX - will be enconded as value:text|value:text
-  value         String
+  campaign Campaign @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
 
-  required      Boolean
-
-  defaultValue  String
-
-  max            Int?
-  min            Int?
-
-  template      Template      @relation(references: [id], fields: [templateId], onDelete: Cascade)
-
-  instanceFields TemplateInstanceFields[]
-
-  dateCreated   DateTime @default(now())
-  dateUpdate    DateTime @updatedAt
+  characters SWADE_CharacterSheet[]
 }
 
+model SWADE_CharacterSheet {
+  id String @id @default(uuid())
 
-// Will be an instance of a template
-model TemplateInstance {
-  id           String @id @default(uuid())
+  name String
 
-  templateId   String
+  campaign_id String
+  creator_id String
 
-  template     Template @relation(references: [id], fields: [templateId], onDelete: Cascade)
+  dead Boolean @default(false)
+  npc  Boolean @default(false)
+  visible Boolean @default(false)
 
-  fields       TemplateInstanceFields[]
+  attributePoints Int @default(5)
 
-  dateCreated  DateTime @default(now())
-  dateUpdate   DateTime @updatedAt
+  // Atributes
+  agility  Int @default(0)
+  smarts   Int @default(0)
+  spirit   Int @default(0)
+  strength Int @default(0)
+  vigor    Int @default(0)
+
+  // Other
+
+  rank String @default("novice")
+
+  campaign SWADE_Campaign @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+  creator User @relation(fields: [creator_id], references: [id], onDelete: Cascade)
+
+  skillPoints Int @default(15)
+
+  skills    SWADE_CharacterSheet_Skill[]
+  edges     SWADE_CharacterSheet_edge[]
+  hindrances SWADE_CharacterSheet_hindrances[]
+  items     SWADE_CharacterSheet_item[]
+
+  logs SWADE_CharacterSheet_Logs[]
 }
 
-// Will be an instance of a field in a template
-model TemplateInstanceFields {
-  id         String @id @default(uuid())
+model SWADE_CharacterSheet_Logs {
+  id String @id @default(uuid())
 
-  instanceId String
+  character_id String
 
-  fieldId    String
+  message String
 
-  templateField TemplateField @relation(references: [id], fields: [fieldId], onDelete: Cascade)
+  dateCreated DateTime @default(now())
 
-  instance   TemplateInstance @relation(references: [id], fields: [instanceId], onDelete: Cascade)
+  character SWADE_CharacterSheet @relation(references: [id], fields: [character_id])
+}
+
+model SWADE_CharacterSheet_Skill {
+  id String @id @default(uuid())
+
+  skill_id String
+
+  level Int
+
+  character_id String
+
+  character SWADE_CharacterSheet @relation(fields: [character_id], references: [id], onDelete: Cascade)
+
+  skill SWADE_Skill @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+}
+
+model SWADE_Skill {
+  id String @id @default(uuid())
+
+  title String
+
+  base String
+  // One of the attributes
+
+  rank String
+  // Novice
+  // Seasoned
+  // Veteran
+  // Heroic
+  // Legendary
+
+  requirements SWADE_Skills_Requirement[] @relation("requirements")
+
+  skill_required          SWADE_Skills_Requirement[]
+  characters_skills       SWADE_CharacterSheet_Skill[]
+  item_effects            SWADE_Item_effect[]
+  SWADE_Edge_requirements SWADE_Edge_requirements[]
+}
+
+model SWADE_Skills_Requirement {
+  id String @id @default(uuid())
+
+  target_id String
+
+  level Int?
+
+  type String
+  // skill
+  // Edge
+
+  skill_id String?
+  edge_id  String?
+
+  edge SWADE_Edge? @relation(fields: [edge_id], references: [id], onDelete: Cascade)
+
+  skill SWADE_Skill? @relation("requirements", fields: [skill_id], references: [id], onDelete: Cascade)
+
+  target SWADE_Skill @relation(fields: [target_id], references: [id], onDelete: Cascade)
+}
+
+model SWADE_Edge_requirements {
+  id String @id @default(uuid())
+
+  target_id String
+
+  level Int?
+
+  type String
+  // skill
+  // Edge
+  // attribute    
+
+  attribute String?
+
+  skill_id String?
+
+  edge_id String?
+
+  skill SWADE_Skill? @relation(fields: [skill_id], references: [id])
+
+  edge SWADE_Edge? @relation("required", fields: [edge_id], references: [id], onDelete: Cascade)
+
+  target SWADE_Edge @relation(fields: [target_id], references: [id], onDelete: Cascade)
+}
+
+model SWADE_Edge {
+  id String @id @default(uuid())
+
+  title String
+
+  rank String?
+
+  description String
+
+  skill_required SWADE_Skills_Requirement[]
+
+  edge_required SWADE_Edge_requirements[] @relation("required")
+
+  requirements SWADE_Edge_requirements[]
+
+  characters SWADE_CharacterSheet_edge[]
+
+  item_effects SWADE_Item_effect[]
+}
+
+model SWADE_CharacterSheet_edge {
+  id String @id @default(uuid())
+
+  edge_id String
+
+  character_id String
+
+  edge SWADE_Edge @relation(fields: [edge_id], references: [id])
+
+  character SWADE_CharacterSheet @relation(fields: [character_id], references: [id])
+}
+
+model SWADE_Hindrances {
+  id String @id @default(uuid())
+
+  title String
+
+  description String
+
+  characters SWADE_CharacterSheet_hindrances[]
+
+  item_effects SWADE_Item_effect[]
+}
+
+model SWADE_CharacterSheet_hindrances {
+  id String @id @default(uuid())
+
+  hindrance_id String
+
+  character_id String
+
+  hindrance SWADE_Hindrances @relation(fields: [hindrance_id], references: [id])
+
+  character SWADE_CharacterSheet @relation(fields: [character_id], references: [id])
+}
+
+model SWADE_Item {
+  id String @id @default(uuid())
+
+  title String
+
+  weight Int
+
+  cost Int
+
+  type String
+  // Armor
+  // Hand Weapons
+  // Range Weapons
+  // Common Items
+
+  notes String
+
+  characters SWADE_CharacterSheet_item[]
+
+  armor   SWADE_Item_armor?
+  range   SWADE_Item_Range?
+  weapon  SWADE_Item_Weapon?
+  effects SWADE_Item_effect[]
+}
+
+model SWADE_Item_armor {
+  id String @id @default(uuid())
+
+  armor Int
+
+  item_id String     @unique
+  item    SWADE_Item @relation(fields: [item_id], references: [id])
+}
+
+model SWADE_Item_Range {
+  id String @id @default(uuid())
+
+  range String
+
+  damage String
+
+  rate_of_fire String
+
+  shots Int?
+
+  min_str Int?
+
+  item_id String     @unique
+  item    SWADE_Item @relation(fields: [item_id], references: [id])
+}
+
+model SWADE_Item_Weapon {
+  id String @id @default(uuid())
+
+  damage String
+
+  item_id String     @unique
+  item    SWADE_Item @relation(fields: [item_id], references: [id])
+}
+
+model SWADE_Item_effect {
+  id String @id @default(uuid())
+
+  type String
+  // skill
+  // edge
+  // hindrance
+  // attribute
+  // parry
+
+  bonus Int?
+
+  edge_id String?
+  edge    SWADE_Edge? @relation(fields: [edge_id], references: [id])
+
+  hindrance_id String?
+  hindrance    SWADE_Hindrances? @relation(fields: [hindrance_id], references: [id])
+
+  skill_id String?
+  skill    SWADE_Skill? @relation(fields: [skill_id], references: [id])
+
+  item_id String
+  item    SWADE_Item @relation(fields: [item_id], references: [id])
+}
+
+model SWADE_CharacterSheet_item {
+  id String @id @default(uuid())
+
+  item_id String
+
+  character_id String
+
+  characters SWADE_CharacterSheet @relation(fields: [character_id], references: [id])
+
+  item SWADE_Item @relation(fields: [item_id], references: [id])
 }

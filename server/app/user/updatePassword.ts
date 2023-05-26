@@ -9,6 +9,8 @@ import argon2 from 'argon2'
 
 export const UpdatePasswordUserSchema: RouteShorthandOptions = {
     schema: {
+        description: 'End point used to password a user',
+        tags: ['User'],
         body: {
             type: 'object',
             required: ['oldPassword', 'password'],
@@ -36,7 +38,7 @@ export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, 
 
 	const tokenStr = randomBytes(64).toString('base64');
 
-    let getUser = await prisma.user.findUnique({where: {id: token.userId} })
+    const getUser = await prisma.user.findUnique({where: {id: token.userId} })
 
 	try {
 		const result = await argon2.verify(getUser.password, body.oldPassword);
@@ -58,9 +60,12 @@ export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, 
 		});
 	} catch (e) { error(reply, 401, 'cloud not perform login') }
 
-    let pass = await argon2.hash(req.body.password)
+    const pass = await argon2.hash(req.body.password)
 
-    let nUser = await prisma.user.update({where: {id: token.userId}, data: {password: pass}, select: SELECT_USER});
+    const nUser = await prisma.user.update({
+        where: {id: token.userId}, 
+        data: {password: pass}, 
+        select: SELECT_USER});
 
 	return {
 		user: nUser,

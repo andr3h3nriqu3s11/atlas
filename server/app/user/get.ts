@@ -1,24 +1,24 @@
 import { prisma } from "app/app";
 import { authenticate, AuthenticationHeaders } from "app/authentication";
-import { FastifyReply, FastifyRequest, RouteShorthandMethod, RouteShorthandOptions } from "fastify";
+import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
 import { UserType } from "@ref/types/user";
 
 export const GetUsersSchema: RouteShorthandOptions = {
     schema: {
+        description: 'End point used to list users',
+        tags: ['User'],
         headers: AuthenticationHeaders
     }
 }
 
-interface GetUsersRequest extends FastifyRequest { }
-
-export const GetUsersHandler = async (req: GetUsersRequest, reply: FastifyReply) => {
+export const GetUsersHandler = async (req: FastifyRequest, reply: FastifyReply) => {
     const token = await authenticate(req, reply);
 
     if (token.user.userType != UserType.DM) {
         return [token.user];
     }
 
-    let users = await prisma.user.findMany({
+    return await prisma.user.findMany({
         select: {
             userType: true,
             id: true,
@@ -27,6 +27,4 @@ export const GetUsersHandler = async (req: GetUsersRequest, reply: FastifyReply)
             password: true,
         }
     });
-
-    return users;
 }
