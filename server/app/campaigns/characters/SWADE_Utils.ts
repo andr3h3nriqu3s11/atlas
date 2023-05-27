@@ -3,7 +3,6 @@ import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Ski
 import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance} from '@ref/types/swade';
 import {swade_character, SWADE_Campaign, CampaignType} from '@ref/types';
 import { prisma } from 'app/app';
-import { export_hindrance } from '../swade/hindrances';
 
 export const find_include = {
     skills: {
@@ -45,6 +44,8 @@ export const export_character = (character: SWADE_CharacterSheet & { campaign: p
     id: character.id,
     name: character.name,
     campaign_id: character.campaign.campaign.id,
+    dead: character.dead,
+    npc: character.npc,
     rank: character.rank as Rank,
     edges: character.edges.map(swade_export_character_edge),
     items: character.items,

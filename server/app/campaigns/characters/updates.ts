@@ -1,5 +1,5 @@
 import { SWADE_CharacterSheet } from '@prisma/client';
-import { CampaignStatus, CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
+import { CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
 import { Rank } from '@ref/types/swade';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify'
@@ -16,9 +16,6 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
     }, async (req: FastifyRequest<{Body: UpdateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
         const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id);
-
-        if (campaign.status !== CampaignStatus.character_editing_mode && !user.authorized)
-            reply.error(400, "You can not change this character while the campaign is in playing mode");
 
         if (campaign.type === CampaignType.SWADE) {
             

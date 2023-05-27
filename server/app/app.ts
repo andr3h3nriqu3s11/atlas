@@ -81,7 +81,7 @@ export const buildServer = async (code: string) => {
                 reply.error(404, 'Campaign not found');
 
             if (verify_type && campaign.status !== CampaignStatus.character_editing_mode && token.user.userType == UserType.PLEB)
-                reply.error(401, 'You can not create a character in playing mode if you are not the dm');
+                reply.error(401, 'You can do this in playing mode if you are not the dm');
 
             return {token, campaign};
         }

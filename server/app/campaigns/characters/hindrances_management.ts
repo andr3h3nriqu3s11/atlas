@@ -1,4 +1,4 @@
-import { CampaignType, Character } from '@ref/types';
+import { CampaignType, Character, UserType } from '@ref/types';
 import { AddHindranceCharacter, HindranceCharacterPair } from '@ref/types/swade/hindrance';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
@@ -22,7 +22,7 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: AddHindranceCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
         
         if (campaign.type !== CampaignType.SWADE) 
             reply.error(400, 'Hindrance only avaliable on SWADE');
@@ -36,6 +36,9 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
 
         if (!character)
             reply.error(404, 'Character not found')
+
+        if (character.creator_id !== user.id && user.userType !== UserType.DM)
+            reply.error(400, 'You can not change this user');
 
         if (character.hindrances.some(hindrance => hindrance.id === body.hindrance_id))
             reply.error(400, 'Character already has that hindrance');
@@ -79,7 +82,7 @@ export const hidrance_remove = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: HindranceCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
 
         if (campaign.type !== CampaignType.SWADE) 
             reply.error(400, 'Invalid campaign type')
@@ -95,6 +98,9 @@ export const hidrance_remove = (fastify: FastifyInstance, baseUrl: string) => {
 
         if (!character)
             reply.error(404, 'Character not found')
+
+        if (character.creator_id !== user.id && user.userType !== UserType.DM)
+            reply.error(400, "You can not edit this character");
 
         const hindrance_pair = character.hindrances.filter(hindrance => hindrance.hindrance_id === body.hindrance_id);
 

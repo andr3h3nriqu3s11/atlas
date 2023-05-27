@@ -20,10 +20,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: CreateCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign, token} = await req.authenticate_verifyCampaign(body.campaign_id)
-
-        if (campaign.status !== CampaignStatus.character_editing_mode && token.user.authorized)
-            reply.error(400, "You can not create a new character while the campaign is in playing mode");
+        const {campaign, token} = await req.authenticate_verifyCampaign(body.campaign_id, true)
 
         if (campaign.type === CampaignType.SWADE) {
 

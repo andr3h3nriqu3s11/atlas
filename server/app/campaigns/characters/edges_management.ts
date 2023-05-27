@@ -1,4 +1,4 @@
-import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddEdgeCharacter } from '@ref/types';
+import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddEdgeCharacter, CampaignStatus, UserType } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -21,7 +21,7 @@ export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: AddEdgeCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
         
         if (campaign.type !== CampaignType.SWADE) 
             reply.error(400, 'Edges only avaliable on SWADE');
@@ -38,6 +38,9 @@ export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
 
         if (!character)
             reply.error(404, 'Character not found')
+
+        if (user.userType !== UserType.DM && character.creator_id !== user.id)
+            reply.error(400, 'You can not change this character');
 
         if (character.edges.some(edge => edge.edge_id === body.edge_id))
             reply.error(400, 'Character already has that edge');
@@ -115,7 +118,7 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: EdgeCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
 
         if (campaign.type !== CampaignType.SWADE) 
             reply.error(400, 'Invalid campaign type')
@@ -132,6 +135,9 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
         if (!character)
             reply.error(404, 'Character not found')
 
+        if (character.creator_id !== user.id && user.userType !== UserType.DM)
+            reply.error(400, "You can not change this character");
+
         const edge_pair = character.edges.filter(edge => edge.edge_id === body.edge_id);
 
         if (edge_pair.length === 0)
@@ -142,6 +148,8 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
                 id: edge_pair[0].id
             }
         });
+
+        // TODO check if any of the skills require this
 
         return prisma_export_character(body.character_id);
     })

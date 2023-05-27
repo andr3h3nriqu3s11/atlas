@@ -1,4 +1,4 @@
-import { CampaignType, Character, SWADE_RequirementType, AddSkillCharacter, SkillCharacterPair } from '@ref/types';
+import { CampaignType, Character, SWADE_RequirementType, AddSkillCharacter, SkillCharacterPair, UserType } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -21,7 +21,7 @@ export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: AddSkillCharacter}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
         
         if (campaign.type === CampaignType.SWADE) {
 
@@ -37,6 +37,9 @@ export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
 
             if (!character)
                 reply.error(404, 'Character not found')
+
+            if (character.creator_id !== user.id && user.userType !== UserType.DM)
+                reply.error(400, "You can not edit this character");
 
             if (character.skills.some(skill => skill.skill_id === body.skill_id))
                 reply.error(400, 'Character already has that skill');
@@ -110,7 +113,7 @@ export const skill_remove = (fastify: FastifyInstance, baseUrl: string) => {
         }
     }, async (req: FastifyRequest<{Body: SkillCharacterPair}>, reply): Promise<Character> => {
         const {body} = req;
-        const {campaign} = await req.authenticate_verifyCampaign(body.campaign_id);
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, true);
 
         if (campaign.type === CampaignType.SWADE) {
 
@@ -125,6 +128,9 @@ export const skill_remove = (fastify: FastifyInstance, baseUrl: string) => {
 
             if (!character)
                 reply.error(404, 'Character not found')
+
+            if (character.creator_id !== user.id && user.userType !== UserType.DM)
+                reply.error(400, 'You can not change this character');
 
             const skill_pair = character.skills.filter(skill => skill.skill_id === body.skill_id);
 
