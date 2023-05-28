@@ -29,10 +29,10 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         const {body} = req;
 
         if (!body.title)
-            return reply.error(400, 'title has an invalid value');
+            reply.error(400, 'title has an invalid value');
 
         if (!body.description)
-            return reply.error(400, 'title has an invalid value');
+            reply.error(400, 'title has an invalid value');
 
         const list_hindrance = await prisma.sWADE_Hindrances.count({
             where: {
@@ -74,7 +74,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
         });
         
         if (!skill)
-            return reply.error(404, 'Hindrance not found');
+            reply.error(404, 'Hindrance not found');
 
         if (body.title) {
             const find_skill = await prisma.sWADE_Hindrances.findFirst({
@@ -83,7 +83,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             });
             if (find_skill)
-                return reply.error(400, 'a edge with this title already exists');
+                reply.error(400, 'a edge with this title already exists');
         }
 
         const result = await prisma.sWADE_Hindrances.update({

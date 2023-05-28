@@ -23,7 +23,8 @@ import {
   UpdateEdge,
   CreateEdgeRequirement,
   RemoveEdgeRequirement,
-  ListCampaign
+  ListCampaign,
+  ImportCampaign
 } from '~/types';
 
 interface Requester {
@@ -75,6 +76,9 @@ class RequestsClass {
 
       list: <Type extends CampaignType>(data: ListCampaign<Type>): Promise<Campaign<Type>> =>
         this.req.post(`${this.campaign.url}/list`, {data}),
+
+      import: (data: ImportCampaign<Campaign<CampaignType>>): Promise<{}> =>
+        this.req.post(`${this.campaign.url}/import`, {data}),
 
       characters: {
         url: `/campaing/characters`,
