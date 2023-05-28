@@ -1,4 +1,4 @@
-import {FastifyInstance, FastifyRequest} from 'fastify';
+import {FastifyInstance, FastifyRequest, FastifyReply} from 'fastify';
 import { CreateEdge, Edge, UpdateEdge } from '@ref/types';
 import { Rank } from '@ref/types';
 import { prisma } from 'app/app';
@@ -25,42 +25,46 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
 
         const {body} = req;
 
-        if(!Object.values(Rank).includes(body.rank))
-            reply.error(400, 'rank has an invalid value');
+        return addEdge(reply, body);
+    })
+}
 
-        if (!body.title)
-            reply.error(400, 'title has an invalid value');
+export async function addEdge(reply: FastifyReply, body: CreateEdge): Promise<Edge> {
+    if(!Object.values(Rank).includes(body.rank))
+        reply.error(400, 'rank has an invalid value');
 
-        if (!body.description)
-            reply.error(400, 'title has an invalid value');
+    if (!body.title)
+        reply.error(400, 'title has an invalid value');
 
-        const list_edges = await prisma.sWADE_Edge.count({
-            where: {
-                title: body.title,
-            }
-        });
+    if (!body.description)
+        reply.error(400, 'title has an invalid value');
 
-        if (list_edges !== 0)
-            reply.error(400, 'A edge with that name already exists');
+    const list_edges = await prisma.sWADE_Edge.count({
+        where: {
+            title: body.title,
+        }
+    });
 
-        const skill = await prisma.sWADE_Edge.create({
-            data: {
-                title: body.title,
-                rank: body.rank,
-                description: body.description
-            },
-            include: {
-                requirements: {
-                    include: {
-                        edge: true,
-                        skill: true
-                    }
+    if (list_edges !== 0)
+        reply.error(400, 'A edge with that name already exists');
+
+    const skill = await prisma.sWADE_Edge.create({
+        data: {
+            title: body.title,
+            rank: body.rank,
+            description: body.description
+        },
+        include: {
+            requirements: {
+                include: {
+                    edge: true,
+                    skill: true
                 }
             }
-        });
+        }
+    });
 
-        return swade_export_edge(skill);
-    })
+    return swade_export_edge(skill);
 }
 
 export const update = (fastify: FastifyInstance, baseUrl: string) => {

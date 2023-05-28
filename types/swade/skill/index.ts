@@ -7,8 +7,9 @@ export type CreateSkill = {
     type: CampaignType.SWADE
     title: string,
     base: BaseAttribute,
+    description: string,
     rank: Rank
-} & {
+} | {
     type: never
 }
 
@@ -51,7 +52,8 @@ export interface SWADE_Skill {
     base: BaseAttribute,
     rank: Rank,
     id: string
-    requirements: SkillRequirement<SWADE_Campaign>[]
+    requirements: SkillRequirement<SWADE_Campaign>[],
+    description: string,
 }
 
 export type SkillRequirement<T extends CampaignT = CampaignT> = T extends SWADE_Campaign ? SWADE_SkillRequirement : never;

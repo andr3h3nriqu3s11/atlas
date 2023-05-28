@@ -1,6 +1,6 @@
 import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances, SWADE_Campaign as prisma_SWADE_Campaign, Campaign as prisma_Campaign} from '@prisma/client'
 
-import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance} from '@ref/types/swade';
+import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance, HindranceType} from '@ref/types/swade';
 import {swade_character, SWADE_Campaign, CampaignType} from '@ref/types';
 import { prisma } from 'app/app';
 
@@ -82,7 +82,8 @@ export const swade_export_skill = (skill: SWADE_ExportableSkill): Skill<SWADE_Ca
     base: skill.base as BaseAttribute,
     rank: skill.rank as Rank,
     id: skill.id,
-    requirements: skill.requirements.map(swade_export_skill_requirement)
+    requirements: skill.requirements.map(swade_export_skill_requirement),
+    description: skill.description,
 });
 
 export type SWADE_ExportableSkillRequirement = SWADE_Skills_Requirement & {edge?: SWADE_Edge, skill: SWADE_Skill};
@@ -145,7 +146,8 @@ export type SWADE_ExportableHindrance = SWADE_CharacterSheet_hindrances & { hind
 export const swade_export_character_hindarance = (hindrance: SWADE_ExportableHindrance): Hindrance => ({
     id: hindrance.hindrance.id,
     title: hindrance.hindrance.title,
-    description: hindrance.hindrance.description
+    description: hindrance.hindrance.description,
+    type: hindrance.hindrance.type as HindranceType,
 })
 
 //

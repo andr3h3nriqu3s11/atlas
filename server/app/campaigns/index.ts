@@ -4,13 +4,17 @@ import { set_up_campaign_characters } from './characters';
 import { prisma } from 'app/app';
 import { set_up_skills } from './skills';
 import { setUpCampaignList } from './ListCampaign';
+import { setUpSwade } from './swade';
+import { setUpImport } from './Import';
 
 export const setUpCampaingns = (fastify: FastifyInstance, baseUrl: string) => {
 
     const url = `${baseUrl}/campaing`;
     
     setUpAddCampaign(fastify, url);
+    setUpImport(fastify, url);
     setUpCampaignList(fastify, url);
+    setUpSwade(fastify, url);
 
     set_up_campaign_characters(fastify, url);
     set_up_skills(fastify, url);

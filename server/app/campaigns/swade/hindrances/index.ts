@@ -1,5 +1,5 @@
 import { SWADE_Hindrances } from '@prisma/client';
-import { Hindrance } from '@ref/types/swade/hindrance';
+import { Hindrance, HindranceType } from '@ref/types/swade/hindrance';
 import { FastifyInstance } from 'fastify';
 import { list } from './list';
 import { create, update } from './mutation';
@@ -14,5 +14,6 @@ export const set_campaing_swade_hindrances = (fastify: FastifyInstance, baseUrl:
 export const export_hindrance = (hindrance: SWADE_Hindrances): Hindrance => ({
     id: hindrance.id,
     title: hindrance.title,
-    description: hindrance.title
+    description: hindrance.title,
+    type: hindrance.type as HindranceType,
 });

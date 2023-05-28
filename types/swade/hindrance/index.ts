@@ -1,8 +1,14 @@
 import { campaign_interaction } from "../../campaign"
 
+export enum HindranceType {
+    Major = "major",
+    Minor = "minor",
+}
+
 export interface create_hindrance {
     title: string
     description: string
+    type: HindranceType
 }
 
 export interface Hindrance extends create_hindrance {

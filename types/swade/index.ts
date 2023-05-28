@@ -7,7 +7,7 @@ export enum Rank {
     Seasoned = 'seasoned',
     Veteran = 'veteran',
     Heroic = 'heroic',
-    Legendary = 'Legendary',
+    Legendary = 'legendary',
 }
 
 export enum BaseAttribute {
@@ -15,5 +15,6 @@ export enum BaseAttribute {
     Smarts = "smarts",
     Spirit = "spirit",
     Strength = "strength",
-    Vigor = "Vigor"
+    Vigor = "vigor",
+    None = "none",
 }

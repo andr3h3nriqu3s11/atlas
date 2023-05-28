@@ -168,6 +168,8 @@ model SWADE_Skill {
   base String
   // One of the attributes
 
+  description String
+
   rank String
   // Novice
   // Seasoned
@@ -267,6 +269,8 @@ model SWADE_Hindrances {
   title String
 
   description String
+
+  type String
 
   characters SWADE_CharacterSheet_hindrances[]
 

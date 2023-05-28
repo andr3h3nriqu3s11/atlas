@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import {CampaignType, Campaign, ListCampaign} from '../../ref/types';
+import {CampaignType, Campaign, ListCampaign, UserType} from '../../ref/types';
 import { prisma } from 'app/app';
 import { AuthenticationHeaders } from 'app/authentication';
 import { export_swade_campaign } from './characters/SWADE_Utils';
@@ -30,7 +30,7 @@ export const setUpCampaignList = (fastify: FastifyInstance, base: string) => {
 
         if (body.type === CampaignType.SWADE) {
             
-            if (token.user.authorized) {
+            if (token.user.userType === UserType.DM) {
                 const data = await prisma.campaign.findMany({
                     include: {
                         SWADE_Campaign: {

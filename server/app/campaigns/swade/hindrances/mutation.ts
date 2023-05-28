@@ -1,5 +1,4 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import { error } from 'app/utils';
 import { prisma } from 'app/app';
 import { create_hindrance, Hindrance, update_hindrance } from '@ref/types/swade/hindrance';
 import { export_hindrance } from '.';
@@ -16,6 +15,10 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                     title: {type: 'string'},
                     rank: {type: 'string'},
                     description: {type: 'string'},
+                    type: {
+                        type: 'string',
+                        enum: ["minor", "major"],
+                    },
                 }
             },
             headers: AuthenticationHeaders,
@@ -26,10 +29,10 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         const {body} = req;
 
         if (!body.title)
-            return error(reply, 400, 'title has an invalid value');
+            return reply.error(400, 'title has an invalid value');
 
         if (!body.description)
-            return error(reply, 400, 'title has an invalid value');
+            return reply.error(400, 'title has an invalid value');
 
         const list_hindrance = await prisma.sWADE_Hindrances.count({
             where: {
@@ -38,12 +41,13 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
         });
 
         if (list_hindrance !== 0)
-            return error(reply, 400, 'A hindrance with that name already exists');
+            reply.error(400, 'A hindrance with that name already exists');
 
         const hindrance = await prisma.sWADE_Hindrances.create({
             data: {
                 title: body.title,
-                description: body.description
+                description: body.description,
+                type: body.type,
             },
         });
 
@@ -70,7 +74,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
         });
         
         if (!skill)
-            return error(reply, 404, 'Hindrance not found');
+            return reply.error(404, 'Hindrance not found');
 
         if (body.title) {
             const find_skill = await prisma.sWADE_Hindrances.findFirst({
@@ -79,7 +83,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             });
             if (find_skill)
-                return error(reply, 400, 'a edge with this title already exists');
+                return reply.error(400, 'a edge with this title already exists');
         }
 
         const result = await prisma.sWADE_Hindrances.update({

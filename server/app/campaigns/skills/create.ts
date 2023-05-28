@@ -17,6 +17,7 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                     base: {type: 'string'},
                     rank: {type: 'string'},
                     type: {type: 'string'},
+                    description: {type: 'string'},
                 }
             },
             headers: AuthenticationHeaders,
@@ -49,7 +50,8 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                 data: {
                     title: body.title,
                     rank: body.rank,
-                    base: body.base
+                    base: body.base,
+                    description: body.description
                 },
                 include: {
                     requirements: {
