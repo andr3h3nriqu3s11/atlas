@@ -10,6 +10,15 @@ export const list = (fastify: FastifyInstance, baseUrl: string) => {
             description: 'Endpoint used to list a swade skill',
             tags: ['Skill', 'Swade'],
             headers: AuthenticationHeaders,
+            body: {
+                type: 'object',
+                properties: {
+                    type: {
+                        type: 'string',
+                        enum: ["SWADE"],
+                    },
+                }
+            }
         }
     }, async (req: FastifyRequest<{Body: CampaignTyped}>, reply): Promise<Skill[]> => {
         await req.authenticate();

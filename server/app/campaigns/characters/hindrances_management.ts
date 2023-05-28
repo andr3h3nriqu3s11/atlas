@@ -1,5 +1,5 @@
 import { CampaignType, Character, UserType } from '@ref/types';
-import { AddHindranceCharacter, HindranceCharacterPair } from '@ref/types/swade/hindrance';
+import { AddHindranceCharacter, HindranceCharacterPair, HindranceType } from '@ref/types/swade/hindrance';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -15,7 +15,7 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
                 properties: {
                     character_id: {type: 'string'},
                     hindrance_id: {type: 'string'},
-                    level: {type: 'number'}
+                    level: {type: 'string'}
                 }
             },
             headers: AuthenticationHeaders,
@@ -52,12 +52,19 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
         if (!hindrance)
             reply.error(404, 'Edge not found');
 
+        if (body.level === HindranceType.Major_Minor || (body.level === undefined && hindrance.type === HindranceType.Major_Minor))
+            reply.error(400, 'Please Specify a hindrance');
+
+        if (body.level !== undefined && hindrance.type !== HindranceType.Major_Minor && hindrance.type !== body.level)
+            reply.error(400, `${hindrance.title} is not avaliable at ${body.level}`);
+
         // TODO point calculations
         
         await prisma.sWADE_CharacterSheet_hindrances.create({
             data: {
                 character_id: body.character_id,
-                hindrance_id: body.hindrance_id
+                hindrance_id: body.hindrance_id,
+                level: body.level ?? hindrance.type,
             }
         });
 

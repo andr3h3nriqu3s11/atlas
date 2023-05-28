@@ -807,13 +807,8 @@ export const defaultSWADE: ImportCampaign<Campaign<CampaignType.SWADE>> = {
             description: "Your hero doesn’t think he’s the best—he knows he is. Whatever it is—swordsmanship, kung fu, running—there is no one who can touch his skills and he flaunts it every chance he gets. Winning just isn’t enough for your hero. He must completely dominate his opponent. Anytime there is even a shadow of a doubt as to who is the better, he must humiliate his opponent and prove he can snatch victory any time he wishes. He is the kind of man who disarms an opponent in a duel just so he can pick the sword up and hand it back with a smirk. Arrogant heroes always look for the “master” in battle, attacking lesser minions only if they get in the way.",
         },
         {
-            title: "Bad Eyes (Minor)",
-            type: HindranceType.Minor,
-            description: "Your hero’s eyes just aren’t what they used to be. With glasses, there’s no penalty and the Hindrance is only Minor. Should he lose his glasses, generally a 50% chance when he’s wounded, or no chance with a “nerd-strap”, he suffers a -2 penalty to any Trait roll made to shoot or Notice something more than 5”, 10 yards, distant. In low-tech settings where the hero cannot wear glasses, Bad Eyes is a Major Hindrance. He must subtract 2 from Trait rolls made to attack or notice things 5” or more away.",
-        },
-        {
-            title: "Bad Eyes (Major)",
-            type: HindranceType.Major,
+            title: "Bad Eyes",
+            type: HindranceType.Major_Minor,
             description: "Your hero’s eyes just aren’t what they used to be. With glasses, there’s no penalty and the Hindrance is only Minor. Should he lose his glasses, generally a 50% chance when he’s wounded, or no chance with a “nerd-strap”, he suffers a -2 penalty to any Trait roll made to shoot or Notice something more than 5”, 10 yards, distant. In low-tech settings where the hero cannot wear glasses, Bad Eyes is a Major Hindrance. He must subtract 2 from Trait rolls made to attack or notice things 5” or more away.",
         },
         {
@@ -862,13 +857,8 @@ export const defaultSWADE: ImportCampaign<Campaign<CampaignType.SWADE>> = {
             description: "Having a death wish doesn’t mean your hero is suicidal—but he does want to die after completing some important goal. Maybe he wants revenge for the murder of his family, or maybe he’s dying from disease and wants to go out in a blaze of glory. He won’t throw his life away for no reason, but when there’s a chance to complete his goal, he’ll do anything—and take any risk—to achieve it. This Hindrance is usually Minor unless the goal is relatively easily fulfilled very rare.",
         },
         {
-            title: "Delusional (Minor)",
-            type: HindranceType.Major,
-            description: "Your hero believes something that is considered quite strange by everyone else. Minor Delusions are harmless or the character generally keeps it to himself, the government puts sedatives in soft drinks, dogs can talk, we’re all just characters in some bizarre game, etc. With a Major Delusion, he expresses his view on the situation frequently and it can occasionally lead to danger,the government is run by aliens, hospitals are deadly, I’m allergic to armor, zombies are my friends.",
-        },
-        {
-            title: "Delusional (Major)",
-            type: HindranceType.Major,
+            title: "Delusional",
+            type: HindranceType.Major_Minor,
             description: "Your hero believes something that is considered quite strange by everyone else. Minor Delusions are harmless or the character generally keeps it to himself, the government puts sedatives in soft drinks, dogs can talk, we’re all just characters in some bizarre game, etc. With a Major Delusion, he expresses his view on the situation frequently and it can occasionally lead to danger,the government is run by aliens, hospitals are deadly, I’m allergic to armor, zombies are my friends.",
         },
         {
@@ -882,43 +872,23 @@ export const defaultSWADE: ImportCampaign<Campaign<CampaignType.SWADE>> = {
             description: "Your hero is getting on in years, but he’s not quite ready for the nursing home. His Pace is reduced by 1, and his Strength and Vigor drop a die type to a minimum of d4, and cannot be raised thereafter. On the plus side, the wisdom of his years grants the hero 5 extra skill points that may be used for any skills linked to Smarts.",
         },
         {
-            title: "Enemy (Minor)",
-            type: HindranceType.Minor,
+            title: "Enemy",
+            type: HindranceType.Major_Minor,
             description: "Someone out there hates your hero and wants him dead. The value of the Hindrance depends on how powerful the enemy is and how often he might show up. A Minor Enemy might be a lone gunslinger out for vengeance. A Major Enemy might be a supernatural gunslinger with a hate-on for your hero. If the enemy is one day defeated, the GM should gradually work in a replacement, or the hero may buy off the Hindrance by sacrifi cing a leveling opportunity.",
         },
         {
-            title: "Enemy (Major)",
-            type: HindranceType.Major,
-            description: "Someone out there hates your hero and wants him dead. The value of the Hindrance depends on how powerful the enemy is and how often he might show up. A Minor Enemy might be a lone gunslinger out for vengeance. A Major Enemy might be a supernatural gunslinger with a hate-on for your hero. If the enemy is one day defeated, the GM should gradually work in a replacement, or the hero may buy off the Hindrance by sacrifi cing a leveling opportunity.",
-        },
-        {
-            title: "Greedy (Minor)",
-            type: HindranceType.Minor,
+            title: "Greedy",
+            type: HindranceType.Major_Minor,
             description: "Your miserly hero measures his worth in treasure. If a Minor Hindrance, he argues bitterly over any loot acquired during play. If a Major Hindrance, he fi ghts over anything he considers unfair, and may even kill for his “fair share.”",
         },
         {
-            title: "Greedy (Major)",
-            type: HindranceType.Major,
-            description: "Your miserly hero measures his worth in treasure. If a Minor Hindrance, he argues bitterly over any loot acquired during play. If a Major Hindrance, he fi ghts over anything he considers unfair, and may even kill for his “fair share.”",
-        },
-        {
-            title: "Habit (Minor)",
-            type: HindranceType.Minor,
+            title: "Habit",
+            type: HindranceType.Major_Minor,
             description: "Your warrior has an annoying and constant habit of some sort. Maybe she picks her nose, says “y’know” in every sentence, or chews gum like it’s going out of style. A Minor Habit irritates those around her but isn’t dangerous. Your hero suffers a -1 Charisma. A Major Habit is a physical or mental addiction of some sort that is debilitating or possibly even deadly. This includes drug use, chronic drinking, or perhaps even an addiction to virtual reality in a high-tech setting. A character who doesn’t get his fi x must make a Fatigue check every 24 hours thereafter, see Fatigue. The first failed roll makes the character Fatigued, then Exhausted. The final result is a coma for hard drug use, or a bad case of the shakes for things like alcohol or VR. Medical care may ease the symptoms. Otherwise the victim must live with the penalties for 1d6 days. Afterwards, the hero must buy off the Hindrance by sacrificing an opportunity to level up, or he eventually falls back into his dependency.", 
         },
         {
-            title: "Habit (Major)",
-            type: HindranceType.Major,
-            description: "Your warrior has an annoying and constant habit of some sort. Maybe she picks her nose, says “y’know” in every sentence, or chews gum like it’s going out of style. A Minor Habit irritates those around her but isn’t dangerous. Your hero suffers a -1 Charisma. A Major Habit is a physical or mental addiction of some sort that is debilitating or possibly even deadly. This includes drug use, chronic drinking, or perhaps even an addiction to virtual reality in a high-tech setting. A character who doesn’t get his fi x must make a Fatigue check every 24 hours thereafter, see Fatigue. The first failed roll makes the character Fatigued, then Exhausted. The final result is a coma for hard drug use, or a bad case of the shakes for things like alcohol or VR. Medical care may ease the symptoms. Otherwise the victim must live with the penalties for 1d6 days. Afterwards, the hero must buy off the Hindrance by sacrificing an opportunity to level up, or he eventually falls back into his dependency.", 
-        },
-        {
-            title: "Hard of Hearing (Minor)",
-            type: HindranceType.Minor,
-            description: "Characters who have lost some or all of their hearing have this disadvantage. As a Minor Hindrance, it subtracts 2 from all Notice rolls made to hear, including awaking due to loud noises. A Major Hindrance means the character is deaf. She cannot hear and automatically fails all Notice rolls that depend on hearing. 17",
-        },
-        {
-            title: "Hard of Hearing (Major)",
-            type: HindranceType.Major,
+            title: "Hard of Hearing",
+            type: HindranceType.Major_Minor,
             description: "Characters who have lost some or all of their hearing have this disadvantage. As a Minor Hindrance, it subtracts 2 from all Notice rolls made to hear, including awaking due to loud noises. A Major Hindrance means the character is deaf. She cannot hear and automatically fails all Notice rolls that depend on hearing. 17",
         },
         {
@@ -977,23 +947,13 @@ export const defaultSWADE: ImportCampaign<Campaign<CampaignType.SWADE>> = {
             description: "There’s nothing out there your hero can’t defeat. At least that’s what he thinks. He believes he can do most anything and never wants to retreat from a challenge. He’s not suicidal, but he certainly takes on more than common sense dictates.",
         },
         {
-            title: "Pacifist (Minor)",
-            type: HindranceType.Minor,
+            title: "Pacifist",
+            type: HindranceType.Major_Minor,
             description: "Your hero absolutely despises violence . Minor pacifism means he only fights when given no other choice, and never allows the killing of prisoners or other defenseless victims. Major Pacifists won’t fight living characters under any circumstances. They may defend themselves, but won’t do anything to permanently harm sentient, living creatures. Note that undeniably evil creatures, undead, demons and the like, are fair game, however. A Major Pacifist might also fight with nonlethal methods, such as with his fists. Such characters only do so when obviously threatened, however.",
         },
         {
-            title: "Pacifist (Major)",
-            type: HindranceType.Major,
-            description: "Your hero absolutely despises violence . Minor pacifism means he only fights when given no other choice, and never allows the killing of prisoners or other defenseless victims. Major Pacifists won’t fight living characters under any circumstances. They may defend themselves, but won’t do anything to permanently harm sentient, living creatures. Note that undeniably evil creatures, undead, demons and the like, are fair game, however. A Major Pacifist might also fight with nonlethal methods, such as with his fists. Such characters only do so when obviously threatened, however.",
-        },
-        {
-            title: "Phobia (Minor)",
-            type: HindranceType.Minor,
-            description: "Phobias are overwhelming and irrational fears that stay with a hero for the rest of his life. Whenever a character is in the presence of his phobia, he subtracts 2 from all his Trait tests as a Minor Hindrance, and 4 if the fear is a Major Phobia. Phobias shouldn’t be too obvious— everyone should be afraid of vampires, for example, so it’s not a phobia—it’s common sense. Instead, the phobia usually centers on some random element the mind focused on during whatever encounter caused such a fright. Remember, phobias are irrational fears.",
-        },
-        {
-            title: "Phobia (Major)",
-            type: HindranceType.Major,
+            title: "Phobia",
+            type: HindranceType.Major_Minor,
             description: "Phobias are overwhelming and irrational fears that stay with a hero for the rest of his life. Whenever a character is in the presence of his phobia, he subtracts 2 from all his Trait tests as a Minor Hindrance, and 4 if the fear is a Major Phobia. Phobias shouldn’t be too obvious— everyone should be afraid of vampires, for example, so it’s not a phobia—it’s common sense. Instead, the phobia usually centers on some random element the mind focused on during whatever encounter caused such a fright. Remember, phobias are irrational fears.",
         },
         {
@@ -1022,33 +982,18 @@ export const defaultSWADE: ImportCampaign<Campaign<CampaignType.SWADE>> = {
             description: "Your hero hit more than a few ugly sticks on his way down the tree of life. His Charisma is lowered by 2, and he is generally shunned by members of the opposite sex.",
         },
         {
-            title: "Vengeful (Minor)",
-            type: HindranceType.Minor,
+            title: "Vengeful",
+            type: HindranceType.Major_Minor,
             description: "Your character always attempts to right a wrong he feels was done to him. If this is a Minor Hindrance, he usually seeks vengeance legally. If this is a Major Hindrance, he’ll kill to see it done.",
         },
         {
-            title: "Vengeful (Major)",
-            type: HindranceType.Major,
-            description: "Your character always attempts to right a wrong he feels was done to him. If this is a Minor Hindrance, he usually seeks vengeance legally. If this is a Major Hindrance, he’ll kill to see it done.",
-        },
-        {
-            title: "Vow (Minor)",
-            type: HindranceType.Minor,
+            title: "Vow",
+            type: HindranceType.Major_Minor,
             description: "The character has a vow of some sort. Whether it’s Major or Minor depends on the Vow itself. Some may have Vows to particular orders or causes, to the Hippocratic Oath, to rid the world of evil, and so on. The danger in fulfi lling the Vow and how often it might come into play determines the level of the Hindrance. Whatever the Vow, it’s only a Hindrance if it actually comes into play from time to time and causes the character some discomfort.",
         },
         {
-            title: "Vow (Major)",
-            type: HindranceType.Major,
-            description: "The character has a vow of some sort. Whether it’s Major or Minor depends on the Vow itself. Some may have Vows to particular orders or causes, to the Hippocratic Oath, to rid the world of evil, and so on. The danger in fulfi lling the Vow and how often it might come into play determines the level of the Hindrance. Whatever the Vow, it’s only a Hindrance if it actually comes into play from time to time and causes the character some discomfort.",
-        },
-        {
-            title: "Wanted (Minor)",
-            type: HindranceType.Minor,
-            description: "Your hero has committed some crime in his past and will be arrested if discovered by the authorities. This assumes the setting actually has laws and police officers to enforce them. The level of the Hindrance depends on how serious the crime was. A hero with numerous unpaid parking tickets ,in a game where he might have to drive occasionally, has a Minor Hindrance, as does someone wanted for more serious crimes away from the main campaign area. Being accused of murder is a Major Hindrance in almost any setting.",
-        },
-        {
-            title: "Wanted (Major)",
-            type: HindranceType.Major,
+            title: "Wanted",
+            type: HindranceType.Major_Minor,
             description: "Your hero has committed some crime in his past and will be arrested if discovered by the authorities. This assumes the setting actually has laws and police officers to enforce them. The level of the Hindrance depends on how serious the crime was. A hero with numerous unpaid parking tickets ,in a game where he might have to drive occasionally, has a Minor Hindrance, as does someone wanted for more serious crimes away from the main campaign area. Being accused of murder is a Major Hindrance in almost any setting.",
         },
         {

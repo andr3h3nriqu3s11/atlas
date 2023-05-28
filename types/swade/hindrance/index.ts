@@ -3,6 +3,7 @@ import { campaign_interaction } from "../../campaign"
 export enum HindranceType {
     Major = "major",
     Minor = "minor",
+    Major_Minor = "major_minor",
 }
 
 export interface create_hindrance {
@@ -25,5 +26,5 @@ export interface HindranceCharacterPair extends campaign_interaction {
 }
 
 export interface AddHindranceCharacter extends HindranceCharacterPair {
-    level: number
+    level?: HindranceType
 }

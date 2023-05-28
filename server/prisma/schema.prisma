@@ -284,6 +284,8 @@ model SWADE_CharacterSheet_hindrances {
 
   character_id String
 
+  level String
+
   hindrance SWADE_Hindrances @relation(fields: [hindrance_id], references: [id])
 
   character SWADE_CharacterSheet @relation(fields: [character_id], references: [id])

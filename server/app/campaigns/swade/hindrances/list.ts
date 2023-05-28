@@ -1,7 +1,6 @@
 import {FastifyInstance, FastifyRequest} from 'fastify';
-import {CampaignType, CampaignTyped, Edge, Hindrance} from '@ref/types';
+import {CampaignType, CampaignTyped, Hindrance} from '@ref/types';
 import { prisma } from 'app/app';
-import { swade_export_edge } from 'app/campaigns/characters/SWADE_Utils';
 import { export_hindrance } from '.';
 import { AuthenticationHeaders } from 'app/authentication';
 
@@ -9,8 +8,17 @@ export const list = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/list`, {
         schema: {
             description: 'Endpoint used to list a swade edges',
-            tags: ['Edge', 'Swade'],
+            tags: ['Hindrance', 'Swade'],
             headers: AuthenticationHeaders,
+            body: {
+                type: 'object',
+                properties: {
+                    type: {
+                        type: 'string',
+                        enum: ["SWADE"],
+                    },
+                }
+            }
         },
     }, async (req: FastifyRequest<{Body: CampaignTyped}>, reply): Promise<Hindrance[]> => {
         await req.authenticate();

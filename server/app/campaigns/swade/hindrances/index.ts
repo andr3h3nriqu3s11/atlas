@@ -14,6 +14,6 @@ export const set_campaing_swade_hindrances = (fastify: FastifyInstance, baseUrl:
 export const export_hindrance = (hindrance: SWADE_Hindrances): Hindrance => ({
     id: hindrance.id,
     title: hindrance.title,
-    description: hindrance.title,
+    description: hindrance.description,
     type: hindrance.type as HindranceType,
 });
