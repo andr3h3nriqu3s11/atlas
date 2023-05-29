@@ -1,12 +1,8 @@
 import {Rank, CharacterSkill, CharacterEdge, Hindrance} from '../../swade';
-import {Campaign, CampaignType, SWADE_Campaign} from '..';
+import {Campaign, CampaignType, CharacterNote, SWADE_Campaign} from '..';
 
 export interface campaign_interaction {
     campaign_id: string,
-}
-
-export interface DeleteCharacterNote extends campaign_interaction {
-    id: string,
 }
 
 export interface CharacterInteraction extends campaign_interaction {
@@ -16,17 +12,6 @@ export interface CharacterInteraction extends campaign_interaction {
 export interface CreateCharacter extends CharacterInteraction {
     name: string;
     npc?: boolean;
-}
-
-export interface CreateCharacterNote extends CharacterInteraction {
-    note: string;
-    visible?: boolean;
-}
-
-export interface ChangeCharacterNote extends campaign_interaction {
-    id: string;
-    note?: string;
-    visible?: boolean;
 }
 
 export interface SkillCharacterPair extends CharacterInteraction {
@@ -50,16 +35,6 @@ export interface character_base<Type extends Campaign<CampaignType>> extends cam
 
 // I kown that this is useless in this scale but it will be usefull later on
 export type CharacterBase<T extends Campaign<CampaignType> = Campaign<CampaignType>> = T extends SWADE_Campaign ? character_base<T> : character_base<T>;
-
-export type CharacterNote<T extends Campaign<CampaignType>> =  T extends SWADE_Campaign ? swade_character_note : never;
-
-export interface swade_character_note {
-    character_id: string;
-    creator_id: string;
-    id: string;
-    note: string;
-    visisble: boolean;
-}
 
 export interface swade_character extends character_base<Campaign<CampaignType.SWADE>> {
 

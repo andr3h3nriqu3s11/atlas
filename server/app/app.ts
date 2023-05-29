@@ -1,14 +1,16 @@
 import Fastify, {FastifyRequest} from "fastify";
 import path from "path";
+import fs from "fs";
 import fastifyStatic from "@fastify/static";
 import { frontendPath } from "./constants";
 import { PrismaClient, Campaign } from "@prisma/client";
-import { setUpUser } from "./user";
 import { authenticate } from "./authentication";
 import { UserType } from "@ref/types/user";
 import { FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { setUpCampaingns } from "./campaigns";
 import { CampaignStatus } from "@ref/types";
+import { setUpUser } from "./user";
+import { Requests } from "./utils";
 
 export const prisma = new PrismaClient();
 
@@ -94,6 +96,51 @@ export const buildServer = async (code: string) => {
             version: `0.0.1`,
         };
     });
+
+    try {
+        const generalBasePath = './app/routes';
+        const routes = fs.readdirSync(generalBasePath, {recursive: false, withFileTypes: true});
+        
+        const checkPath = async (basePath: string, path: fs.Dirent) => {
+            if (path.isDirectory()) {
+                const routes = fs.readdirSync(`${basePath}/${path.name}`, {withFileTypes: true});
+                
+                for (const route of routes) {
+                    checkPath(`${basePath}/${path.name}`, route);
+                }
+                return;
+            }
+
+            if(!path.name.endsWith(".ts"))
+                return;
+
+            try {
+                const v = await import(`${basePath.replace('./app', '.')}/${path.name}`);
+                
+                let uri = `${basePath.replace(generalBasePath, '')}/${path.name.replace(/.ts$/, '')}`;
+
+                if (path.name === 'index.ts') 
+                    uri = basePath.replace(generalBasePath, '');
+                
+                if (v.post instanceof Requests)
+                    v.post.post().build(fastify, uri);
+                if (v.get instanceof Requests)
+                    v.get.get().build(fastify, uri);
+                if (v.put instanceof Requests)
+                    v.put.put().build(fastify, uri);
+
+            } catch (e) {
+                console.log("Failed to load file");
+            }
+        }
+
+
+        for (const route of routes) {
+            await checkPath(generalBasePath, route);
+        }
+    } catch (e) {
+        console.log("Faield to load auto routes");
+    }
 
     setUpUser(baseUrl, fastify);
 

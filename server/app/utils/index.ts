@@ -1,5 +1,6 @@
 import { FastifyReply } from "fastify";
 export * from './schema_builder';
+export * from './requests';
 
 /**
     * @deprecated use the one on the request

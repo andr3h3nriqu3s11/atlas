@@ -1,34 +1,22 @@
-import { UpdatePasswordUserRequestBody} from '@ref/types/user';
-import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
+import { UpdatePasswordUserRequestBody } from '@ref/types/user';
+import { FastifyRequest } from "fastify";
 import { prisma } from 'app/app';
-import { error } from 'app/utils';
-import { authenticate } from 'app/authentication';
+import { Requests, T } from 'app/utils';
 import { SELECT_USER } from '.';
 import { randomBytes } from 'crypto';
 import argon2 from 'argon2'
 
-export const UpdatePasswordUserSchema: RouteShorthandOptions = {
-    schema: {
-        description: 'End point used to password a user',
-        tags: ['User'],
-        body: {
-            type: 'object',
-            required: ['oldPassword', 'password'],
-            properties: {
-                oldPassword: {type: 'string'},
-                password: {type: 'string'},
-            }
-        }
-    }
-}
-
-interface UpdatePasswordUserRequest extends FastifyRequest {
-    body: UpdatePasswordUserRequestBody
-}
-
-export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, reply: FastifyReply) => {
-    const token = await authenticate(req, reply);
-
+export const put = new Requests()
+.description('End point used to password a user')
+.tags('User')
+.authHeaders()
+.body(T.object({
+    oldPassword: T.string(),
+    password: T.string(),
+    expire: T.number(24 * 60 * 60),
+}, {required: ['oldPassword', 'password']}))
+.handle(async (req: FastifyRequest<{ Body: UpdatePasswordUserRequestBody }>, reply) => {
+    const token = await req.authenticate();
 	const body = req.body;
 
 	const expireTime = new Date();
@@ -43,7 +31,7 @@ export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, 
 	try {
 		const result = await argon2.verify(getUser.password, body.oldPassword);
 		if (!result) throw new Error();
-	} catch { error(reply, 401, 'email or password are invalid'); }
+	} catch { reply.error(401, 'email or password are invalid'); }
 
 	//Remove the salt and password from the user object
 	delete getUser.password;
@@ -58,7 +46,7 @@ export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, 
 				userId: getUser.id
 			}
 		});
-	} catch (e) { error(reply, 401, 'cloud not perform login') }
+	} catch (e) { reply.error(401, 'cloud not perform login') }
 
     const pass = await argon2.hash(req.body.password)
 
@@ -71,4 +59,4 @@ export const UpdatePasswordUserHandler = async (req: UpdatePasswordUserRequest, 
 		user: nUser,
 		token: tokenStr
 	};
-}
+})

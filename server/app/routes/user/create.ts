@@ -1,35 +1,22 @@
 import {CreateUserRequestBody, UserType} from '@ref/types/user';
-import { FastifyReply, FastifyRequest, RouteShorthandOptions } from "fastify";
+import { FastifyRequest } from "fastify";
 import { prisma } from 'app/app';
 import argon2 from 'argon2';
+import { T, Requests } from 'app/utils';
 
-export const CreateUserSchema: RouteShorthandOptions = {
-    schema: {
-        description: 'End point used to create user',
-        tags: ['User'],
-        body: {
-            type: 'object',
-            properties: {
-                name: {type: 'string'},
-                password: {type: 'string'},
-            }
-        }
-    }
-}
-
-interface CreateUserRequest extends FastifyRequest {
-    body: CreateUserRequestBody
-}
-
-export const CreateUserHandler = async (req: CreateUserRequest, reply: FastifyReply) => {
-
+export const post = new Requests()
+.description('End point used to create user')
+.tags('User')
+.body(T.object({
+    name: T.string(),
+    password: T.string(),
+}, {required: ['name', 'password']}))
+.handle(async (req: FastifyRequest<{ Body: CreateUserRequestBody}>, reply) => {
     const userCount = await prisma.user.count()
 
     let userType: UserType = UserType.PLEB;
 
-    if (userCount === 0) {
-        userType = UserType.DM;
-    }
+    if (userCount === 0) userType = UserType.DM;
 
     const pass = await argon2.hash(req.body.password)
 
@@ -54,4 +41,4 @@ export const CreateUserHandler = async (req: CreateUserRequest, reply: FastifyRe
         if (e.code === 'P2002') reply.error(400, 'name already in use');
         reply.error(500, String(e));
     }
-}
+});
