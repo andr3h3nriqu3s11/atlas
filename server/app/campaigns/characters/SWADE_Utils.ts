@@ -1,10 +1,20 @@
-import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances, SWADE_Campaign as prisma_SWADE_Campaign, Campaign as prisma_Campaign} from '@prisma/client'
+import {SWADE_CharacterSheet_item,SWADE_CharacterSheet, SWADE_CharacterSheet_Skill, SWADE_CharacterSheet_edge, SWADE_CharacterSheet_hindrances, SWADE_CharacterSheet_Logs, SWADE_Skills_Requirement, SWADE_Skill, SWADE_Edge, SWADE_Edge_requirements, SWADE_Hindrances, SWADE_Campaign as prisma_SWADE_Campaign, Campaign as prisma_Campaign, SWADE_CharacterSheet_Note} from '@prisma/client'
 
 import {BaseAttribute, CharacterSkill, Rank, SWADE_RequirementType, Skill, SkillRequirement, Edge, EdgeRequirements, CharacterEdge, Hindrance, HindranceType} from '@ref/types/swade';
-import {swade_character, SWADE_Campaign, CampaignType} from '@ref/types';
-import { prisma } from 'app/app';
+import {swade_character, SWADE_Campaign, CampaignType, UserType, CharacterNote, Campaign} from '@ref/types';
+import { TokenDBUser, prisma } from 'app/app';
 
-export const find_include = {
+export function swade_export_character_note (note: SWADE_CharacterSheet_Note): CharacterNote<Campaign<CampaignType.SWADE>> {
+    return {
+        character_id: note.character_id,
+        creator_id: note.creator_id,
+        visisble: note.visible,
+        id: note.id,
+        note: note.note
+    }
+}
+
+export const find_include = (user: TokenDBUser) => ({
     skills: {
         include: {
             skill: true
@@ -26,12 +36,20 @@ export const find_include = {
         include: {
             campaign: true,
         }
-    }
-}
+    },
+    notes: user.userType === UserType.DM ? {} : {
+        where: {
+            OR: [
+                {visible: true},
+                {creator_id: user.id}
+            ]
+        }
+    },
+});
 
-export const prisma_export_character = async (id: string) => export_character(await prisma.sWADE_CharacterSheet.findUnique({
+export const prisma_export_character = async (id: string, user: TokenDBUser) => export_character(await prisma.sWADE_CharacterSheet.findUnique({
     where: { id },
-    include: find_include,
+    include: find_include(user), 
 }))
 
 export const export_character = (character: SWADE_CharacterSheet & { campaign: prisma_SWADE_Campaign & { campaign: prisma_Campaign }} & {
@@ -40,11 +58,13 @@ export const export_character = (character: SWADE_CharacterSheet & { campaign: p
     hindrances: SWADE_ExportableHindrance[];
     items: SWADE_CharacterSheet_item[];
     logs: SWADE_CharacterSheet_Logs[];
+    notes: SWADE_CharacterSheet_Note[];
 }): swade_character => ({
     id: character.id,
     name: character.name,
     campaign_id: character.campaign.campaign.id,
     dead: character.dead,
+    visible: character.visible,
     npc: character.npc,
     rank: character.rank as Rank,
     edges: character.edges.map(swade_export_character_edge),
@@ -57,7 +77,8 @@ export const export_character = (character: SWADE_CharacterSheet & { campaign: p
     strength: character.strength,
     hindrances: character.hindrances.map(swade_export_character_hindarance),
     atributesPoints: character.attributePoints,
-    skillPoints: character.skillPoints
+    skillPoints: character.skillPoints,
+    notes: character.notes.map(swade_export_character_note),
 })
 
 

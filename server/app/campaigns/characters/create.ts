@@ -1,21 +1,20 @@
-import { CampaignStatus, CampaignType, Character, CreateCharacter } from '@ref/types';
+import { CampaignType, Character, CreateCharacter } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { export_character, find_include } from './SWADE_Utils';
 import { AuthenticationHeaders } from 'app/authentication';
+import { T } from 'app/utils';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {
         schema: {
             description: 'Endpoint used to add a character to a campaign',
             tags: ['Characters', 'Campaign'],
-            body: {
-                type: 'object',
-                properties: {
-                    name: {type: 'string'},
-                    campaign_id: {type: 'string'},
-                }
-            },
+            body: T.object({
+                name: T.string(),
+                campaign_id: T.string(),
+                npc: T.boolean(false),
+            }, {required: ['name', 'campaign_id']}),
             headers: AuthenticationHeaders,
         }
     }, async (req: FastifyRequest<{Body: CreateCharacter}>, reply): Promise<Character> => {
@@ -46,9 +45,10 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
                         name: body.name,
                         campaign_id: swade_campaign.id,
                         creator_id: token.user.id,
+                        npc: body.npc,
                     },
                     include: {
-                        ...find_include,
+                        ...find_include(token.user),
                         campaign: {
                             include: {
                                 campaign: true,
@@ -61,7 +61,6 @@ export const create = (fastify: FastifyInstance, baseUrl: string) => {
             } catch (e) {
                 throw new Error(e.message);
             }
-            
         } else
             throw new Error('Unreachable');
     })

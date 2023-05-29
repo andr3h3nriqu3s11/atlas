@@ -12,8 +12,9 @@ export const setUpCampaingns = (fastify: FastifyInstance, baseUrl: string) => {
     const url = `${baseUrl}/campaing`;
     
     setUpAddCampaign(fastify, url);
-    setUpImport(fastify, url);
     setUpCampaignList(fastify, url);
+    setUpImport(fastify, url);
+
     setUpSwade(fastify, url);
 
     set_up_campaign_characters(fastify, url);

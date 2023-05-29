@@ -68,7 +68,7 @@ export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
             }
         });
 
-        return prisma_export_character(body.character_id);
+        return prisma_export_character(body.character_id, user);
     })
 }
 
@@ -120,6 +120,6 @@ export const hidrance_remove = (fastify: FastifyInstance, baseUrl: string) => {
             }
         });
 
-        return prisma_export_character(body.character_id);
+        return prisma_export_character(body.character_id, user);
     })
 }

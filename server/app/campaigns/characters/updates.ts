@@ -1,6 +1,5 @@
 import { SWADE_CharacterSheet } from '@prisma/client';
-import { CampaignType, Character, UpdateCharacter, update_character_swade } from '@ref/types';
-import { Rank } from '@ref/types/swade';
+import { CampaignType, Character, UpdateCharacter, update_character_swade, Rank } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify'
 import { prisma_export_character } from './SWADE_Utils';
@@ -81,7 +80,7 @@ export const update = (fastify: FastifyInstance, baseUrl: string) => {
             await add_log(character, body, attributePoints);
 
             // TODO check if skill points need to be recalulated
-            return prisma_export_character(character.id);
+            return prisma_export_character(character.id, user);
         } else
             throw Error('Unrechanble');
     });

@@ -106,13 +106,15 @@ export const buildServer = async (code: string) => {
     return fastify;
 };
 
-interface TokenDB {
-    user: {
-        authorized: boolean;
-        id: string;
-        name: string;
-        userType: string;
-    };
+export interface TokenDBUser {
+    authorized: boolean;
+    id: string;
+    name: string;
+    userType: string;
+}
+
+export interface TokenDB {
+    user: TokenDBUser;
     token: string;
     expireDate: Date;
     userId: string;

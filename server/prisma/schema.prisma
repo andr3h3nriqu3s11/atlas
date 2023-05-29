@@ -33,6 +33,7 @@ model User {
 
   campaigns Campaign[]
   characters SWADE_CharacterSheet[]
+  characterNotes SWADE_CharacterSheet_Note[]
 }
 
 model Token {
@@ -96,6 +97,12 @@ model SWADE_Campaign {
   characters SWADE_CharacterSheet[]
 }
 
+//
+//
+// SWADE Character Sheet
+//
+//
+
 model SWADE_CharacterSheet {
   id String @id @default(uuid())
 
@@ -132,6 +139,18 @@ model SWADE_CharacterSheet {
   items     SWADE_CharacterSheet_item[]
 
   logs SWADE_CharacterSheet_Logs[]
+  notes SWADE_CharacterSheet_Note[]
+}
+
+model SWADE_CharacterSheet_Note {
+    id String @id @default(uuid())
+    character_id String
+    creator_id String
+    note String
+    visible Boolean @default(false)
+
+    character SWADE_CharacterSheet @relation(fields: [character_id], references: [id])
+    creator   User @relation(fields: [creator_id], references: [id])
 }
 
 model SWADE_CharacterSheet_Logs {

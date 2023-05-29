@@ -1,4 +1,4 @@
-import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddEdgeCharacter, CampaignStatus, UserType } from '@ref/types';
+import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddEdgeCharacter, UserType } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
@@ -97,7 +97,7 @@ export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
             }
         });
 
-        return prisma_export_character(body.character_id);
+        return prisma_export_character(body.character_id, user);
     })
 }
 
@@ -151,6 +151,6 @@ export const edge_remove = (fastify: FastifyInstance, baseUrl: string) => {
 
         // TODO check if any of the skills require this
 
-        return prisma_export_character(body.character_id);
+        return prisma_export_character(body.character_id, user);
     })
 }

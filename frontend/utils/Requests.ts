@@ -24,7 +24,13 @@ import {
   CreateEdgeRequirement,
   RemoveEdgeRequirement,
   ListCampaign,
-  ImportCampaign
+  ImportCampaign,
+  HindranceType,
+  CreateCharacterNote,
+  ChangeCharacterNote,
+  CharacterNote,
+  DeleteCharacterNote,
+  CharacterInteraction
 } from '~/types';
 
 interface Requester {
@@ -165,7 +171,7 @@ class RequestsClass {
             campaign: Campaign<CampaignType.SWADE>,
             character: Character<Campaign<CampaignType.SWADE>>,
             hindrance: Hindrance,
-            level: number,
+            level?: HindranceType.Major | HindranceType.Minor,
           ): Promise<void> =>
             this.req.post(`${this.campaign.characters.hindrance.url}/add`, {data: {
               campaign_id: campaign.id,
@@ -183,7 +189,51 @@ class RequestsClass {
             hindrance_id: hindrance.id,
             character_id: character.id,
           } as HindranceCharacterPair })
-        }
+        },
+
+        notes: {
+          url: `/campaing/characters/notes`,
+
+          add: <Type extends Campaign<CampaignType>>(campaign: Type, character: Character<Type>, data: {
+            note: string;
+            visible?: boolean;
+          }): Promise<Character<Type>> =>
+            this.req.post(`${this.campaign.characters.notes.url}/add`, {data: {
+              campaign_id: campaign.id,
+              character_id: character.id,
+              note: data.note,
+              visible: data.visible
+            } as CreateCharacterNote}),
+
+          update: <Type extends Campaign<CampaignType>>(campaign: Type, note: CharacterNote<Type>, data: {
+            visible?: boolean,
+            note?: string,
+          }): Promise<Character<Type>> =>
+            this.req.put(`${this.campaign.characters.notes.url}/update`, {data: {
+              campaign_id: campaign.id,
+              id: note.id,
+              visible: data.visible,
+              note: data.note,
+            } as ChangeCharacterNote }),
+
+          remove: <Type extends Campaign<CampaignType>>(campaign: Type, note: CharacterNote<Type>): Promise<Character<Type>> =>
+            this.req.delete(`${this.campaign.characters.notes.url}`, {
+              data: {
+                id: note.id,
+                campaign_id: campaign.id,
+              } as DeleteCharacterNote,
+            }),
+
+          list: <Type extends Campaign<CampaignType>>(campaign: Type, character: Character<Type>): Promise<CharacterNote<Type>> =>
+            this.req.post(`${this.campaign.characters.notes.url}/list`, {
+              data: {
+                campaign_id: campaign.id,
+                character_id: character.id,
+              } as CharacterInteraction,
+            }),
+        },
+
+
       },
 
       skills: {

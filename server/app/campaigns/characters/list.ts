@@ -1,50 +1,54 @@
-import { CampaignType, campaign_interaction, character_base} from '@ref/types';
+import { Campaign, CampaignType, Character, UserType, campaign_interaction} from '@ref/types';
 import { prisma } from 'app/app';
 import { AuthenticationHeaders } from 'app/authentication';
-import {FastifyRequest, FastifyInstance} from 'fastify';
+import { FastifyRequest, FastifyInstance } from 'fastify';
+import { T } from 'app/utils';
+import { export_character, find_include } from './SWADE_Utils';
 
 export const list = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/list`, {
         schema: {
             description: 'Endpoint used list characters in a campaign',
             tags: ['Characters', 'Campaign'],
-            body: {
-                type: 'object',
-                properties: {
-                    campaign_id: {type: 'string'},
-                }
-            },
-            headers: AuthenticationHeaders
+            body: T.object({
+                campaign_id: T.string(),
+            }, {required: ['campaign_id']}),
+            headers: AuthenticationHeaders,
         }
-    }, async (req: FastifyRequest<{Body: campaign_interaction}>): Promise<character_base[]> => {
+    }, async (req: FastifyRequest<{Body: campaign_interaction}>): Promise<Character<Campaign<CampaignType>>[]> => {
         const {body} = req;
-        const {campaign, token} = await req.authenticate_verifyCampaign(body.campaign_id, false)
+        const {campaign, token: {user}} = await req.authenticate_verifyCampaign(body.campaign_id, false)
 
         if (campaign.type === CampaignType.SWADE) {
+            
+            const swade_campaign = await prisma.sWADE_Campaign.findUnique({
+                where: {
+                    campaign_id: body.campaign_id,
+                }
+            });
+
             // TODO fix this any
             let where: any = {
-                campaign_id: body.campaign_id,
+                campaign_id: swade_campaign.id,
                 OR: [
                     {visible: true},
-                    {creator_id: token.user.id}
+                    {creator_id: user.id}
                 ]
             }
 
-            if (token.user.authorized)
+            if (user.userType === UserType.DM)
                 where = {
-                    campaign_id: body.campaign_id
+                    campaign_id: swade_campaign.id
                 };
 
-            return await prisma.sWADE_CharacterSheet.findMany({
+            console.log(where, "test", user);
+
+            const data = await prisma.sWADE_CharacterSheet.findMany({
                 where,
-                select: {
-                    name: true,
-                    id: true,
-                    campaign_id: true,
-                    dead: true,
-                    npc: true,
-                }
+                include: find_include(user),
             });
+
+            return data.map(export_character);
         } else
             throw new Error('Unreachable');
     })

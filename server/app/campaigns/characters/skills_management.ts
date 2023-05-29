@@ -90,7 +90,7 @@ export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             });
 
-            return prisma_export_character(body.character_id);
+            return prisma_export_character(body.character_id, user);
         } else
             throw new Error('Unreachable');
     })
@@ -145,7 +145,7 @@ export const skill_remove = (fastify: FastifyInstance, baseUrl: string) => {
                 }
             });
 
-            return prisma_export_character(body.character_id);
+            return prisma_export_character(body.character_id, user);
         } else
             throw new Error('Unreachable');
     })
