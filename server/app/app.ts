@@ -9,7 +9,6 @@ import { UserType } from "@ref/types/user";
 import { FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { setUpCampaingns } from "./campaigns";
 import { CampaignStatus } from "@ref/types";
-import { setUpUser } from "./user";
 import { Requests } from "./utils";
 
 export const prisma = new PrismaClient();
@@ -141,8 +140,6 @@ export const buildServer = async (code: string) => {
     } catch (e) {
         console.log("Faield to load auto routes");
     }
-
-    setUpUser(baseUrl, fastify);
 
     setUpCampaingns(fastify, baseUrl);
 
