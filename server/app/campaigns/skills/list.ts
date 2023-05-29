@@ -2,7 +2,7 @@ import {FastifyInstance, FastifyRequest} from 'fastify';
 import {CampaignType, CampaignTyped, Skill} from '@ref/types';
 import { prisma } from 'app/app';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const list = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/list`, {

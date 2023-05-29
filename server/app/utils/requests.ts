@@ -1,11 +1,10 @@
 import { FastifyInstance, RouteHandlerMethod, RouteShorthandOptions } from "fastify";
-import {typed, types} from '.';
-import { AuthenticationHeaders } from "app/authentication";
+import { typed, types, AuthenticationHeaders } from '.';
 
 export class Requests {
     private handler: RouteHandlerMethod
     private _opts: RouteShorthandOptions
-    private method: 'post' | 'get' | 'put';
+    private method: 'post' | 'get' | 'put' | 'delete';
     private uriExtra: string;
 
     constructor() {
@@ -57,6 +56,11 @@ export class Requests {
 
     post() {
         this.method = 'post';
+        return this;
+    }
+
+    delete() {
+        this.method = 'delete';
         return this;
     }
 

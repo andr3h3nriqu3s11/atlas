@@ -3,7 +3,7 @@ import { AddHindranceCharacter, HindranceCharacterPair, HindranceType } from '@r
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const hindrance_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/hindrance/add`, {

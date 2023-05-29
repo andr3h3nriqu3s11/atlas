@@ -1,10 +1,9 @@
-import Fastify, {FastifyRequest} from "fastify";
+import Fastify, {FastifyReply, FastifyRequest} from "fastify";
 import path from "path";
 import fs from "fs";
 import fastifyStatic from "@fastify/static";
 import { frontendPath } from "./constants";
 import { PrismaClient, Campaign } from "@prisma/client";
-import { authenticate } from "./authentication";
 import { UserType } from "@ref/types/user";
 import { FastifyDynamicSwaggerOptions } from "@fastify/swagger";
 import { setUpCampaingns } from "./campaigns";
@@ -127,6 +126,8 @@ export const buildServer = async (code: string) => {
                     v.get.get().build(fastify, uri);
                 if (v.put instanceof Requests)
                     v.put.put().build(fastify, uri);
+                if (v.del instanceof Requests)
+                    v.del.delete().build(fastify, uri);
 
             } catch (e) {
                 console.log("Failed to load file");
@@ -174,3 +175,40 @@ declare module 'fastify' {
     error: (status: number, message: string) => never
   }
 }
+
+const authenticate = async (
+	req: FastifyRequest,
+	rep: FastifyReply,
+	token_pass: string | undefined = undefined
+) => {
+	const token = token_pass ?? req.headers.token;
+	if (!token || Array.isArray(token)) 
+        rep.error(401, 'token needed')
+	const tokenDB = await prisma.token.findUnique({
+		where: {
+			token
+		},
+		select: {
+			expireDate: true,
+			token: true,
+			user: {
+				select: {
+					authorized: true,
+					id: true,
+					name: true,
+					userType: true
+				}
+			},
+			userId: true
+		}
+	});
+	if (!tokenDB) 
+        rep.error(401, 'invalid token');
+
+	if (new Date().getTime() > tokenDB.expireDate.getTime()) {
+		prisma.token.delete({ where: { token } });
+        rep.error(401, 'token expired');
+	}
+
+	return tokenDB;
+};

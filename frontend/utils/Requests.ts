@@ -264,32 +264,34 @@ class RequestsClass {
         update: (data: UpdateEdge): Promise<Edge> =>
           this.req.post(`${this.campaign.edges.url}/update`, {data}),
 
+        delete: (data: {id: string}): Promise<Edge> =>
+          this.req.delete(`${this.campaign.edges.url}`, {data}),
+
         list: (type: CampaignType): Promise<Edge[]> =>
-          this.req.post(`${this.campaign.edges.url}/list`, {
-            data: {
-              type,
-            },
-          }),
+          this.req.post(`${this.campaign.edges.url}s`, { data: { type, }, }),
 
         requirements: {
           add: (data: CreateEdgeRequirement): Promise<Edge> =>
-            this.req.post(`${this.campaign.edges.url}/requirement/add`, {data}),
+            this.req.post(`${this.campaign.edges.url}/requirement`, {data}),
           remove: (data: RemoveEdgeRequirement): Promise<Edge> =>
-            this.req.post(`${this.campaign.edges.url}/requirement/remove`, {data}),
+            this.req.delete(`${this.campaign.edges.url}/requirement`, {data}),
         }
       },
 
       hindrance: {
-        url: `/campaing/characters/hindrance`,
+        url: `/campaing/characters/hindrances`,
 
         add: (data: CreateEdge): Promise<Hindrance> =>
           this.req.post(`${this.campaign.hindrance.url}/add`, {data}),
 
         update: (data: UpdateEdge): Promise<Hindrance> =>
-          this.req.post(`${this.campaign.hindrance.url}/update`, {data}),
+          this.req.put(`${this.campaign.hindrance.url}`, {data}),
+
+        delete: (data: {id: string}): Promise<Hindrance> =>
+          this.req.delete(`${this.campaign.hindrance.url}`, {data}),
 
         list: (type: CampaignType): Promise<Hindrance[]> =>
-          this.req.post(`${this.campaign.hindrance.url}/list`, { data: { type } }),
+          this.req.post(`${this.campaign.hindrance.url}`, { data: { type } }),
       }
     }
 

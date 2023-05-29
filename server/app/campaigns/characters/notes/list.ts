@@ -1,6 +1,6 @@
 import { CampaignType, CharacterNote, Campaign, CharacterInteraction } from "@ref/types";
 import { prisma } from "app/app";
-import { AuthenticationHeaders } from "app/authentication";
+import { AuthenticationHeaders } from "app/utils";
 import { T } from "app/utils/schema_builder";
 import { FastifyInstance, FastifyRequest } from "fastify";
 import { swade_export_character_note } from "../SWADE_Utils";

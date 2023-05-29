@@ -3,7 +3,7 @@ import { CampaignType, Character, UpdateCharacter, update_character_swade, Rank 
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify'
 import { prisma_export_character } from './SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const update = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.put(`${baseUrl}/update`, {

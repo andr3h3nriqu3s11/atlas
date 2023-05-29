@@ -2,7 +2,7 @@ import { CampaignType, Character, SWADE_RequirementType, AddSkillCharacter, Skil
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const skill_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/skill/add`, {

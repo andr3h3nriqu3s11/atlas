@@ -2,8 +2,7 @@ import { CampaignType, Character, CreateCharacter } from '@ref/types';
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { export_character, find_include } from './SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
-import { T } from 'app/utils';
+import { T, AuthenticationHeaders } from 'app/utils';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {

@@ -1,6 +1,6 @@
 import { Campaign, CampaignType, Character, UserType, campaign_interaction} from '@ref/types';
 import { prisma } from 'app/app';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 import { FastifyRequest, FastifyInstance } from 'fastify';
 import { T } from 'app/utils';
 import { export_character, find_include } from './SWADE_Utils';

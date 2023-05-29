@@ -2,7 +2,7 @@ import { CampaignType, Character, SWADE_RequirementType, EdgeCharacterPair, AddE
 import { prisma } from 'app/app';
 import {FastifyInstance, FastifyRequest} from 'fastify';
 import { prisma_export_character } from './SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const edge_add = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/edge/add`, {

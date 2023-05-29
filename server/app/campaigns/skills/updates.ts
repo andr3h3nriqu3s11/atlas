@@ -1,6 +1,6 @@
 import { BaseAttribute, Rank, Skill, UpdateSkill } from '@ref/types/swade';
 import { prisma } from 'app/app';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
 import { error } from 'app/utils';
 import {FastifyInstance, FastifyRequest} from 'fastify'

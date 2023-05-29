@@ -3,7 +3,7 @@ import {CampaignType, CreateSkill, Skill} from '@ref/types';
 import { BaseAttribute, Rank } from '@ref/types';
 import { prisma } from 'app/app';
 import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
-import { AuthenticationHeaders } from 'app/authentication';
+import { AuthenticationHeaders } from 'app/utils';
 
 export const create = (fastify: FastifyInstance, baseUrl: string) => {
     fastify.post(`${baseUrl}/add`, {
