@@ -1,7 +1,6 @@
 import { BaseAttribute, Rank, SWADE_RequirementType } from "..";
 import { campaign_interaction } from "../../campaign";
 
-
 export interface CreateEdge {
     title: string;
     rank: Rank;
@@ -35,9 +34,7 @@ export interface EdgeCharacterPair extends campaign_interaction {
     edge_id: string,
 }
 
-export interface AddEdgeCharacter extends EdgeCharacterPair {
-    level: number
-}
+export type AddEdgeCharacter = EdgeCharacterPair;
 
 export interface BaseEdge {
     title: string,

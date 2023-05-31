@@ -4,7 +4,7 @@ import { typed, types, AuthenticationHeaders } from '.';
 export class Requests {
     private handler: RouteHandlerMethod
     private _opts: RouteShorthandOptions
-    private method: 'post' | 'get' | 'put' | 'delete';
+    private method: 'post' | 'get' | 'put' | 'delete' | 'patch';
     private uriExtra: string;
 
     constructor() {
@@ -71,6 +71,11 @@ export class Requests {
 
     put() {
         this.method = 'put';
+        return this;
+    }
+
+    patch() {
+        this.method = 'patch';
         return this;
     }
 

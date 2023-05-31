@@ -38,6 +38,7 @@ interface Requester {
     get: (url: string, options?: {data?: any, token?: string}) => Promise<any>
     put: (url: string, options?: {data?: any, token?: string}) => Promise<any>
     delete: (url: string, options?: {data?: any, token?: string}) => Promise<any>
+    patch: (url: string, options?: {data?: any, token?: string}) => Promise<any>
 }
 
 class RequestsClass {
@@ -90,7 +91,7 @@ class RequestsClass {
         url: `/campaing/characters`,
 
         add: <Type extends CampaignType>(campaign: Campaign<Type>, name: string): Promise<Character<Campaign<Type>>> =>
-          this.req.post(`${this.campaign.characters.url}/add`, {
+          this.req.put(`${this.campaign.characters.url}`, {
             data: {
               name,
               campaign_id: campaign.id,
@@ -98,7 +99,10 @@ class RequestsClass {
           }),
 
         update: <Type extends CampaignType>(data: UpdateCharacter<Campaign<Type>>): Promise<Character<Campaign<Type>>> =>
-          this.req.post(`${this.campaign.characters.url}/update`, { data }),
+          this.req.patch(`${this.campaign.characters.url}`, { data }),
+
+        list: <Type extends Campaign<CampaignType>>(campaign: Type): Promise<Character<Type>> =>
+          this.req.post(`${this.campaign.characters.url}`, { data: { campaign_id: campaign.id } }),
 
         skill: {
           url: `/campaing/characters/skill`,
@@ -109,7 +113,7 @@ class RequestsClass {
             skill: Skill<Campaign<Type>>,
             level: number,
           ): Promise<Character<Campaign<Type>>> =>
-            this.req.post(`${this.campaign.characters.skill}/add`, {
+            this.req.put(`${this.campaign.characters.skill}`, {
               data: {
                 campaign_id: campaign.id,
                 skill_id: skill.id,
@@ -123,7 +127,7 @@ class RequestsClass {
             character: Character<Campaign<Type>>,
             skill: Skill<Campaign<Type>>
           ) =>
-            this.req.post(`${this.campaign.characters.skill}/remove`, {
+            this.req.delete(`${this.campaign.characters.skill}`, {
               data: {
                 campaign_id: campaign.id,
                 character_id: character.id,
@@ -173,7 +177,7 @@ class RequestsClass {
             hindrance: Hindrance,
             level?: HindranceType.Major | HindranceType.Minor,
           ): Promise<void> =>
-            this.req.post(`${this.campaign.characters.hindrance.url}/add`, {data: {
+            this.req.put(`${this.campaign.characters.hindrance.url}`, {data: {
               campaign_id: campaign.id,
               character_id: character.id,
               hindrance_id: hindrance.id,
@@ -184,7 +188,7 @@ class RequestsClass {
             campaign: Campaign<CampaignType.SWADE>,
             character: Character<Campaign<CampaignType.SWADE>>,
             hindrance: Hindrance,
-          ) => this.req.post(`${this.campaign.characters.hindrance.url}/remove`, { data: {
+          ) => this.req.delete(`${this.campaign.characters.hindrance.url}`, { data: {
             campaign_id: campaign.id,
             hindrance_id: hindrance.id,
             character_id: character.id,
@@ -198,7 +202,7 @@ class RequestsClass {
             note: string;
             visible?: boolean;
           }): Promise<Character<Type>> =>
-            this.req.post(`${this.campaign.characters.notes.url}/add`, {data: {
+            this.req.put(`${this.campaign.characters.notes.url}`, {data: {
               campaign_id: campaign.id,
               character_id: character.id,
               note: data.note,
@@ -209,7 +213,7 @@ class RequestsClass {
             visible?: boolean,
             note?: string,
           }): Promise<Character<Type>> =>
-            this.req.put(`${this.campaign.characters.notes.url}/update`, {data: {
+            this.req.patch(`${this.campaign.characters.notes.url}/update`, {data: {
               campaign_id: campaign.id,
               id: note.id,
               visible: data.visible,
@@ -240,15 +244,15 @@ class RequestsClass {
         url: `/campaing/characters/skills`,
 
         add: (data: CreateSkill): Promise<Skill> =>
-          this.req.post(`${this.campaign.skills.url}/add`, {data}),
+          this.req.put(`${this.campaign.skills.url}`, {data}),
         update: (data: UpdateSkill): Promise<Skill> =>
-          this.req.post(`${this.campaign.skills.url}`, {data}),
+          this.req.patch(`${this.campaign.skills.url}`, {data}),
         list: (type: CampaignType): Promise<Skill[]> =>
           this.req.post(`${this.campaign.skills.url}`, { data: { type, } }),
 
         requirements: {
           add: (data: CreateSkillRequirement): Promise<Skill> =>
-            this.req.post(`${this.campaign.skills.url}/requirement`, {data}),
+            this.req.put(`${this.campaign.skills.url}/requirement`, {data}),
 
           remove: (data: RemoveSkillRequirement): Promise<Skill> =>
             this.req.delete(`${this.campaign.skills.url}/requirement`, {data}),
@@ -259,20 +263,20 @@ class RequestsClass {
         url: `/campaing/characters/edges`,
 
         add: (data: CreateEdge): Promise<Edge> =>
-          this.req.post(`${this.campaign.edges.url}/add`, {data}),
+          this.req.put(`${this.campaign.edges.url}`, {data}),
 
         update: (data: UpdateEdge): Promise<Edge> =>
-          this.req.post(`${this.campaign.edges.url}/update`, {data}),
+          this.req.patch(`${this.campaign.edges.url}`, {data}),
 
         delete: (data: {id: string}): Promise<Edge> =>
           this.req.delete(`${this.campaign.edges.url}`, {data}),
 
         list: (type: CampaignType): Promise<Edge[]> =>
-          this.req.post(`${this.campaign.edges.url}s`, { data: { type, }, }),
+          this.req.post(`${this.campaign.edges.url}`, { data: { type, }, }),
 
         requirements: {
           add: (data: CreateEdgeRequirement): Promise<Edge> =>
-            this.req.post(`${this.campaign.edges.url}/requirement`, {data}),
+            this.req.put(`${this.campaign.edges.url}/requirement`, {data}),
           remove: (data: RemoveEdgeRequirement): Promise<Edge> =>
             this.req.delete(`${this.campaign.edges.url}/requirement`, {data}),
         }
@@ -282,10 +286,10 @@ class RequestsClass {
         url: `/campaing/characters/hindrances`,
 
         add: (data: CreateEdge): Promise<Hindrance> =>
-          this.req.post(`${this.campaign.hindrance.url}/add`, {data}),
+          this.req.put(`${this.campaign.hindrance.url}`, {data}),
 
         update: (data: UpdateEdge): Promise<Hindrance> =>
-          this.req.put(`${this.campaign.hindrance.url}`, {data}),
+          this.req.patch(`${this.campaign.hindrance.url}`, {data}),
 
         delete: (data: {id: string}): Promise<Hindrance> =>
           this.req.delete(`${this.campaign.hindrance.url}`, {data}),
@@ -359,16 +363,32 @@ class OurAxios {
         return request.json();
     }
 
-    delete (url: string, options?: {data?: any, token?: string}) {
+    async delete (url: string, options?: {data?: any, token?: string}) {
         const {data, token = this.getToken() ?? this.token} = options ?? {};
 
         const urlObj = new URL(url, this.baseUrl)
 
-        return fetch(urlObj.toString(), {
+        const request = await fetch(urlObj.toString(), {
             method: 'DELETE',
             headers: this.buildHeaders(data, token),
             ...(data ? {body: JSON.stringify(data)} : {})
-        })
+        });
+
+        return request.json();
+    }
+
+    async patch (url: string, options?: {data?: any, token?: string}) {
+        const {data, token = this.getToken() ?? this.token} = options ?? {};
+
+        const urlObj = new URL(url, this.baseUrl)
+
+        const request = await fetch(urlObj.toString(), {
+            method: 'PATCH',
+            headers: this.buildHeaders(data, token),
+            ...(data ? {body: JSON.stringify(data)} : {})
+        });
+
+        return request.json();
     }
 }
 

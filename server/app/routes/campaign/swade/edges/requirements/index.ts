@@ -1,10 +1,10 @@
 import { BaseAttribute, CreateEdgeRequirement, Edge, RemoveEdgeRequirement, SWADE_RequirementType } from "@ref/types";
 import { prisma } from "app/app";
-import { swade_export_edge } from "app/campaigns/characters/SWADE_Utils";
+import { swade_export_edge } from "app/utils/SWADE_Utils";
 import { Requests } from "app/utils";
 import { FastifyRequest } from "fastify";
 
-export const post = new Requests()
+export const put = new Requests()
 .authHeaders()
 .description('Endpoint used to add a requirement to a edge\nNote: Body is missing because is complex type check Requests for more detailed overview')
 .tags('Edge', 'Swade')

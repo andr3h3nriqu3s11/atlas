@@ -1,10 +1,10 @@
-import {FastifyInstance, FastifyRequest} from 'fastify';
+import { FastifyRequest} from 'fastify';
 import {CampaignType, SWADE_RequirementType, Skill, CreateSkillRequirement, RemoveSkillRequirement} from '@ref/types';
 import { prisma } from 'app/app';
-import { swade_export_skill } from 'app/campaigns/characters/SWADE_Utils';
-import { AuthenticationHeaders, Requests } from 'app/utils';
+import { swade_export_skill } from 'app/utils/SWADE_Utils';
+import { Requests } from 'app/utils';
 
-export const post = new Requests()
+export const put = new Requests()
 .authHeaders()
 .description('Endpoint used to add a requirement to a skill\nNote: Type is to complex check Requests class')
 .tags('Skill', 'Swade')

@@ -128,6 +128,8 @@ export const buildServer = async (code: string) => {
                     v.put.put().build(fastify, uri);
                 if (v.del instanceof Requests)
                     v.del.delete().build(fastify, uri);
+                if (v.patch instanceof Requests)
+                    v.patch.patch().build(fastify, uri);
 
             } catch (e) {
                 console.log("Failed to load file");
