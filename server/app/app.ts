@@ -6,7 +6,6 @@ import { frontendPath } from "./constants";
 import { PrismaClient, Campaign } from "@prisma/client";
 import { UserType } from "@ref/types/user";
 import { FastifyDynamicSwaggerOptions } from "@fastify/swagger";
-import { setUpCampaingns } from "./campaigns";
 import { CampaignStatus } from "@ref/types";
 import { Requests } from "./utils";
 
@@ -143,8 +142,6 @@ export const buildServer = async (code: string) => {
     } catch (e) {
         console.log("Faield to load auto routes");
     }
-
-    setUpCampaingns(fastify, baseUrl);
 
     await fastify.ready();
 
