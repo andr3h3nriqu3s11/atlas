@@ -242,16 +242,16 @@ class RequestsClass {
         add: (data: CreateSkill): Promise<Skill> =>
           this.req.post(`${this.campaign.skills.url}/add`, {data}),
         update: (data: UpdateSkill): Promise<Skill> =>
-          this.req.post(`${this.campaign.skills.url}/update`, {data}),
+          this.req.post(`${this.campaign.skills.url}`, {data}),
         list: (type: CampaignType): Promise<Skill[]> =>
-          this.req.post(`${this.campaign.skills.url}/list`, { data: { type, } }),
+          this.req.post(`${this.campaign.skills.url}`, { data: { type, } }),
 
         requirements: {
           add: (data: CreateSkillRequirement): Promise<Skill> =>
-            this.req.post(`${this.campaign.skills.url}/requirement/add`, {data}),
+            this.req.post(`${this.campaign.skills.url}/requirement`, {data}),
 
           remove: (data: RemoveSkillRequirement): Promise<Skill> =>
-            this.req.post(`${this.campaign.skills.url}/requirement/remove`, {data}),
+            this.req.delete(`${this.campaign.skills.url}/requirement`, {data}),
         },
       },
 
